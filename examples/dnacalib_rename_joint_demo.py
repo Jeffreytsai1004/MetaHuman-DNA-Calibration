@@ -1,22 +1,22 @@
 """
-This example demonstrates rename of a joint.
-IMPORTANT: You have to setup the environment before running this example. Please refer to the 'Environment setup' section in README.md.
+这个例子演示了如何重命名一个关节。
+重要提示：在运行这个例子之前，你必须设置好环境。请参考 README.md 中的“环境设置”部分。
 
-- usage in command line:
+- 在命令行中的使用方法：
     python rename_joint_demo.py
     mayapy rename_joint_demo.py
 
-    Expected: Script will generate Ada_output.dna in OUTPUT_DIR.
-- usage in Maya:
-    1. copy whole content of this file to Maya Script Editor
-    2. change value of ROOT_DIR to absolute path of dna_calibration, e.g. `c:/dna_calibration` in Windows or `/home/user/dna_calibration`. Important:
-    Use `/` (forward slash), because Maya uses forward slashes in path.
+    预期结果：脚本将在 OUTPUT_DIR 中生成 Ada_output.dna 文件。
+- 在 Maya 中的使用方法：
+    1. 将这个文件的全部内容复制到 Maya 脚本编辑器中
+    2. 将 ROOT_DIR 的值更改为 dna_calibration 的绝对路径，例如在 Windows 中为 `c:/dna_calibration`，在 Unix 系统中为 `/home/user/dna_calibration`。重要提示：
+    使用 `/`（正斜杠），因为 Maya 在路径中使用正斜杠。
 
-- customization:
-    - change CHARACTER_NAME to Taro, or the name of a custom DNA file placed in /data/dna_files
+- 定制：
+    - 将 CHARACTER_NAME 更改为 Taro，或者将其更改为放置在 /data/dna_files 中的自定义 DNA 文件的名称
 
-Expected: Script will generate Ada_output.dna in OUTPUT_DIR from original Ada.dna.
-NOTE: If OUTPUT_DIR does not exist, it will be created.
+预期结果：脚本将从原始的 Ada.dna 文件生成 Ada_output.dna 文件，并放在 OUTPUT_DIR 中。
+注意：如果 OUTPUT_DIR 不存在，脚本会创建它。
 """
 
 from os import makedirs
