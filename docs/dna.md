@@ -1,80 +1,75 @@
-## DNA library
+## DNA 库
 
-DNA library comes bundled together in this repository as one of the dependencies of DNACalib.
-It provides the core functionality of reading and writing MetaHuman DNA files.
-It enables the user to query and change the information contained in them.
+DNA 库作为DNACalib的一个依赖项捆绑在此代码库中。它提供了读取和写入MetaHuman DNA文件的核心功能，可以让用户查询和更改其中包含的信息。
 
-DNACalib provides a set of useful commands for editing MetaHuman DNA files. Under the hood, it makes use of the DNA library. Some commands just encapsulate a few calls to DNA library, while others contain additional logic.
-While users could do all of that on their own using only DNA library, these commands aim to make their lives easier.
+DNACalib提供了一套用于编辑MetaHuman DNA文件的有用命令。在底层，它利用了DNA库。一些命令只是封装了对DNA库的调用，而其他命令则包含了额外的逻辑。虽然用户也可以纯粹使用DNA库来做到这一切，这些命令旨在让他们的操作更轻松。
 
 ## MetaHuman DNA
 
-MetaHuman DNA is a file format which is designed to store the complete description of a 3D object's rig and geometry. 
-Relying only on a MetaHuman DNA file, it is possible to reconstruct the complete mesh of an object and have it fully rigged, ready to be animated. In practice, MetaHuman DNA files are used to store only the faces of human characters.
+MetaHuman DNA是一种文件格式，旨在存储3D对象的完整绑定和几何描述。仅依靠MetaHuman DNA文件，就可以重建对象的完整网格，并使其完全绑定，准备好进行动画处理。实际上，MetaHuman DNA文件主要用于存储人类角色的面部。
 
-### Layers
+### 层
 
-Data contained within MetaHuman DNA files is separated into several logical layers. Layers are connected into a loose hierarchy, where each subsequent layer in a MetaHuman DNA file relies on data stored in the layers above it.
+MetaHuman DNA文件中的数据被分成几个逻辑层。层之间形成一个松散的层级结构，MetaHuman DNA文件中的每个后续层依赖于其上方层中存储的数据。
 
 ![MetaHuman DNA Layers](img/layers.svg "MetaHuman DNA Layers")
 
-It is possible to selectively load a MetaHuman DNA only up to a specified layer. As can be seen in the diagram denoting the organization into layers, the Behavior and Geometry layers are not dependent on each other. This independence is crucial for use cases where the MetaHuman DNA file is needed only to drive a rig (runtime evaluation using the Behavior layer), without the need to access the Geometry data.
+可以选择性地加载MetaHuman DNA直至指定层。如图中所示的层组织，行为层和几何层彼此不依赖。这种独立性对于只需要MetaHuman DNA文件来驱动绑定（使用行为层进行运行时评估），而无需访问几何数据的使用场景至关重要。
 
-#### Descriptor
+#### 描述符
 
-The Descriptor layer contains basic metadata about the rig, such as:
+描述符层包含了有关绑定的基本元数据，例如：
 
-  - Name of the character
-  - Age
-  - Facial archetype
-  - Arbitrary string metadata in the form of key/value pairs
-  - Compatibility parameters as needed (relevant for higher-level systems, e.g. for mixing MetaHuman DNA files)
+- 角色名称
+- 年龄
+- 面部原型
+- 任意字符串元数据，以键/值对的形式
+- 根据需要提供的兼容性参数（与更高层次系统相关，例如用于混合MetaHuman DNA文件）
 
-#### Definition
+#### 定义
 
-The Definition layer contains the static data of the rig, such as:
+定义层包含绑定的静态数据，例如：
 
-  - Names of controls, joints, blend shapes, animated maps, and meshes
-  - Mappings of joints, blend shapes, animated maps, and meshes to individual LODs
-  - Joint hierarchy
-  - Joint transformations in the bind pose (such as T-pose)
+- 控件、关节、混合形状、动画地图和网格的名称
+- 把关节、混合形状、动画地图和网格映射到单个LOD
+- 关节层级
+- 绑定姿势（如T型姿势）中的关节变换
 
-This layer contains necessary information to perform filtering in the subsequent layers based on the chosen LODs.
+此层包含基于选择的LOD对后续层进行过滤所需的信息。
 
-#### Behavior
+#### 行为
 
-The Behavior layer contains the dynamic data of the rig, which is used to:
+行为层包含绑定的动态数据，用于：
 
-  - Map GUI controls to raw control values
-  - Compute corrective expressions
-  - Compute joint transformations
-  - Compute blend shape channel weights
-  - Compute animated map weights
+- 将GUI控件映射到原始控件值
+- 计算校正表达式
+- 计算关节变换
+- 计算混合形状通道权重
+- 计算动画地图权重
 
-#### Geometry
+#### 几何
 
-The Geometry layer contains all the data needed to reconstruct the mesh of the character, along with its skin weights and blend shape target deltas. The mesh information itself is structured in a format resembling the OBJ format.
+几何层包含重建角色网格所需的所有数据，以及其皮肤权重和混合形状目标增量。网格信息本身的结构类似于OBJ格式。
 
-### API overview
+### API概览
 
-When working with MetaHuman DNA files, two main interfaces used are:
+在处理MetaHuman DNA文件时，主要使用两个接口：
 - [`BinaryStreamReader`](/dnacalib/DNACalib/include/dna/BinaryStreamReader.h)
 - [`BinaryStreamWriter`](/dnacalib/DNACalib/include/dna/BinaryStreamWriter.h)
 
-They are used to read data from or write data to a binary stream. For example, a [`FileStream`](/dnacalib/DNACalib/include/trio/streams/FileStream.h) is used when working with files.
+它们用于从二进制流中读取数据或将数据写入二进制流。例如，当处理文件时，会使用[`FileStream`](/dnacalib/DNACalib/include/trio/streams/FileStream.h)。
 
-Here, we will present a few code snippets that show basic usage of the library.
-A general API overview of the DNA library can be found [here](/docs/dna_api.md).
+在此，我们将展示一些库的基本用法代码片段。有关DNA库的一般API概览，请参见[这里](/docs/dna_api.md)。
 
-As with DNACalib, DNA library is written in C++, but there is a Python wrapper for it, so it can be used both from C++ and Python.
+与DNACalib类似，DNA库是用C++编写的，但它有一个Python包装器，因此可以从C++和Python中使用。
 
-#### Creating a reader/writer
+#### 创建阅读器/写入器
 
-##### Reader
+##### 阅读器
 
-An example of a function reading a binary DNA from file:
+一个从文件中读取二进制DNA的函数示例：
 
-```
+```python
 def load_dna(path):
     stream = FileStream(path, FileStream.AccessMode_Read, FileStream.OpenMode_Binary)
     reader = BinaryStreamReader(stream, DataLayer_All)
@@ -85,20 +80,21 @@ def load_dna(path):
     return reader
 ```
 
-When creating a reader, besides the stream parameter, you can also specify the data layer which you wish to load. In this example, all layers will be loaded, because ```DataLayer_All``` is used, but you can specify any of the following:
-```
+在创建阅读器时，除了流参数，还可以指定要加载的数据层。在此示例中，将加载所有层，因为使用了```DataLayer_All```，但你可以指定以下任何一项：
+
+```python
 DataLayer_Descriptor
-DataLayer_Definition - includes Descriptor and Definition
-DataLayer_Behavior - includes Descriptor, Definition, and Behavior
-DataLayer_Geometry - includes Descriptor, Definition, and Geometry
-DataLayer_GeometryWithoutBlendShapes - includes Descriptor, Definition, and Geometry without blend shapes
-DataLayer_AllWithoutBlendShapes - includes everything except blend shapes from Geometry
+DataLayer_Definition - 包含描述符和定义
+DataLayer_Behavior - 包含描述符、定义和行为
+DataLayer_Geometry - 包含描述符、定义和几何
+DataLayer_GeometryWithoutBlendShapes - 包含描述符、定义和没有混合形状的几何
+DataLayer_AllWithoutBlendShapes - 包含除几何中混合形状之外的所有内容
 DataLayer_All
 ```
 
-For example, if you want to load only the behavior layer (including definition and descriptor), use:
+例如，如果你只想加载行为层（包括定义和描述符），使用：
 
-```
+```python
 stream = FileStream(path, FileStream.AccessMode_Read, FileStream.OpenMode_Binary)
 reader = BinaryStreamReader(stream, DataLayer_Behavior)
 reader.read()
@@ -107,17 +103,17 @@ if not Status.isOk():
     raise RuntimeError(f"Error loading DNA: {status.message}")
 ```
 
-##### Writer
+##### 写入器
 
-An example of a function writing a binary DNA from file:
+一个从文件中写入二进制DNA的函数示例：
 
-```
+```python
 def save_dna(reader, path):
     stream = FileStream(path, FileStream.AccessMode_Write, FileStream.OpenMode_Binary)
     writer = BinaryStreamWriter(stream)
-    # Create a writer based on the reader using all data layers (if no argument is passed to setFrom(), DataLayer_All is the default value)
+    # 使用所有数据层基于reader创建一个writer（如果没有参数传递给setFrom()，DataLayer_All是默认值）
     writer.setFrom(reader)
-    # For example, to create a writer with only Geometry layer (including Definition and Descriptor), use:
+    # 例如，要创建只有几何层（包括定义和描述符）的writer，使用：
     # writer.setFrom(reader, DataLayer_Geometry)
 
     writer.write()
@@ -126,22 +122,23 @@ def save_dna(reader, path):
         status = Status.get()
         raise RuntimeError(f"Error saving DNA: {status.message}")
 ```
-Beside specifying layers when creating a reader, layers to use can be specified when creating a writer as well (as an argument to ```setFrom()``` method).
 
-The ```load_dna``` and ```save_dna``` functions are utilized in the majority of [`examples`](/examples/).
+除了在创建阅读器时指定层外，也可以在创建写入器时指定要使用的层（作为`setFrom()`方法的参数）。
 
-**Note**: There are also [`JSONStreamReader`](/dnacalib/DNACalib/include/dna/JSONStreamReader.h) and [`JSONStreamWriter`](/dnacalib/DNACalib/include/dna/JSONStreamWriter.h) which are used when MetaHuman DNA file is written in JSON format, instead of binary. It should be noted however, that JSON variant is only intended to be used e.g. as a tool for debugging. Unlike binary reader and writer, their JSON counterparts cannot perform filtering and generally produce much larger files.
-The recommended format for storing DNA files is binary.
+```load_dna```和```save_dna```函数在大多数[`示例`](/examples/)中使用。
 
-**Known issue**: Reading a JSON MetaHuman DNA file currently fails. This issue will be resolved in a future release.
+**注意**：还有[`JSONStreamReader`](/dnacalib/DNACalib/include/dna/JSONStreamReader.h)和[`JSONStreamWriter`](/dnacalib/DNACalib/include/dna/JSONStreamWriter.h)，用于当MetaHuman DNA文件以JSON格式而不是二进制格式编写时使用。然而应注意，JSON变体仅打算用作例如调试工具。与二进制阅读器和写入器不同，它们的JSON对等体无法执行过滤，且通常产生的文件要大得多。
+存储DNA文件的推荐格式是二进制。
 
-#### Examples
+**已知问题**：当前读取JSON MetaHuman DNA文件会失败。这个问题将在未来的版本中解决。
 
-Here are a few example snippets of using the library.
+#### 示例
 
-##### Example 1: Read neutral vertex positions for specified mesh
+以下是一些使用该库的示例代码片段。
 
-```
+##### 示例1：读取指定网格的中性顶点位置
+
+```python
 dna = load_dna(input_path)
 
 if dna.getMeshCount() == 0:
@@ -154,28 +151,28 @@ ys = dna.getVertexPositionYs(mesh_index)
 zs = dna.getVertexPositionZs(mesh_index)
 ```
 
-##### Example 2: Read neutral joint coordinates and joint orient values
+##### 示例2：读取中性关节坐标和关节朝向值
 
-```
+```python
 dna = load_dna(input_path)
 
-# Read joint coordinates
+# 读取关节坐标
 neutral_joint_translation_xs = dna.getNeutralJointTranslationXs()
 neutral_joint_translation_ys = dna.getNeutralJointTranslationYs()
 neutral_joint_translation_zs = dna.getNeutralJointTranslationZs()
 
-# Read joint orientations
+# 读取关节方向
 neutral_joint_orient_xs = dna.getNeutralJointRotationXs()
 neutral_joint_orient_ys = dna.getNeutralJointRotationYs()
 neutral_joint_orient_zs = dna.getNeutralJointRotationZs()
 ```
 
-##### Example 3: Read blend shape target deltas for an expression and change them
+##### 示例3：读取表达式的混合形状目标增量并更改它们
 
-```
+```python
 def read_blend_shape_target_deltas(reader, mesh_index, blend_shape_target_index):
     """
-    Read blend shape target deltas and corresponding vertex indices.
+    读取混合形状目标增量和对应的顶点索引。
     """
 
     vertex_indices = reader.getBlendShapeTargetVertexIndices(
@@ -192,7 +189,7 @@ def read_blend_shape_target_deltas(reader, mesh_index, blend_shape_target_index)
         deltas.append([x, y, z])
     return vertex_indices, deltas
 
-# Read and then change blend shape target deltas for expression "jaw_open", mesh "head_lod0_mesh"
+# 读取并更改表达式"jaw_open"，网格"head_lod0_mesh"的混合形状目标增量
 input_dna = load_dna(input_path)
 
 mesh_name = "head_lod0_mesh"
@@ -206,7 +203,7 @@ for mesh_index in range(mesh_count):
 bs_target_count = input_dna.getBlendShapeTargetCount(head_mesh_index)
 expr_name = "jaw_open"
 
-# Get the blend shape target index for the specified expression
+# 获取指定表达式的混合形状目标索引
 for i in range(bs_target_count):
     bs_channel_index = input_dna.getBlendShapeChannelIndex(head_mesh_index, i)
     bs_name = input_dna.getBlendShapeChannelName(bs_channel_index)
@@ -216,27 +213,27 @@ for i in range(bs_target_count):
 
 vertex_indices, deltas = read_blend_shape_target_deltas(input_dna, head_mesh_index, bs_target_index)
 
-# Modify deltas (in this case, just add 1.0 to each delta)
+# 修改增量（在此示例中，仅为每个增量加1.0）
 for i in range(len(deltas)):
     deltas[i][0] += 1.0
     deltas[i][1] += 1.0
     deltas[i][2] += 1.0
 
-# Create a writer DNA from input DNA
+# 从输入DNA创建一个writer DNA
 output_stream = dna.FileStream(outputPath, dna.FileStream.AccessMode_Write, dna.FileStream.OpenMode_Binary)
 
-# In this example, for debugging purposes, write a DNA in JSON format, to quickly see if blend shape deltas have been changed
+# 在此示例中，为了调试目的，以JSON格式写入DNA，以快速查看混合形状增量是否已更改
 output_dna = dna.JSONStreamWriter(output_stream)
 output_dna.setFrom(input_dna)
 
-# Write new blend shape delta values for expression
+# 为表达式写入新的混合形状增量值
 output_dna.setBlendShapeTargetDeltas(mesh_index, bs_target_index, deltas)
 
-# If you modified deltas in a way that e.g. removed or added some,
-# then you would also have to set new vertex indices that correspond to new deltas:
+# 如果您以某种方式替换增量，例如移除或添加了部分，
+# 那么您还需要设置与新增量对应的新顶点索引：
 # output_dna.setBlendShapeTargetVertexIndices(mesh_index, bs_target_index, new_vertex_indices)
 
-# Write DNA with modified values
+# 写入具有修改值的DNA
 output_dna.write()
 
 if not dna.Status.isOk():
@@ -244,10 +241,9 @@ if not dna.Status.isOk():
     raise RuntimeError("Error saving DNA: {}".format(status.message))
 ```
 
-### Usage
+### 用法
 
-There are short [`examples`](/examples) that cover some of the cases users may encounter when working with MetaHuman DNAs.
-Some of those are:
-  - [`writing the contents of a MetaHuman DNA file to JSON format for inspection`](/examples/dna_binary_to_json_demo.py)
-  - [`clearing all blend shape data from the DNA`](/examples/dnacalib_clear_blend_shapes.py)
-  - [`removing certain LODs from the DNA`](/examples/dnacalib_lod_demo.py)
+这些简短的[`示例`](/examples)涵盖了用户在处理MetaHuman DNA时可能遇到的一些情况。其中一些是：
+- [`将MetaHuman DNA文件的内容写入JSON格式以供检查`](/examples/dna_binary_to_json_demo.py)
+- [`从DNA中清除所有混合形状数据`](/examples/dnacalib_clear_blend_shapes.py)
+- [`从DNA中移除某些LOD`](/examples/dnacalib_lod_demo.py)
