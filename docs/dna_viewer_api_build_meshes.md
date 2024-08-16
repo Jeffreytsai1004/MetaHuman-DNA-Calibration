@@ -1,10 +1,10 @@
-# Mesh Utilities
+# 网格实用工具
 
-The purpose of the following methods is to provide:
-- a simple mechanism for building meshes from a given DNA file path
-- return and print information about the meshes contained in the DNA file
+以下方法的目的是提供：
+- 从给定的 DNA 文件路径构建网格的简单机制
+- 返回并打印关于 DNA 文件中包含的网格的信息
 
-## Importing
+## 导入
 
 ```
 from dna_viewer import DNA, Config, build_meshes
@@ -15,8 +15,8 @@ DNA_PATH_ADA = f"{ROOT_DIR}/data/dna_files/Ada.dna"
 DNA_PATH_TARO = f"{ROOT_DIR}/data/dna_files/Taro.dna"
 ```
 
-## Create Config Instance([`Config`](../dna_viewer/builder/config.py#35))
-Create a configuration object that will be used in the mesh building process.
+## 创建配置实例([`Config`](../dna_viewer/builder/config.py#35))
+创建一个配置对象，将在网格构建过程中使用。
 
 ```
 config = Config(
@@ -30,23 +30,21 @@ config = Config(
 )
 ```
 
-These are just some attributes of `Config` class:
-- `add_joints: bool` - A flag representing if joints should be added, defaults to `True`.
-- `add_blend_shapes: bool` - A flag representing if blendshapes should be added, defaults to `True`.
-- `add_skin_cluster: bool` - A flag representing if skin clusters should be added, defaults to `True`.
-- `add_ctrl_attributes_on_root_joint: bool` - A flag representing if control attributes should be added to the root joint
-as attributes, defaults to `False`. They are used as animation curves for Rig Logic inputs in the engine.
-- `add_animated_map_attributes_on_root_joint: bool` - A flag representing if animated map attributes should be added to
-the root joint as attributes, defaults to `True`. They are used as animation curves for animated maps in the engine.
+这些只是 `Config` 类的一些属性：
+- `add_joints: bool` - 一个表示是否应添加关节的标志，默认为 `True`。
+- `add_blend_shapes: bool` - 一个表示是否应添加混合形状的标志，默认为 `True`。
+- `add_skin_cluster: bool` - 一个表示是否应添加皮肤集群的标志，默认为 `True`。
+- `add_ctrl_attributes_on_root_joint: bool` - 一个表示是否应将控制属性作为属性添加到根关节中， 默认为 `False`。它们在引擎中用作 Rig Logic 输入的动画曲线。
+- `add_animated_map_attributes_on_root_joint: bool` - 一个表示是否应将动画地图属性作为属性添加到根关节中， 默认为 `True`。它们在引擎中用作动画地图的动画曲线。
 
-**IMPORTANT**: Some combinations of flag values can lead to an unusable rig or disable some features!
+**重要**: 某些标志值的组合可能导致无法使用的 rig 或禁用某些功能！
 
 
 
-## Building the meshes ([`build_meshes`](../dna_viewer/api.py#L26))
+## 构建网格 ([`build_meshes`](../dna_viewer/api.py#L26))
 
-Used for building rig elements (joints, meshes, blendshapes and skin clusters) without Rig Logic.
-It returns long names of meshes that have been added to the scene.
+用于构建不带 Rig Logic 的 rig 元素（关节、网格、混合形状和皮肤集群）。
+它返回已添加到场景中的网格的长名称。
 
 ```
 config = Config(
@@ -65,35 +63,35 @@ mesh_names = build_meshes(
 ```
 
 
-This uses the following parameters:
-- `dna: DNA` - Instance of DNA got with `DNA`.
-- `config: Config` - Instance of configuration.
+这使用以下参数：
+- `dna: DNA` - 通过 `DNA` 获取的 DNA 实例。
+- `config: Config` - 配置实例。
 
 ```
 mesh_names = build_meshes(dna=dna_ada)
 ```
 
-Which defaults to adding all the meshes within the DNA file.
+它默认添加 DNA 文件中的所有网格。
 
 
 
-### Example
+### 示例
 
-**Important**: The [environment setup](dna_viewer_api.md#environment-setup) provided above needs to be executed before running this example.
+**重要**: 需要先执行上面提供的[环境设置](dna_viewer_api.md#environment-setup)，然后再运行此示例。
 
 ```
 from dna_viewer import DNA, Config, build_meshes
 
-# if you use Maya, use absolute path
+# 如果使用 Maya，请使用绝对路径
 ROOT_DIR = f"{ospath.dirname(ospath.abspath(__file__))}/..".replace("\\", "/")
-# Sets DNA file path
+# 设置 DNA 文件路径
 DNA_PATH_ADA = f"{ROOT_DIR}/data/dna_files/Ada.dna"
 dna_ada = DNA(DNA_PATH_ADA)
 
-# Starts the mesh build process with all the default values
+# 开始使用默认值启动网格构建过程
 build_meshes(dna=dna_ada)
 
-# Creates the options to be passed in `build_meshes`
+# 创建要传递给 `build_meshes` 的选项
 config = Config(
     add_joints=True,
     add_blend_shapes=True,
@@ -104,8 +102,8 @@ config = Config(
     mesh_filter=["head"],
 )
 
-# Starts the mesh building process with the provided parameters
-# In this case it will create every mesh contained in LODs 0 and 1 with 'head` in it's name,
+# 使用提供的参数开始网格构建过程
+# 在本例中，将创建包含在 LODs 0 和 1 中，名称中包含 'head' 的每个网格，
 build_meshes(
     dna=dna_ada,
     config=config,
