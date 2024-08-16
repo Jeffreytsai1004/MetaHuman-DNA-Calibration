@@ -739,6 +739,7 @@ def eye_setup(jnt_eye, loc_eye, loc_ui_eye, loc_aim_eye, ctrl_eye, ctrl_ui_eye, 
               loc_eye_root, loc_aim_up):
     """
     Setup for one eye.
+    设置为一个眼睛。
     """
     if cmds_exists(jnt_eye):
         jnt_pos = cmds_xform(jnt_eye, query=True, worldSpace=True, translation=True)
