@@ -24,6 +24,13 @@ class BuildResult:
     ----------
     @type meshes_per_lod: Dict[int, List[str]]
     @param meshes_per_lod: The list of mesh names created group by LOD number
+
+    用于在构建过程完成后返回数据的类
+
+    属性
+    ----------
+    @type meshes_per_lod: Dict[int, List[str]]
+    @param meshes_per_lod: 按LOD号分组创建的网格名称列表
     """
 
     meshes_per_lod: Dict[int, List[str]] = field(default_factory=dict)
@@ -34,6 +41,11 @@ class BuildResult:
 
         @rtype: List[str]
         @returns: The list of all mesh names.
+
+        将网格展平为单个列表。
+        
+        @rtype: List[str]
+        @returns: 所有网格名称的列表。
         """
 
         all_meshes = []
@@ -56,6 +68,19 @@ class Builder:
 
     @type meshes: Dict[int, List[str]]
     @param meshes: A list of meshes created grouped by lod
+
+    一个用于构建角色的生成器类
+    
+    属性
+    ----------
+    @type config: Config
+    @param config: 用于构建角色的配置选项
+    
+    @type dna: DNA
+    @param dna: 从DNA文件中读取的DNA对象
+    
+    @type meshes: Dict[int, List[str]]
+    @param meshes: 按LOD分组创建的网格列表
 
     """
 
@@ -84,16 +109,19 @@ class Builder:
 
     def build(self) -> BuildResult:
         """Builds the character"""
+        """构建角色"""
         self.meshes = {}
         try:
             filename = Path(self.dna.path).stem
             logging.info("******************************")
             logging.info(f"{filename} started building")
+            logging.info(f"{filename} 开始构建")
             logging.info("******************************")
 
             self._build()
 
             logging.info(f"{filename} built successfully!")
+            logging.info(f"{filename} 构建成功!")
 
         except DNAViewerError as e:
             traceback.print_exc()
@@ -116,6 +144,14 @@ class Builder:
 
         @type lod: int
         @param lod: The lod value, this is needed for determining the name of the display layer that the mesh should be added to.
+        
+        将具有给定名称的网格添加到已创建的显示层。
+        
+        @type mesh_name: str
+        @param mesh_name: 应添加到显示层的网格的名称。
+        
+        @type lod: int
+        @param lod: lod 值，这是确定应将网格添加到的显示层名称所需的值。
         """
         if self.config.create_display_layers:
             cmds.editDisplayLayerMembers(
@@ -128,6 +164,11 @@ class Builder:
 
         @rtype: List[JointModel]
         @returns: The list containing model objects representing the joints that were added to the scene.
+
+        读取并将关节添加到场景中，还返回一个关节模型对象列表，其中包含已添加的关节。
+        
+        @rtype：List[JointModel]
+        @returns：包含表示已添加到场景中的关节的模型对象列表。
         """
 
         joints: List[JointModel] = self.dna.read_all_neutral_joints()
@@ -141,6 +182,8 @@ class Builder:
         """
         Starts adding the joints the character, if the character configuration options have add_joints set to False,
         this step will be skipped.
+
+        开始添加角色的关节，如果角色配置选项中的add_joints设置为False，则会跳过这一步。
         """
 
         if self.config.add_joints:
@@ -154,6 +197,8 @@ class Builder:
         """
         Creates a Maya transform which will hold the character, if the character configuration options have
         create_character_node set to False, this step will be skipped.
+
+        创建一个Maya变换，用于容纳角色，如果角色配置选项中的create_character_node设置为False，则将跳过此步骤。
         """
 
         if self.config.group_by_lod:
@@ -194,6 +239,14 @@ class Builder:
 
         @type lod: str
         @param lod: The name of the mesh that should be added to a display layer.
+
+        将名为mesh_name的网格附加到给定的lod。
+        
+        @type mesh_name: str
+        @param mesh_name:需要附加到lod持有者对象的网格。
+        
+        @type lod: str
+        @param lod:应该添加到显示层的网格的名称。
         """
         if self.config.group_by_lod:
             parent_node = f"{self.config.get_top_level_group()}|{self.config.get_geometry_group()}|{self.config.top_level_group}_lod{lod}_grp"
@@ -210,6 +263,14 @@ class Builder:
 
         @rtype: str
         @returns: The full path of the mesh object in the scene
+
+        获取场景中网格的完整路径。
+        
+        @type mesh_name: str
+        @param mesh_name: 需要路径的网格。
+        
+        @rtype: str
+        @returns: 场景中网格对象的完整路径
         """
 
         return str(Maya.get_element(f"|{mesh_name}").fullPathName())
@@ -217,6 +278,7 @@ class Builder:
     def add_ctrl_attributes_on_root_joint(self) -> None:
         """
         Adds and sets the raw gui control attributes on root joint.
+        在根关节上添加和设置原始GUI控件属性。
         """
 
         if self.config.add_ctrl_attributes_on_root_joint and self.config.add_joints:
@@ -231,6 +293,7 @@ class Builder:
     def add_animated_map_attributes_on_root_joint(self) -> None:
         """
         Adds and sets the animated map attributes on root joint.
+        在根关节上添加并设置动画地图属性。
         """
 
         if (
@@ -247,6 +310,8 @@ class Builder:
     def add_attribute(self, control_name: str, long_name: str) -> None:
         """
         Adds attributes wrapper for internal usage.
+
+        为内部使用添加属性包装器。
         """
         cmds.addAttr(
             control_name,
@@ -261,6 +326,7 @@ class Builder:
         """
         Adds a starting key frame to the facial root joint if joints are added and the add_key_frames option is set
         to True.
+        如果添加了关节并且设置了add_key_frames选项为True，则在面部根关节上添加一个起始关键帧。
         """
 
         if self.config.add_key_frames and self.config.add_joints:
@@ -308,6 +374,7 @@ class Builder:
         """
         Builds the meshes. If specified in the config they get parented to a created
         character node transform, otherwise the meshes get put to the root level of the scene.
+        构建网格。如果在配置中指定，它们将被添加到创建的角色节点变换下，否则网格将被放置在场景的根级别。
         """
 
         logging.info("adding character meshes...")
@@ -332,6 +399,17 @@ class Builder:
 
         @rtype: List[MObject]
         @returns: The list of maya objects that represent the meshes added to the scene.
+
+        从提供的网格ID构建网格，然后将它们附加到角色配置中指定的LOD（如果有）。
+        
+        @type lod: int
+        @param lod: 表示网格显示层的LOD编号。
+        
+        @type meshes_per_lod: List[int]
+        @param meshes_per_lod: 正在构建的网格索引列表。
+        
+        @rtype: List[MObject]
+        @returns: 表示添加到场景中的网格的Maya对象列表。
         """
 
         meshes: List[str] = []
@@ -395,6 +473,17 @@ class Builder:
 
         @rtype: LinearUnit
         @returns: LinearUnit.cm or LinearUnit.m
+
+        从提供的网格ID构建网格，然后将它们附加到角色配置中指定的LOD（如果有）。
+        
+        @type lod: int
+        @param lod: 表示网格显示层的LOD编号。
+        
+        @type meshes_per_lod: List[int]
+        @param meshes_per_lod: 正在构建的网格索引列表。
+        
+        @rtype: List[MObject]
+        @returns: 表示添加到场景中的网格的Maya对象列表。
         """
 
         if value == 0:
@@ -414,6 +503,16 @@ class Builder:
 
         @rtype: AngleUnit
         @returns: AngleUnit.degree or AngleUnit.radian
+
+        从整数值返回一个枚举。
+        0 -> degree
+        1 -> radian
+        
+        @type value: int
+        @param value: 枚举映射的值。
+        
+        @rtype: AngleUnit
+        @returns: AngleUnit.degree 或 AngleUnit.radian
         """
 
         if value == 0:
