@@ -1,26 +1,27 @@
 """
-This example demonstrates generating functional rig in maya scene and exporting fbx per lod.
-IMPORTANT: You have to setup the environment before running this example. Please refer to the 'Environment setup' section in README.md.
+这个示例演示了在Maya场景中生成功能性的骨骼系统，并根据每个LOD导出FBX文件。
 
-- usage in command line:
+重要提示：在运行此示例之前，您必须设置好环境。请参考README.md中的“环境设置”部分。
+
+- 命令行中的用法：
     python dna_viewer_build_rig.py
     mayapy dna_viewer_build_rig.py
-    NOTE: Script cannot be called with Python, it must be called with mayapy.
+    注意：脚本不能用Python调用，必须用mayapy调用。
 
-- usage in Maya:
-    1. copy whole content of this file to Maya Script Editor
-    2. change value of ROOT_DIR to absolute path of dna_calibration, e.g. `c:/dna_calibration` in Windows or `/home/user/dna_calibration`. Important:
-    Use `/` (forward slash), because Maya uses forward slashes in path.
+- 在Maya中的用法：
+    1. 将此文件的整个内容复制到Maya脚本编辑器中
+    2. 将ROOT_DIR的值更改为dna_calibration的绝对路径，例如在Windows中为`c:/dna_calibration`或`/home/user/dna_calibration`。重要提示：
+    使用`/`（正斜杠），因为Maya在路径中使用正斜杠。
 
-- customization:
-    - change CHARACTER_NAME to Taro, or the name of a custom DNA file placed in /data/dna_files
-Expected:
-    - script will generate maya scene Ada.mb in OUTPUT_DIR
-    - script will generate workspace.mel in OUTPUT_DIR
-    - script will copy original Ada.dna file to OUTPUT_DIR
+- 自定义：
+    - 将CHARACTER_NAME更改为Taro，或者放置在/data/dna_files中的自定义DNA文件的名称
+期望结果：
+    - 脚本将在OUTPUT_DIR中生成Maya场景Ada.mb
+    - 脚本将在OUTPUT_DIR中生成workspace.mel
+    - 脚本将原始的Ada.dna文件复制到OUTPUT_DIR
 
-Expected: script will generate <PATH TO NEW DNA FILE>.
-NOTE: If OUTPUT_DIR does not exist, it will be created.
+期望结果：脚本将生成<新DNA文件的路径>。
+注意：如果OUTPUT_DIR不存在，将会创建它。
 """
 
 
