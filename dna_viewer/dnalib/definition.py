@@ -123,6 +123,11 @@ class Definition(Descriptor):
 
         @rtype: DefinitionModel
         @returns: the instance of the created definition model
+
+        开始阅读DNA定义部分
+        
+        @rtype：DefinitionModel
+        @returns：已创建的定义模型实例
         """
         super().read()
 
@@ -280,6 +285,7 @@ class Definition(Descriptor):
 
     def add_mesh_blend_shape_channel_mapping(self) -> None:
         """Reads in the mesh blend shape channel mapping"""
+        """读取网格混合形状通道映射"""
 
         for index in range(self.get_mesh_blend_shape_channel_mapping_count()):
             mapping = self.get_mesh_blend_shape_channel_mapping(index)
@@ -293,6 +299,7 @@ class Definition(Descriptor):
 
     def add_meshes(self) -> None:
         """Reads in the meshes of the definition"""
+        """读取定义中的网格"""
 
         for index in range(self.get_mesh_count()):
             mesh_name = self.get_mesh_name(index)
@@ -303,6 +310,7 @@ class Definition(Descriptor):
 
     def add_animated_maps(self) -> None:
         """Reads in the animated maps of the definition"""
+        """读取定义的动画地图"""
 
         for index in range(self.get_animated_map_count()):
             self.animated_maps.names.append(self.get_animated_map_name(index))
@@ -313,6 +321,7 @@ class Definition(Descriptor):
 
     def add_blend_shape_channels(self) -> None:
         """Reads in the neutral joints part of the definition"""
+        """读取定义中的中性关节部分"""
 
         for index in range(self.get_blend_shape_channel_count()):
             self.blend_shape_channels.names.append(
@@ -325,6 +334,7 @@ class Definition(Descriptor):
 
     def add_joints(self) -> None:
         """Reads in the joints of the definition"""
+        """读取定义的关节"""
 
         for index in range(self.get_joint_count()):
             self.joints.names.append(self.get_joint_name(index))
@@ -334,6 +344,7 @@ class Definition(Descriptor):
 
     def add_controls(self) -> None:
         """Reads in the gui and raw controls of the definition"""
+        """读取定义的GUI和原始控件"""
 
         for index in range(self.get_gui_control_count()):
             self.gui_control_names.append(self.get_gui_control_name(index))
