@@ -1,37 +1,33 @@
-# Frequently Asked Questions (FAQ)
+# 常见问题（FAQ）
 
-## Fix "RuntimeError: Error loading DNA: DNA signature mismatched, expected DNA, got ver?"
+## 如何修复“RuntimeError: Error loading DNA: DNA signature mismatched, expected DNA, got ver?”
 
-In order to fix this issue, you should install [git-lfs](https://git-lfs.github.com/), and clone the repository again. 
-DNA files will be downloaded correctly then.
-If you cannot install git-lfs, you can download DNA files manually.
+为了解决这个问题，您应该安装[git-lfs](https://git-lfs.github.com/)，然后重新克隆存储库。这样DNA文件就会正确下载。如果您无法安装git-lfs，您可以手动下载DNA文件。
 
 
-## How do I distribute a Maya scene?
+## 我如何分发Maya场景？
 
-Your scene should work out of the box if you include the following in the distribution:
-- Scene file (`.mb` file)
-- DNA (`.dna` file)
-- Workspace (`workspace.mel` file)
+如果您在分发中包含以下内容，您的场景应该可以直接使用：
+- 场景文件（`.mb`文件）
+- DNA（`.dna`文件）
+- 工作空间（`workspace.mel`文件）
 
-All of these files need to be distributed together. If those files are not bundled and you experience some issues with you rig in Maya, 
-try the following steps:
+所有这些文件都需要一起分发。如果这些文件没有捆绑在一起，而您在Maya中遇到一些问题，请尝试以下步骤：
 
-### How do I share the generated files?
-If you want to distribute a generated Maya scene to other users, you must distribute the `.dna` file and `workspace.mel` together with the scene.
+### 如何分享生成的文件？
+如果您想将生成的Maya场景分发给其他用户，您必须将`.dna`文件和`workspace.mel`与场景一起分发。
 
-### How do I open a generated scene?
-Before you load a generated scene, follow these steps:
-- From the main menu, go to File > Set Project.
-- Select `workspace.mel`
-- Set the containing folder (with generated maya scene, `.dna` file and `workspace.mel`).
+### 如何打开生成的场景？
+在加载生成的场景之前，请按照以下步骤操作：
+- 从主菜单中，转到 文件 > 设置项目。
+- 选择 `workspace.mel`
+- 设置包含文件夹（包含生成的Maya场景、`.dna`文件和`workspace.mel`）。
 
-
-### How do I change the DNA path in the Maya scene?
-If you want to change the DNA path in the scene:
-- In `outliner`, deselect **DAG Objects Only**:
+### 如何更改Maya场景中的DNA路径？
+如果您想在场景中更改DNA路径：
+- 在`outliner`中，取消选择**仅DAG对象**：
   - ![image](img/change_path_outliner_settings.png)
-- Still in the Outliner, search for `rl4`. You will see a file whose name starts with `rl4Embedded_`. Click this file to select it.
+- 仍然在Outliner中，搜索`rl4`。您会看到一个文件，文件名以`rl4Embedded_`开头。单击此文件以选择它。
   - ![image](img/change_path_outliner.png)
-- In `Attribute editor` you will be able to change the path with `Dna File Path`:
+- 在`属性编辑器`中，您可以使用`Dna File Path`更改路径：
   - ![image](img/change_path_node_path.png)
