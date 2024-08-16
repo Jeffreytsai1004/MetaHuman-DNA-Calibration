@@ -7,16 +7,6 @@ from ..model import Joint as JointModel
 
 class Joint:
     """
-    A builder class used for adding joints to the scene
-
-    Attributes
-    ----------
-    @type joints: List[JointModel]
-    @param joints: data representing the joints
-
-    @type joint_flags: Dict[str, bool]
-    @param joint_flags: A mapping used for setting flags that are used to avoid adding the same joint multiple times
-
     用于向场景添加关节的构建器类
     
     属性
@@ -37,11 +27,6 @@ class Joint:
 
     def add_joint_to_scene(self, joint: JointModel) -> None:
         """
-        Adds the given joint to the scene
-
-        @type joint: JointModel
-        @param joint: The joint to be added to the scene
-
         将给定的关节添加到场景中
         
         @type joint: JointModel
@@ -87,7 +72,7 @@ class Joint:
         self.joint_flags[joint.name] = True
 
     def process(self) -> None:
-        """Starts adding all the provided joints to the scene"""
+        """开始将所有提供的关节添加到场景中"""
 
         for joint in self.joints:
             self.add_joint_to_scene(joint)
