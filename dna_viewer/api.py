@@ -8,16 +8,16 @@ from .dnalib.dnalib import DNA
 
 def build_rig(dna: DNA, config: RigConfig) -> BuildResult:
     """
-    Used for assembling the rig with provided configuration.
-
+    用于使用提供的配置组装机架。
+    
     @type config: DNA
-    @param config: Instance of DNA
-
+    @param config: DNA实例
+    
     @type config: Config
-    @param config: Instance of configuration
-
+    @param config: 配置实例
+    
     @rtype: BuildResult
-    @returns: The object representing result of build
+    @returns: 代表构建结果的对象
     """
 
     return RigBuilder(dna, config).build()
@@ -25,16 +25,16 @@ def build_rig(dna: DNA, config: RigConfig) -> BuildResult:
 
 def build_meshes(dna: DNA, config: Optional[Config] = None) -> BuildResult:
     """
-    Starts the mesh building process with the provided configuration.
-
+    使用提供的配置开始网格构建过程。
+    
     @type config: DNA
-    @param config: Instance of DNA
-
+    @param config: DNA实例
+    
     @type config: Config
-    @param config: Instance of configuration
-
+    @param config: 配置实例
+    
     @rtype: BuildResult
-    @returns: The object representing result of build
+    @returns: 代表构建结果的对象
     """
     if config is None:
         config = Config()
