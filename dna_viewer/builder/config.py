@@ -5,13 +5,6 @@ from typing import Any, Dict, List, Optional
 
 class LinearUnit(Enum):
     """
-    An enum used to represent the unit used for linear representation.
-
-    Attributes
-    ----------
-    @cm: using cm as unit
-    @m: using m as unit
-
     用于表示线性表示所使用的单位的枚举。
 
     属性
@@ -25,13 +18,6 @@ class LinearUnit(Enum):
 
 class AngleUnit(Enum):
     """
-    An enum used to represent the unit used for angle representation.
-
-    Attributes
-    ----------
-    @degree: using degree as unit
-    @radian: using radian as unit
-
     用于表示角度单位的枚举。
     
     属性
@@ -46,68 +32,6 @@ class AngleUnit(Enum):
 @dataclass
 class Config:
     """
-    A class used to represent the config for @Builder
-
-    Attributes
-    ----------
-    @type mesh_filter: List[str]
-    @param mesh_filter: List of mesh names that should be filtered. Mash names can be just substrings. ["head"] will find all meshes that contins string "head" in its mash name.
-
-
-    @type lod_filter: List[int]
-    @param lod_filter: List of lods that should be filtered.
-
-    @type group_by_lod: bool
-    @param group_by_lod: A flag representing whether the character should be parented to a character transform node in the scene hierarchy
-
-    @type group_by_lod: bool
-    @param group_by_lod: A flag representing whether the character should be parented to a character transform node in rig hierarchy
-
-    @type top_level_group: str
-    @param top_level_group: Value that is going to be used when creating root group
-
-    @type geometry_group: str
-    @param geometry_group: Value that is going to be used when creating group that contains geometry
-
-    @type facial_root_joint_name: str
-    @param facial_root_joint_name: The name of the facial root joint
-
-    @type blend_shape_group_prefix: str
-    @param blend_shape_group_prefix: prefix string for blend shape group
-
-    @type blend_shape_name_postfix: str
-    @param blend_shape_name_postfix: postfix string for blend shape name
-
-    @type skin_cluster_suffix: str
-    @param skin_cluster_suffix: postfix string for skin cluster name
-
-    @type animated_map_attribute_multipliers_name: str
-    @param animated_map_attribute_multipliers_name: string for frame animated map attribute name
-
-    @type create_display_layers: bool
-    @param create_display_layers: A flag representing whether the created meshes should be assigned to a display layer
-
-    @type add_joints: bool
-    @param add_joints: A flag representing whether joints should be added
-
-    @type add_blend_shapes: bool
-    @param add_blend_shapes: A flag representing whether blend shapes should be added
-
-    @type add_skin_cluster: bool
-    @param add_skin_cluster: A flag representing whether skin should be added
-
-    @type add_ctrl_attributes_on_root_joint: bool
-    @param add_ctrl_attributes_on_root_joint: A flag representing whether control attributes should be added to the root joint
-
-    @type add_animated_map_attributes_on_root_joint: bool
-    @param add_animated_map_attributes_on_root_joint: A flag representing whether animated map attributes should be added to the root joint
-
-    @type add_key_frames: bool
-    @param add_key_frames: A flag representing whether key frames should be added
-
-    @type add_mesh_name_to_blend_shape_channel_name: bool
-    @param add_mesh_name_to_blend_shape_channel_name: A flag representing whether mesh name of blend shape channel is added to name when creating it
-
     用于表示@Builder配置的类
     
     属性
@@ -209,78 +133,6 @@ class Config:
 @dataclass
 class RigConfig(Config):
     """
-    A class used to represent the config for @RigBuilder
-
-
-    @type add_rig_logic: bool
-    @param add_rig_logic: A flag representing whether normals should be added
-
-    @type rig_logic_command: str
-    @param rig_logic_command: The command used to start creating the rig logic using the plugin
-
-    @type rig_logic_name: str
-    @param rig_logic_name: The name of the rig logic node
-
-    @type control_naming: str
-    @param control_naming: The naming pattern of controls
-
-    @type joint_naming: str
-    @param joint_naming: The naming pattern of joints
-
-    @type blend_shape_naming: str
-    @param blend_shape_naming: The naming pattern of blend shapes
-
-    @type animated_map_naming: str
-    @param animated_map_naming: The naming pattern of animated maps
-
-    @type gui_path: str
-    @param gui_path: The location of the gui file
-
-    @type left_eye_joint_name: str
-    @param left_eye_joint_name: The name of the left eye joint
-
-    @type eye_gui_name: str
-    @param eye_gui_name: The name of the control in the gui
-
-    @type gui_translate_x: float
-    @param gui_translate_x: Represents the value that the gui should be additionally translated on the X axis
-
-    @type analog_gui_path: str
-    @param analog_gui_path: The location of the analog gui file
-
-    @type left_eye_joint_name: str
-    @param left_eye_joint_name: The name of the left eye joint
-
-    @type right_eye_joint_name: str
-    @param right_eye_joint_name: The name of the right eye joint
-
-    @type central_driver_name: str
-    @param central_driver_name: The name of the central driver
-
-    @type left_eye_driver_name: str
-    @param left_eye_driver_name: The name of the left eye driver
-
-    @type right_eye_driver_name: str
-    @param right_eye_driver_name: The name of the right eye driver
-
-    @type central_aim: str
-    @param central_aim: The name of the central aim
-
-    @type le_aim: str
-    @param le_aim: The name of the left eye aim
-
-    @type re_aim: str
-    @param re_aim: The name of the right eye aim
-
-    @type aas_path: Optional[str]
-    @param aas_path: The location of the script file
-
-    @type aas_method: str
-    @param aas_method: The method that should be called
-
-    @type aas_parameter: Dict[Any, Any]
-    @param aas_parameter: The parameters that will be passed as the method arguments
-
     用于表示@RigBuilder配置的类
     
     @type add_rig_logic: bool
