@@ -1,20 +1,20 @@
 """
-This example demonstrates how to remove all blend shape data from a DNA.
-IMPORTANT: You have to setup the environment before running this example. Please refer to the 'Environment setup' section in README.md.
+此示例演示如何从DNA中删除所有混合形状数据。
+重要提示：在运行此示例之前，您必须设置环境。请参考README.md中的“环境设置”部分。
 
-- usage in command line:
+- 命令行中的用法：
     python dnacalib_clear_blend_shapes.py
     mayapy dnacalib_clear_blend_shapes.py
-- usage in Maya:
-    1. copy whole content of this file to Maya Script Editor
-    2. change value of ROOT_DIR to absolute path of dna_calibration, e.g. `c:/dna_calibration` in Windows or `/home/user/dna_calibration`. Important:
-    Use `/` (forward slash), because Maya uses forward slashes in path.
+- Maya中的用法：
+    1. 将此文件的整个内容复制到Maya脚本编辑器中
+    2. 将ROOT_DIR的值更改为dna_calibration的绝对路径，例如在Windows中为`c:/dna_calibration`或在`/home/user/dna_calibration`。重要提示：
+    使用`/`（正斜杠），因为Maya在路径中使用正斜杠。
 
-- customization:
-    - change CHARACTER_NAME to Taro, or the name of a custom DNA file placed in /data/dna_files
+- 自定义：
+    - 将CHARACTER_NAME更改为Taro，或者是放置在/data/dna_files中的自定义DNA文件的名称
 
-Expected: Script will generate Ada_output.dna in OUTPUT_DIR from original Ada.dna.
-NOTE: If OUTPUT_DIR does not exist, it will be created.
+预期结果：脚本将从原始的Ada.dna生成Ada_output.dna到OUTPUT_DIR中。
+注意：如果OUTPUT_DIR不存在，将会被创建。
 """
 
 from os import makedirs
