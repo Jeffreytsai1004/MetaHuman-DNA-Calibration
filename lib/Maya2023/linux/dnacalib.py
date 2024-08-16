@@ -3,7 +3,6 @@
 #
 # 除非您知道自己在做什么，请不要对此文件进行更改 - 请修改 SWIG 接口文件。
 
-
 import os
 if hasattr(os, 'add_dll_directory'):
     for path in os.environ.get('PATH', '').split(';'):
