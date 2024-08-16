@@ -58,10 +58,10 @@ MARGIN_BODY_RIGHT = 0
 
 class MeshTreeList(QWidget):
     """
-    A custom widget that lists out meshes with checkboxes next to them, so these meshes can be selected to be processed. The meshes are grouped by LOD
-
+    一个自定义小部件，其中列出了带有复选框的网格，这样这些网格就可以被选择以进行处理。这些网格按LOD分组。
+    
     @type mesh_tree: QWidget
-    @param mesh_tree: The widget that contains the meshes to be selected in a tree list
+    @param mesh_tree: 包含要在树列表中选择的网格的小部件
     """
 
     def __init__(self, main_window: "DnaViewerWindow") -> None:
@@ -104,10 +104,10 @@ class MeshTreeList(QWidget):
 
     def create_mesh_tree(self) -> QWidget:
         """
-        Creates the mesh tree list widget
-
+        创建网格树列表小部件
+        
         @rtype: QWidget
-        @returns: The created widget
+        @returns: 创建的小部件
         """
 
         mesh_tree = QTreeWidget()
@@ -121,16 +121,16 @@ class MeshTreeList(QWidget):
         self, lod_count: int, names: List[str], indices_names: List[List[int]]
     ) -> None:
         """
-        Fills the mesh list with the meshes, and groups them by lods
-
+        用网格填充网格列表，并根据LOD对它们进行分组
+        
         @type lod_count: int
-        @param lod_count: The LOD count
-
+        @param lod_count: LOD计数
+        
         @type names: List[str]
-        @param names: The names and indices of all the meshes
-
+        @param names: 所有网格的名称和索引
+        
         @type indices_names: List[List[int]
-        @param indices_names: The names and indices of all the meshes
+        @param indices_names: 所有网格的名称和索引
         """
 
         self.mesh_tree.clear()
@@ -152,10 +152,10 @@ class MeshTreeList(QWidget):
 
     def get_selected_meshes(self) -> List[int]:
         """
-        Gets the selected meshes from the tree widget
-
+        从树部件中获取所选的网格
+        
         @rtype: List[int]
-        @returns: The list of mesh indices that are selected
+        @returns: 所选网格的索引列表
         """
 
         meshes = []
@@ -176,20 +176,20 @@ class MeshTreeList(QWidget):
 
     def select_all(self) -> None:
         """
-        Selects all meshes in the tree widget
+        选择树部件中的所有网格
         """
         self.iterate_over_items(Qt.Checked)
 
     def deselect_all(self) -> None:
         """
-        Deselects all meshes in the tree widget
+        取消树部件中的所有网格选择
         """
 
         self.iterate_over_items(Qt.Unchecked)
 
     def iterate_over_items(self, state: Qt.CheckState) -> None:
         """
-        Deselects all meshes in the tree widget
+        反选树部件中的所有网格
         """
 
         item = self.mesh_tree.invisibleRootItem()
@@ -198,7 +198,7 @@ class MeshTreeList(QWidget):
             child.setCheckState(0, state)
 
     def tree_item_changed(self) -> None:
-        """The method that gets called when a tree item gets its value changed"""
+        """当树形项目的值更改时调用的方法"""
 
         meshes = self.get_selected_meshes()
 
@@ -228,58 +228,58 @@ class MeshTreeList(QWidget):
 
 class DnaViewerWindow(QMainWindow):
     """
-    UI Window
-
-    Attributes
+    UI 窗口
+    
+    属性
     ----------
-
+    
     @type select_dna_path: FileChooser
-    @param select_dna_path: The FileChooser widget for getting the DNA path
-
+    @param select_dna_path: 用于获取 DNA 路径的 FileChooser 小部件
+    
     @type load_dna_btn: QPushButton
-    @param load_dna_btn: The button that starts loading in the DNA
-
+    @param load_dna_btn: 启动加载 DNA 的按钮
+    
     @type mesh_tree_list: QWidget
-    @param mesh_tree_list: The widget that contains the meshes to be selected in a tree list
-
+    @param mesh_tree_list: 包含要在树列表中选择的网格的小部件
+    
     @type joints_cb: QCheckBox
-    @param joints_cb: The checkbox that represents if joints should be added
-
+    @param joints_cb: 表示是否应添加关节的复选框
+    
     @type blend_shapes_cb: QCheckBox
-    @param blend_shapes_cb: The checkbox that represents if blend shapes should be added
-
+    @param blend_shapes_cb: 表示是否应添加混合形状的复选框
+    
     @type skin_cb: QCheckBox
-    @param skin_cb: The checkbox that represents if skin should be added
-
+    @param skin_cb: 表示是否应添加皮肤的复选框
+    
     @type rig_logic_cb: QCheckBox
-    @param rig_logic_cb: The checkbox that represents if rig logic should be added
-
+    @param rig_logic_cb: 表示是否应添加骨骼逻辑的复选框
+    
     @type ctrl_attributes_on_root_joint_cb: QCheckBox
-    @param ctrl_attributes_on_root_joint_cb: The checkbox that represents if control attributes on joint should be added
-
+    @param ctrl_attributes_on_root_joint_cb: 表示是否应在关节上添加控制属性的复选框
+    
     @type animated_map_attributes_on_root_joint_cb: QCheckBox
-    @param animated_map_attributes_on_root_joint_cb: The checkbox that represents if animated maps attributes on root joint should be added
-
+    @param animated_map_attributes_on_root_joint_cb: 表示是否应在根关节上添加动画映射属性的复选框
+    
     @type mesh_name_to_blend_shape_channel_name_cb: QCheckBox
-    @param mesh_name_to_blend_shape_channel_name_cb: The checkbox that represents if mesh names to blend shapes channel name should be added
-
+    @param mesh_name_to_blend_shape_channel_name_cb: 表示是否应将网格名称添加为混合形状通道名称的复选框
+    
     @type key_frames_cb: QCheckBox
-    @param key_frames_cb: The checkbox that represents if key frames should be added
-
+    @param key_frames_cb: 表示是否应添加关键帧的复选框
+    
     @type select_gui_path: FileChooser
-    @param select_gui_path: The FileChooser widget for getting the gui path
-
+    @param select_gui_path: 用于获取 GUI 路径的 FileChooser 小部件
+    
     @type select_analog_gui_path: FileChooser
-    @param select_analog_gui_path: The FileChooser widget for getting the analog gui path
-
+    @param select_analog_gui_path: 用于获取模拟 GUI 路径的 FileChooser 小部件
+    
     @type select_aas_path: FileChooser
-    @param select_aas_path: The FileChooser widget for getting the additional assemble script path
-
+    @param select_aas_path: 用于获取额外组装脚本路径的 FileChooser 小部件
+    
     @type process_btn: QPushButton
-    @param process_btn: The button that starts creating the scene and character
-
+    @param process_btn: 启动创建场景和角色的按钮
+    
     @type progress_bar: QProgressBar
-    @param progress_bar: The progress bar that shows the building progress
+    @param progress_bar: 显示构建进度的进度条
     """
 
     _instance: "DnaViewerWindow" = None
@@ -313,7 +313,7 @@ class DnaViewerWindow(QMainWindow):
         self.create_ui()
 
     def setup_window(self) -> None:
-        """A method for setting up the window"""
+        """设置窗口的方法"""
 
         self.setWindowFlags(
             self.windowFlags()
@@ -343,10 +343,10 @@ class DnaViewerWindow(QMainWindow):
 
     def create_main_widget(self) -> QWidget:
         """
-        Creates the widget containing the UI elements
-
+        创建包含 UI 元素的小部件
+        
         @rtype: QtWidgets.QWidget
-        @returns: the main widget
+        @returns: 主小部件
         """
 
         header = self.create_header()
@@ -362,7 +362,7 @@ class DnaViewerWindow(QMainWindow):
         return widget
 
     def set_size(self) -> None:
-        """Sets the window size"""
+        """设置窗口大小"""
 
         self.setMaximumSize(WINDOW_SIZE_WIDTH_MAX, WINDOW_SIZE_HEIGHT_MAX)
         self.setMinimumSize(WINDOW_SIZE_WIDTH_MIN, WINDOW_SIZE_HEIGHT_MIN)
@@ -389,7 +389,7 @@ class DnaViewerWindow(QMainWindow):
         return True
 
     def process(self) -> None:
-        """Start the build process of creation of scene from provided configuration from the UI"""
+        """开始从UI提供的配置开始创建场景的构建过程"""
 
         process = True
         if cmds.file(q=True, modified=True):
@@ -446,12 +446,12 @@ class DnaViewerWindow(QMainWindow):
     @staticmethod
     def maya_main_window() -> QWidget:
         """
-        Gets the MayaWindow instance
-
+        获取MayaWindow实例
+        
         @throws RuntimeError
-
+        
         @rtype: QtWidgets.QWidget
-        @returns: main window instance
+        @returns: 主窗口实例
         """
 
         for obj in QApplication.topLevelWidgets():
@@ -503,13 +503,13 @@ class DnaViewerWindow(QMainWindow):
 
     def is_checked(self, checkbox: QCheckBox) -> bool:
         """
-        Returns if the provided checkbox is checked and enabled
-
-        @type checkbox: QCheckBox
-        @param checkbox: The checkbox thats value needs to be checked and enabled
-
-        @rtype: bool
-        @returns: The flag representing if the checkbox is checked and enabled
+        返回所提供复选框是否已选中并启用
+        
+        @type checkbox：QCheckBox
+        @param checkbox：需要检查并启用其值的复选框
+        
+        @rtype：bool
+        @returns：表示复选框是否已选中并启用的标志
         """
 
         return (
@@ -520,10 +520,10 @@ class DnaViewerWindow(QMainWindow):
 
     def create_body(self) -> QVBoxLayout:
         """
-        Creates the main body layout and adds needed widgets
-
-        @rtype: QVBoxLayout
-        @returns: The created vertical box layout with the widgets added
+        创建主体布局并添加所需的小部件
+        
+        @rtype：QVBoxLayout
+        @returns：添加了小部件的创建的垂直框布局
         """
 
         self.body = QVBoxLayout()
@@ -558,10 +558,10 @@ class DnaViewerWindow(QMainWindow):
 
     def create_header(self) -> QHBoxLayout:
         """
-        Creates and adds to the header widget
-
+        创建并添加到标题部件
+        
         @rtype: QHBoxLayout
-        @returns: The created horizontal box layout with the widgets added
+        @returns: 添加小部件的创建的水平框布局
         """
 
         self.header = QHBoxLayout()
@@ -581,10 +581,10 @@ class DnaViewerWindow(QMainWindow):
 
     def create_help_btn(self) -> QWidget:
         """
-        Creates the help button widget
-
+        创建帮助按钮小部件
+        
         @rtype: QHBoxLayout
-        @returns: The created horizontal box layout with the widgets added
+        @returns: 添加小部件后创建的水平框布局
         """
 
         btn = QPushButton(self)
@@ -594,7 +594,7 @@ class DnaViewerWindow(QMainWindow):
         return btn
 
     def on_help(self) -> None:
-        """The method that gets called when the help button is clicked"""
+        """当点击帮助按钮时调用的方法"""
 
         if HELP_URL:
             webbrowser.open(HELP_URL)
@@ -607,10 +607,10 @@ class DnaViewerWindow(QMainWindow):
 
     def create_dna_selector(self) -> QWidget:
         """
-        Creates and adds the DNA selector widget
-
+        创建并添加DNA选择器小部件
+        
         @rtype: QWidget
-        @returns: The created DNA selector widget
+        @returns: 创建的DNA选择器小部件
         """
 
         widget = QWidget()
@@ -638,10 +638,10 @@ class DnaViewerWindow(QMainWindow):
 
     def on_dna_selected(self, input: FileChooser) -> None:
         """
-        The method that gets called when a DNA file gets selected
-
+        当选择 DNA 文件时调用的方法
+        
         @type input: FileChooser
-        @param input: The file chooser object corresponding to the DNA selector widget
+        @param input: 对应 DNA 选择器小部件的文件选择器对象
         """
 
         enabled = input.get_file_path() is not None
@@ -650,10 +650,10 @@ class DnaViewerWindow(QMainWindow):
 
     def create_dna_chooser(self) -> FileChooser:
         """
-        Creates and adds the DNA chooser widget
-
-        @rtype: FileChooser
-        @returns: Dna chooser widget
+        创建并添加 DNA 选择器小部件
+        
+        @rtype: 文件选择器
+        @returns: DNA 选择器小部件
         """
 
         return self.create_file_chooser(
@@ -666,10 +666,10 @@ class DnaViewerWindow(QMainWindow):
 
     def on_dna_changed(self, state: int) -> None:  # pylint: disable=unused-argument
         """
-        Method that gets called when the checkbox is changed
-
+        当复选框更改时调用的方法
+        
         @type state: int
-        @param state: The changed state of the checkbox
+        @param state: 复选框的更改状态
         """
         enabled = False
         if self.dna:
@@ -683,13 +683,13 @@ class DnaViewerWindow(QMainWindow):
 
     def create_load_dna_button(self, dna_input: FileChooser) -> QWidget:
         """
-        Creates and adds the load DNA button widget
-
-        @type input: FileChooser
-        @param input: The file chooser object corresponding to the DNA selector widget
-
-        @rtype: QWidget
-        @returns: The created load DNA button widget
+        创建并添加加载DNA按钮小部件
+        
+        @type input：FileChooser
+        @param input：与DNA选择器小部件对应的文件选择器对象
+        
+        @rtype：QWidget
+        @returns：创建的加载DNA按钮小部件
         """
 
         btn = QPushButton("Load DNA")
@@ -699,10 +699,10 @@ class DnaViewerWindow(QMainWindow):
 
     def on_load_dna_clicked(self, input: FileChooser) -> None:
         """
-        The method that gets called when a DNA file gets selected
-
+        当选择了一个DNA文件时被调用的方法
+        
         @type input: FileChooser
-        @param input: The file chooser object corresponding to the DNA selector widget
+        @param input: 对应于DNA选择器小部件的文件选择器对象
         """
 
         self.main_widget.setEnabled(False)
@@ -732,14 +732,14 @@ class DnaViewerWindow(QMainWindow):
         self.main_widget.setEnabled(True)
 
     def get_mesh_names(self) -> List[str]:
-        """Reads in the meshes of the definition"""
+        """读取定义中的网格"""
         names: List[str] = []
         for index in range(self.dna.get_mesh_count()):
             names.append(self.dna.get_mesh_name(index))
         return names
 
     def get_lod_indices_names(self) -> List[List[int]]:
-        """Reads in the meshes of the definition"""
+        """读取定义中的网格"""
         lod_indices: List[List[int]] = []
         for index in range(self.dna.get_lod_count()):
             lod_indices.append(self.dna.get_mesh_indices_for_lod(index))
@@ -747,10 +747,10 @@ class DnaViewerWindow(QMainWindow):
 
     def create_mesh_selector(self) -> MeshTreeList:
         """
-        Creates and adds a mesh tree list where the entries are grouped by lods, this is used for selecting the meses that need to be processed
-
-        @rtype: MeshTreeList
-        @returns: The created mesh tree list widget
+        创建并添加一个网格树列表，其中条目按LOD分组，这用于选择需要处理的网格
+        
+        @rtype：MeshTreeList
+        @returns：创建的网格树列表小部件
         """
 
         widget = MeshTreeList(self)
@@ -766,22 +766,22 @@ class DnaViewerWindow(QMainWindow):
         on_changed: Callable[[int], None] = None,
     ) -> FileChooser:
         """
-        Creates a file chooser widget that is used for selecting file paths
-
+        创建一个文件选择器小部件，用于选择文件路径
+        
         @type label: str
-        @param label: The label in the FileDialog that pops up
-
+        @param label: 文件对话框中弹出的标签
+        
         @type hint: str
-        @param hint: The label in the FileDialog that pops up
-
+        @param hint: 文件对话框中弹出的标签
+        
         @type caption: str
-        @param caption: The caption in the FileDialog that pops up
-
+        @param caption: 文件对话框中弹出的标题
+        
         @type filter: str
-        @param filter: The file filter that is used in the FileDialog
-
+        @param filter: 文件对话框中使用的文件过滤器
+        
         @rtype: FileChooser
-        @returns: The created file chooser object
+        @returns: 创建的文件选择器对象
         """
 
         widget = FileChooser(
@@ -797,10 +797,10 @@ class DnaViewerWindow(QMainWindow):
 
     def create_gui_selector(self) -> FileChooser:
         """
-        Creates the gui selector widget
-
-        @rtype: FileChooser
-        @returns: Gui selector widget
+        创建GUI选择器小部件
+        
+        @rtype：FileChooser
+        @returns：GUI选择器小部件
         """
 
         return self.create_file_chooser(
@@ -812,10 +812,10 @@ class DnaViewerWindow(QMainWindow):
 
     def create_aas_selector(self) -> FileChooser:
         """
-        Creates and adds the additional assemble script selector widget
-
-        @rtype: FileChooser
-        @returns: Additional assemble script selector widget
+        创建并添加额外的组装脚本选择器小部件
+        
+        @rtype：FileChooser
+        @returns：额外的组装脚本选择器小部件
         """
 
         return self.create_file_chooser(
@@ -827,10 +827,10 @@ class DnaViewerWindow(QMainWindow):
 
     def create_analog_gui_selector(self) -> FileChooser:
         """
-        Creates and adds the analog gui selector widget
-
-        @rtype: FileChooser
-        @returns: Analog gui selector widget
+        创建并添加模拟gui选择器小部件
+        
+        @rtype：FileChooser
+        @returns：模拟gui选择器小部件
         """
 
         return self.create_file_chooser(
@@ -841,7 +841,7 @@ class DnaViewerWindow(QMainWindow):
         )
 
     def create_build_options(self) -> QWidget:
-        """Creates and adds the widget containing the build options checkboxes"""
+        """创建并添加包含构建选项复选框的小部件"""
         widget = QWidget()
         layout = QVBoxLayout(widget)
         layout.setContentsMargins(
@@ -879,7 +879,7 @@ class DnaViewerWindow(QMainWindow):
         return widget
 
     def create_extra_build_options(self) -> QWidget:
-        """Creates and adds the widget containing the extra build options checkboxes"""
+        """创建并添加包含额外构建选项复选框的小部件"""
         widget = QWidget()
         layout = QVBoxLayout(widget)
         layout.setContentsMargins(
@@ -937,25 +937,25 @@ class DnaViewerWindow(QMainWindow):
         enabled: bool = False,
     ) -> QCheckBox:
         """
-        Adds a checkbox with given parameters and connects them to the on_changed method
-
+        向给定参数添加复选框，并将它们连接到on_changed方法
+        
         @type label: str
-        @param label: The label of the checkbox
-
+        @param label: 复选框的标签
+        
         @type hint: str
-        @param hint: The hint of the checkbox
-
+        @param hint: 复选框的提示
+        
         @type on_changed: Callable[[int], None]
-        @param on_changed: The method that will get called when the checkbox changes states
-
+        @param on_changed: 复选框状态改变时调用的方法
+        
         @type checked: bool
-        @param checked: The value representing if the checkbox is checked after creation
-
+        @param checked: 创建后表示复选框是否已选中的值
+        
         @type enabled: bool
-        @param enabled: The value representing if the checkbox is enabled after creation
-
+        @param enabled: 创建后表示复选框是否已启用的值
+        
         @rtype: QCheckBox
-        @returns: the created checkbox object
+        @returns: 创建的复选框对象
         """
 
         checkbox = QCheckBox(label, self)
@@ -969,10 +969,10 @@ class DnaViewerWindow(QMainWindow):
 
     def on_joints_changed(self, state: int) -> None:
         """
-        Method that gets called when the joints checkbox is changed
-
+        当关节复选框更改时调用的方法
+        
         @type state: int
-        @param state: The changed state of the checkbox
+        @param state: 复选框的更改状态
         """
 
         if self.joints_cb.isChecked():
@@ -987,13 +987,13 @@ class DnaViewerWindow(QMainWindow):
 
     def create_process_btn(self) -> QPushButton:
         """
-        Creates and adds a process button
-
-        @type window: QMainWindow
-        @param window: The instance of the window object
-
-        @rtype: QPushButton
-        @returns: The created process button
+        创建并添加一个处理按钮
+        
+        @类型 窗口: QMainWindow
+        @参数 窗口: 窗口对象的实例
+        
+        @类型: QPushButton
+        @返回: 创建的处理按钮
         """
 
         btn = QPushButton("Process")
@@ -1005,13 +1005,13 @@ class DnaViewerWindow(QMainWindow):
 
     def create_progress_bar(self) -> QProgressBar:
         """
-        Creates and adds progress bar
-
-        @type window: QMainWindow
-        @param window: The instance of the window object
-
+        创建并添加进度条
+        
+        @类型窗口: QMainWindow
+        @参数窗口: 窗口对象的实例
+        
         @rtype: QProgressBar
-        @returns: The created progress bar
+        @returns: 创建的进度条
         """
 
         progress = QProgressBar(self)
@@ -1024,20 +1024,20 @@ class DnaViewerWindow(QMainWindow):
 
     def on_generic_changed(self, state: int) -> None:  # pylint: disable=unused-argument
         """
-        Method that gets called when the checkbox is changed
-
+        当复选框更改时被调用的方法
+        
         @type state: int
-        @param state: The changed state of the checkbox
+        @param state: 复选框的更改状态
         """
 
         self.set_riglogic_cb_enabled()
 
     def is_enabled_and_checked(self, check_box: QCheckBox) -> bool:
         """
-        Method that checks if check box is enabled in same time
-
+        检查复选框是否同时启用的方法
+        
         @type check_box: QCheckBox
-        @param check_box: The checkbox instance to check
+        @param check_box: 要检查的复选框实例
         """
 
         return (
@@ -1047,7 +1047,7 @@ class DnaViewerWindow(QMainWindow):
         )
 
     def set_riglogic_cb_enabled(self) -> None:
-        """Method that sets enable state of riglogic check box"""
+        """设置riglogic复选框启用状态的方法"""
 
         all_total_meshes = False
 
