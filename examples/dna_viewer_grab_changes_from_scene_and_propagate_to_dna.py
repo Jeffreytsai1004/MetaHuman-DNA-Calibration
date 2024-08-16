@@ -1,44 +1,44 @@
 """
-This example demonstrates how to propagate changes from maya scene to dna file.
-IMPORTANT: You have to setup the environment before running this example. Please refer to the 'Environment setup' section in README.md.
+此示例演示了如何将Maya场景中的更改传播到dna文件。
+重要提示：在运行此示例之前，您必须设置环境。请参考README.md中的“环境设置”部分。
 
-Follow the steps:
+按照以下步骤操作：
 
-1. Start Maya
-2. open maya scene (do 2.1 or 2.2)
-2.1. Generate new scene using build_meshes or
-2.2. start DNA Viewer GUI (dna_viewer_run_in_maya.py)
-    - Select DNA file that you want to load and generate scene for
-    - Select meshes that you want to change
-    - Tick joints in Build Options
-    - Click Process
-    - in Maya scene rig is going to be assembled
-3. Run this script to the part called "load data"
-    a. get current vertex positions for all meshes
+1. 启动Maya
+2. 打开Maya场景（执行2.1或2.2）
+2.1. 使用build_meshes生成新场景，或
+2.2. 启动DNA Viewer GUI（dna_viewer_run_in_maya.py）
+    - 选择要加载和生成场景的DNA文件
+    - 选择要更改的网格
+    - 在“构建选项”中勾选关节
+    - 点击“处理”
+    - 在Maya场景中，将会组装骨骼系统
+3. 运行此脚本到“加载数据”部分
+    a. 获取所有网格的当前顶点位置
 
-4. In the scene, make modifications to the neutral mesh and joints (important note:
-    if you're rotating joints, be sure to freeze transformations, so they're stored as orientations)
-5. Run this script from the part called "propagate changes to dna" to the end
-    a. set new joints translations
-    b. set new joints rotations
-    c. move all meshes vertices to new positions
+4. 在场景中对中性网格和关节进行修改（重要提示：
+    如果旋转关节，请确保冻结变换，以便将其存储为方向）
+5. 从“将更改传播到dna”部分到结束运行此脚本
+    a. 设置新的关节平移
+    b. 设置新的关节旋转
+    c. 将所有网格顶点移动到新位置
 
-After performing this steps, your changes in maya scene will pe propagated to dna.
+执行完这些步骤后，您对Maya场景的更改将传播到dna。
 
-- usage in Maya:
-    1. copy whole content of this file to Maya Script Editor
-    2. change value of ROOT_DIR to absolute path of dna_calibration, e.g. `c:/dna_calibration` in Windows or `/home/user/dna_calibration`. Important:
-    Use `/` (forward slash), because Maya uses forward slashes in path.
+- 在Maya中的使用：
+    1. 将此文件的全部内容复制到Maya脚本编辑器中
+    2. 将ROOT_DIR的值更改为dna_calibration的绝对路径，例如在Windows中为`c:/dna_calibration`或在`/home/user/dna_calibration`。重要提示：
+    使用`/`（正斜杠），因为Maya在路径中使用正斜杠。
 
-- customization:
-    - change CHARACTER_NAME to Taro, or the name of a custom DNA file placed in /data/dna_files
+- 自定义：
+    - 将CHARACTER_NAME更改为Taro，或放置在/data/dna_files中的自定义DNA文件的名称
 
-Expected:
-    - script will generate dna file <CHARACTER_NAME>_modified.dna in OUTPUT_DIR, e.g. Ada_modified.dna
-    - script will generate maya scene <CHARACTER_NAME>_modified.mb in OUTPUT_DIR, e.g. Ada_modified.mb
-    - script will generate workspace.mel in OUTPUT_DIR
+期望：
+    - 脚本将在OUTPUT_DIR中生成dna文件<CHARACTER_NAME>_modified.dna，例如Ada_modified.dna
+    - 脚本将在OUTPUT_DIR中生成Maya场景<CHARACTER_NAME>_modified.mb，例如Ada_modified.mb
+    - 脚本将在OUTPUT_DIR中生成workspace.mel
 
-NOTE: If OUTPUT_DIR does not exist, it will be created.
+注意：如果OUTPUT_DIR不存在，将会创建它。
 """
 
 import maya.OpenMaya as om
