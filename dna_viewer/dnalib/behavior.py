@@ -9,24 +9,6 @@ from .layer import Layer
 
 class Behavior(Definition):
     """
-    @type reader: BinaryStreamReader
-    @param reader: The binary stream reader being used
-
-    @type gui_to_raw: ConditionalTable
-    @param gui_to_raw: Mapping data about gui to raw values
-
-    @type psd: PSDMatrix
-    @param psd: The data representing Pose Space Deformation
-
-    @type blend_shapes: BlendShapesData
-    @param blend_shapes: The data representing blend shapes
-
-    @type animated_maps: AnimatedMapsConditionalTable
-    @param animated_maps: The data representing animated maps
-
-    @type joints: JointGroups
-    @param joints: The data representing joints
-
     @类型读者: BinaryStreamReader
     @参数读者: 正在使用的二进制流读取器
     
@@ -65,7 +47,7 @@ class Behavior(Definition):
 
     def read(self) -> None:
         """
-        Starts reading in the behavior part of the DNA
+        开始阅读DNA的行为部分
         """
         super().read()
 
@@ -167,7 +149,7 @@ class Behavior(Definition):
         return cast(List[int], self.reader.getJointGroupJointIndices(joint_group_index))
 
     def add_gui_to_raw(self) -> None:
-        """Reads in the gui to raw mapping"""
+        """读取GUI到原始映射"""
 
         self.reader.gui_to_raw = ConditionalTable(
             inputs=self.get_gui_to_raw_input_indices(),
@@ -179,7 +161,7 @@ class Behavior(Definition):
         )
 
     def add_psd(self) -> None:
-        """Reads in the PSD part of the behavior"""
+        """读取行为的PSD部分"""
 
         self.psd = PSDMatrix(
             count=self.get_psd_count(),
@@ -189,7 +171,7 @@ class Behavior(Definition):
         )
 
     def add_joint_groups(self) -> None:
-        """Reads in the joints part of the behavior"""
+        """读取行为的关节部分"""
 
         self.joint_groups.joint_row_count = self.reader.getJointRowCount()
         self.joint_groups.joint_column_count = self.reader.getJointColumnCount()
@@ -209,7 +191,7 @@ class Behavior(Definition):
             )
 
     def add_blend_shapes(self) -> None:
-        """Reads in the blend shapes part of the behavior"""
+        """读取行为的混合形状部分"""
 
         self.blend_shapes = BlendShapesData(
             lods=self.get_blend_shape_channel_lods(),
@@ -218,7 +200,7 @@ class Behavior(Definition):
         )
 
     def add_animated_maps_conditional_table(self) -> None:
-        """Reads in the animated maps part of the behavior"""
+        """读取行为的动画地图部分"""
 
         self.reader.animated_maps_conditional_table = AnimatedMapsConditionalTable(
             lods=self.get_animated_map_lods(),
@@ -236,28 +218,6 @@ class Behavior(Definition):
 @dataclass
 class ConditionalTable:
     """
-    A model class for holding various values
-
-    Attributes
-    ----------
-    @type from_values: List[float]
-    @param from_values: The list of values
-
-    @type to_values: List[float]
-    @param to_values: The list of values
-
-    @type slope_values: List[float]
-    @param slope_values: The list of slope values
-
-    @type cut_values: List[float]
-    @param cut_values: The list of cut values
-
-    @type inputs: List[int]
-    @param inputs: The indices of inputs
-
-    @type outputs: List[int]
-    @param outputs: The indices of outputs
-
     一个用于保存各种值的模型类
 
     属性
@@ -292,22 +252,6 @@ class ConditionalTable:
 @dataclass
 class PSDMatrix:
     """
-    A model class for holding data about Pose Space Deformation
-
-    Attributes
-    ----------
-    @type count: int
-    @param count: The list of values
-
-    @type rows: List[int]
-    @param rows: List of row indices used for storing values
-
-    @type columns: List[int]
-    @param columns: List of row indices used for storing values
-
-    @type values: List[float]
-    @param values: The list of values, that can be accessed from the row and column index
-
     一个用于保存关于姿势空间变形数据的模型类
     
     属性
@@ -334,25 +278,6 @@ class PSDMatrix:
 @dataclass
 class JointGroup:
     """
-    A model class for holding data about joint groups
-
-    Attributes
-    ----------
-    @type lods: List[int]
-    @param lods: A list of lod indices that the joint group is contained within
-
-    @type values: List[float]
-    @param values: A list of values
-
-    @type joints: List[int]
-    @param joints: A list of joint indices
-
-    @type inputs: List[int]
-    @param inputs: The indices of inputs
-
-    @type outputs: List[int]
-    @param outputs: The indices of outputs
-
     一个用于保存关于联合组数据的模型类
     
     属性
@@ -383,19 +308,6 @@ class JointGroup:
 @dataclass
 class BlendShapesData:
     """
-    A model class for holding data about blend shapes
-
-    Attributes
-    ----------
-    @type lods: List[int]
-    @param lods: A list of lod indices that the blend shapes are contained within
-
-    @type inputs: List[int]
-    @param inputs: The indices of inputs
-
-    @type outputs: List[int]
-    @param outputs: The indices of outputs
-
     一个用于保存混合形状数据的模型类
     
     属性
@@ -418,16 +330,6 @@ class BlendShapesData:
 @dataclass
 class AnimatedMapsConditionalTable:
     """
-    A model class for holding data about animated maps
-
-    Attributes
-    ----------
-    @type lods: List[int]
-    @param lods: A list of lod indices that the blend shapes are contained within
-
-    @type conditional_table: ConditionalTable
-    @param conditional_table: Data needed for animated maps
-
     一个用于保存关于动画地图数据的模型类
     
     属性
@@ -446,22 +348,6 @@ class AnimatedMapsConditionalTable:
 @dataclass
 class JointGroups:
     """
-    A model class for storing data about joints
-
-    Attributes
-    ----------
-    @type joint_row_count: int
-    @param joint_row_count: The row count of the matrix that stores the joints data
-
-    @type joint_column_count: int
-    @param joint_column_count: The column count of the matrix that stores the joints data
-
-    @type joint_variable_attribute_indices: List[List[int]]
-    @param joint_variable_attribute_indices: List of joint variable attribute indices per LOD
-
-    @type joint_groups: List[JointGroup]
-    @param joint_groups: The list of joint groups
-
     一个用于存储关节数据的模型类
     
     属性
