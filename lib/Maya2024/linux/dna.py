@@ -1,9 +1,7 @@
 # 此文件是由SWIG（http://www.swig.org）自动生成的。
 # 版本4.0.2
 # 
-# 除非您知道自己在做什么-否则请不要对此文件进行更改-而应修改
-# SWIG接口文件。
-
+# 除非您知道自己在做什么-否则请不要对此文件进行更改-而应修改 SWIG接口文件。
 
 import os
 if hasattr(os, 'add_dll_directory'):
