@@ -7,46 +7,46 @@ from ..dnalib.layer import Layer
 
 class Descriptor:
     """
-    A class used for reading and accessing the descriptor part of the DNA file
-
-    Attributes
+    用于读取和访问DNA文件描述器部分的类
+    
+    属性
     ----------
-
+    
     @type name: str
-    @param name: The name of the character
-
+    @param name: 人物的名称
+    
     @type archetype: int
-    @param archetype: A value that represents the archetype of the character
-
+    @param archetype: 代表人物原型的值
+    
     @type gender: int
-    @param gender: A value that represents the gender of the character
-
+    @param gender: 代表人物性别的值
+    
     @type age: int
-    @param age: The age of the character
-
+    @param age: 人物的年龄
+    
     @type metadata: Dict[str, str]
-    @param metadata: Metadata stored for the character
-
+    @param metadata: 存储在人物上的元数据
+    
     @type translation_unit: int
-    @param translation_unit: The translation unit that was used for creating the character
-
+    @param translation_unit: 用于创建人物的翻译单位
+    
     @type rotation_unit: int
-    @param rotation_unit: The translation unit that was used for creating the character
-
+    @param rotation_unit: 用于创建人物的旋转单位
+    
     @type coordinate_system: Tuple[int, int, int]
-    @param coordinate_system: A tuple representing the coordinate system
-
+    @param coordinate_system: 代表坐标系的元组
+    
     @type lod_count: int
-    @param lod_count: The number of LODs for the characters
-
+    @param lod_count: 人物的LOD数
+    
     @type db_max_lod:int
-    @param db_max_lod: A LOD constraint representing the greatest LOD we wish wish to produce (ie. if the value is n, the potential LODs are 0, 1, .. n-1)
-
+    @param db_max_lod: 代表我们希望生成的最大LOD的LOD约束（即如果值为n，则潜在的LOD为0, 1, .. n-1）
+    
     @type db_complexity: str
-    @param db_complexity: Will be used in future
-
+    @param db_complexity: 将来会使用
+    
     @type db_name: str
-    @param db_name: DB identifier
+    @param db_name: 数据库标识符
     """
 
     def __init__(self, reader: DNAReader, layers: Optional[List[Layer]]) -> None:
@@ -84,6 +84,11 @@ class Descriptor:
 
         @rtype: DescriptorModel
         @returns: the instance of the created descriptor model
+        
+        开始阅读 DNA 描述部分
+        
+        @rtype: DescriptorModel
+        @returns: 创建的描述模型的实例
         """
 
         if not self.descriptor_read and self.layer_enabled(Layer.descriptor):
@@ -95,6 +100,7 @@ class Descriptor:
 
     def add_basic_data(self) -> None:
         """Reads in the character name, archetype, gender and age"""
+        """读入角色名称、原型、性别和年龄"""
 
         self.name = self.reader.getName()
         self.archetype = self.reader.getArchetype()
@@ -103,6 +109,7 @@ class Descriptor:
 
     def add_metadata(self) -> None:
         """Reads in the metadata provided from the DNA file"""
+        """读取DNA文件提供的元数据"""
 
         for i in range(self.reader.getMetaDataCount()):
             key = self.reader.getMetaDataKey(i)
@@ -110,6 +117,7 @@ class Descriptor:
 
     def add_geometry_data(self) -> None:
         """Sets the translation unit, rotation unit, and coordinate system from the DNA file"""
+        """从DNA文件设置翻译单位、旋转单位和坐标系统"""
 
         self.translation_unit = self.reader.getTranslationUnit()
         self.rotation_unit = self.reader.getRotationUnit()
@@ -122,6 +130,7 @@ class Descriptor:
 
     def add_db_data(self) -> None:
         """Reads in the db data from the DNA file"""
+        """从 DNA 文件中读取数据库数据"""
 
         self.lod_count = self.reader.getLODCount()
         self.db_max_lod = self.reader.getDBMaxLOD()
