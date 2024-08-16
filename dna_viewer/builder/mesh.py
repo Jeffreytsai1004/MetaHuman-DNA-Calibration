@@ -33,6 +33,31 @@ class Mesh:
 
     @type dna: DNA
     @param dna: The DNA object that was loaded in
+
+    一个用于向场景中添加关节的构建器类
+    
+    属性
+    ----------
+    @type dna: DNA
+    @param dna: DNA文件的位置
+    
+    @type mesh_index: int
+    @param mesh_index: 我们正在使用的网格索引
+    
+    @type joint_ids: List[int]
+    @param joint_ids: 用于添加皮肤的关节索引
+    
+    @type joint_names: List[str]
+    @param joint_names: 用于添加皮肤的关节名称
+    
+    @type config: Config
+    @param config: 创建网格时将应用的构建选项
+    
+    @type mesh: MayaMesh
+    @param mesh: 用于创建网格的构建器类对象
+    
+    @type dna: DNA
+    @param dna: 加载的DNA对象
     """
 
     def __init__(
