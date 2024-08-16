@@ -1,11 +1,11 @@
 """
-This example demonstrates Maya UI Window for simple and non-programmatic creation the scene with the creating functional rig.
-IMPORTANT: You have to setup the environment before running this example. Please refer to the 'Environment setup' section in README.md.
+这个例子演示了用于简单且非编程创建带有创建功能性rig场景的Maya UI窗口。
+重要提示：在运行此示例之前，您必顈设置环境。请参考README.md中的“环境设置”部分。
 
-- usage in command line:
-    NOTE: Script cannot be called with Python or mayapy, it must be called in Maya Script Editor.
-- usage in Maya:
-    Expected: Maya will show UI.
+- 在命令行中的使用：
+    注意：脚本不能使用Python或mayapy调用，必须在Maya脚本编辑器中调用。
+- 在Maya中的使用：
+    预期：Maya将显示UI。
 
 """
 
