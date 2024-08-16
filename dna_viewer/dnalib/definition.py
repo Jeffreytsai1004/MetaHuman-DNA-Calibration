@@ -50,6 +50,46 @@ class Definition(Descriptor):
 
     @type neutral_joint_rotations: List[Point3]
     @param neutral_joint_rotations: The list of neutral joint rotations
+
+    一个用于读取和访问DNA文件定义部分的类
+    
+    属性
+    ----------
+    @type reader: BinaryStreamReader
+    @param reader: 正在使用的二进制流读取器
+    
+    @type definition: DefinitionModel
+    @param definition: 从DNA文件中读取的定义数据的对象
+    
+    @type joints: Joints
+    @param joints: 关节数据
+    
+    @type blend_shape_channels: GeometryEntity
+    @param blend_shape_channels: Blend形状通道的名称和索引
+    
+    @type animated_maps: GeometryEntity
+    @param animated_maps: 动画地图的名称和索引
+    
+    @type meshes: GeometryEntity
+    @param meshes: 网格的名称和索引
+    
+    @type gui_control_names: List[str]
+    @param gui_control_names: GUI控制名称的列表
+    
+    @type raw_control_names: List[str]
+    @param raw_control_names: 原始控制名称的列表
+    
+    @type mesh_blend_shape_channel_mapping: List[Tuple[int, int]]
+    @param mesh_blend_shape_channel_mapping: 网格索引到Blend形状通道索引的映射
+    
+    @type mesh_blend_shape_channel_mapping_indices_for_lod: List[List[int]]
+    @param mesh_blend_shape_channel_mapping_indices_for_lod: 按LOD划分的Blend形状通道映射索引列表
+    
+    @type neutral_joint_translations: List[Point3]
+    @param neutral_joint_translations: 中性关节平移的列表
+    
+    @type neutral_joint_rotations: List[Point3]
+    @param neutral_joint_rotations: 中性关节旋转的列表
     """
 
     def __init__(self, reader: DNAReader, layers: Optional[List[Layer]]) -> None:
@@ -313,6 +353,16 @@ class GeometryEntity:
 
     @type lod_indices: List[List[int]]
     @param lod_indices: List of indices per lod
+
+    一个用于保存姓名和索引的模型类
+    
+    属性
+    ----------
+    @type names: List[str]
+    @param names: 名称列表
+    
+    @type lod_indices: List[List[int]]
+    @param lod_indices: 每个级别的索引列表
     """
 
     names: List[str] = field(default_factory=list)
@@ -328,6 +378,13 @@ class Joints(GeometryEntity):
     ----------
     @type parent_index: List[int]
     @param parent_index: List of parent indices for each joint index
+
+    一个用于保存关节数据的模型类
+    
+    属性
+    ----------
+    @type parent_index: List[int]
+    @param parent_index: 每个关节索引对应的父级索引列表
     """
 
     parent_index: List[int] = field(default_factory=list)
