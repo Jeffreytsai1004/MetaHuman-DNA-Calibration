@@ -211,7 +211,7 @@ class Definition(Descriptor):
         return cast(int, self.reader.getRotationUnit())
 
     def add_neutral_joints(self) -> None:
-        """Reads in the neutral joints part of the definition"""
+        """读取定义中关于中性关节的部分"""
 
         neutral_joint_translation_xs = self.get_neutral_joint_translation_xs()
         neutral_joint_translation_ys = self.get_neutral_joint_translation_ys()
