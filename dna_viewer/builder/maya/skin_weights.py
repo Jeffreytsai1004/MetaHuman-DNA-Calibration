@@ -12,6 +12,7 @@ from ...common import DNAViewerError
 class MayaSkinWeights:
     """
     A class used for reading and storing skin weight related data needed for adding skin clusters
+    一个用于读取和存储皮肤权重相关数据的类，用于添加皮肤集。
     """
 
     no_of_influences: int
@@ -39,6 +40,14 @@ class MayaSkinWeights:
 
         @rtype: List[str]
         @returns: The list if names of the joints that influence the skin cluster
+
+        获取对皮肤集群有影响的关节名称列表。
+
+        @type skin_cluster：MFnSkinCluster
+        @param skin_cluster：一个Maya皮肤集群对象的功能
+        
+        @rtype：List[str]
+        @returns：影响皮肤集群的关节名称列表
         """
 
         influences: List[str] = cmds.skinCluster(skin_cluster.name(), q=True, inf=True)
@@ -62,6 +71,17 @@ class MayaSkinWeights:
 
         @rtype: List[List[Union[int, float]]]
         @returns: A list of list of weight indices and the weight values
+
+        获取与给定网格相关的皮肤权重。
+
+        @type skin_cluster: MFnSkinCluster
+        @param skin_cluster: Maya皮肤集群对象的功能
+        
+        @type mesh_name: str
+        @param mesh_name: 网格的名称
+        
+        @rtype: List[List[Union[int, float]]]
+        @returns: 权重索引和权重值的列表列表
         """
 
         mesh = Maya.get_element(mesh_name)
@@ -94,6 +114,14 @@ def get_skin_weights_data(mesh_name: str) -> Tuple[MFnMesh, MFnSkinCluster]:
 
     @rtype: Tuple[MFnMesh, MFnSkinCluster]
     @returns: The maya object that manipulate the mesh node and the skin cluster for a given mesh name.
+
+    获取操纵给定网格名称的网格节点和皮肤集群的Maya对象。
+    
+    @type mesh_name: str
+    @param mesh_name: 网格的名称
+    
+    @rtype: Tuple[MFnMesh, MFnSkinCluster]
+    @returns: 获取操纵给定网格名称的网格节点和皮肤集群的Maya对象。
     """
 
     skin_cluster_name = mel.eval(f"findRelatedSkinCluster {mesh_name}")
@@ -113,6 +141,14 @@ def get_skin_weights_from_scene(mesh_name: str) -> MayaSkinWeights:
 
     @rtype: MayaSkinWeights
     @returns: An instance of this class with the data from the scene
+
+    获取此类的实例，其中包含给定网格名称的场景数据。
+
+    @type mesh_name: str
+    @param mesh_name: 网格名称
+    
+    @rtype: MayaSkinWeights
+    @returns: 具有来自场景数据的此类的实例
     """
 
     _, skin_cluster = get_skin_weights_data(mesh_name)
@@ -134,6 +170,17 @@ def get_file_joint_mappings(
 
     @rtype: List[int]
     @returns: a list of indices representing the influences concerning the given joints
+
+    返回一个对象索引列表，表示在皮肤权重模型中指定的关节名称的影响。
+    
+    @type skin_weights: MayaSkinWeights
+    @param skin_weights: 存储有关皮肤权重数据的模型实例
+    
+    @type skin_cluster: MFnSkinCluster
+    @param skin_cluster: 一个用于处理Maya中皮肤集群相关功能的对象
+    
+    @rtype: List[int]
+    @returns: 一个表示关于给定关节的影响的索引列表
     """
 
     file_joint_mapping: List[int] = []
@@ -153,6 +200,14 @@ def set_skin_weights_to_scene(mesh_name: str, skin_weights: MayaSkinWeights) -> 
 
     @type skin_weights: MayaSkinWeights
     @param skin_weights: The object containing data that need to be set to the scene.
+
+    将皮肤权重设置到场景中。
+    
+    @type mesh_name: str
+    @param mesh_name: 网格名称
+    
+    @type skin_weights: MayaSkinWeights
+    @param skin_weights: 包含需要设置到场景中的数据的对象。
     """
 
     mesh_node, skin_cluster = get_skin_weights_data(mesh_name)
@@ -184,6 +239,20 @@ def import_skin_weights(
 
     @type file_joint_mapping: List[int]
     @param file_joint_mapping: a list of indices representing the influences concerning joints
+
+    将皮肤权重导入场景，使用关节映射和模型中包含的权重数据。
+
+    @type skin_cluster：MFnSkinCluster
+    @param skin_cluster：用于处理Maya中皮肤集群的函数的对象
+    
+    @type mesh_node：MFnMesh
+    @param mesh_node：用于处理Maya中网格的函数的对象
+    
+    @type skin_weights：MayaSkinWeights
+    @param skin_weights：存储有关皮肤权重数据的模型实例
+    
+    @type file_joint_mapping：List[int]
+    @param file_joint_mapping：表示与关节有关的影响的索引列表
     """
 
     temp_str = f"{skin_cluster.name()}.wl["
