@@ -14,25 +14,6 @@ from ...model import Point3
 @dataclass
 class Mesh:
     """
-    A model class for holding data needed in the mesh building process
-
-    Attributes
-    ----------
-    @type dna_vertex_positions: List[Point3]
-    @param dna_vertex_positions: Data representing the positions of the vertices
-
-    @type dna_vertex_layout_positions: List[int]
-    @param dna_vertex_layout_positions: Data representing layout position indices of vertices
-
-    @type polygon_faces: List[int]
-    @param polygon_faces: List of lengths of vertex layout indices
-
-    @type polygon_connects: List[int]
-    @param polygon_connects: List of vertex layout position indices
-
-    @type derived_mesh_names: List[str]
-    @param derived_mesh_names: List of mesh names
-    
     为在网格构建过程中需要的数据创建一个模型类
     
     属性
@@ -63,37 +44,6 @@ class Mesh:
 
 class MayaMesh:
     """
-    A builder class used for adding joints to the scene
-
-    Attributes
-    ----------
-    @type mesh_index: int
-    @param mesh_index: The index of the mesh
-
-    @type dna: DNA
-    @param dna: Instance of DNA
-
-    @type blend_shape_group_prefix: str
-    @param blend_shape_group_prefix: prefix string for blend shape group
-
-    @type blend_shape_name_postfix: str
-    @param blend_shape_name_postfix: postfix string for blend shape name
-
-    @type skin_cluster_suffix: str
-    @param skin_cluster_suffix: postfix string for skin cluster name
-
-    @type data: Mesh
-    @param data: mesh data used in the mesh creation process
-
-    @type fn_mesh: om.MFnMesh
-    @param fn_mesh: OpenMaya class used for creating the mesh
-
-    @type mesh_object: om.MObject
-    @param mesh_object: the object representing the mesh
-
-    @type dag_modifier: om.MDagModifier
-    @param dag_modifier: OpenMaya class used for naming the mesh
-
     一个用于向场景添加连接件的建造者类
     
     属性
@@ -146,10 +96,10 @@ class MayaMesh:
 
     def create_neutral_mesh(self) -> MObject:
         """
-        Creates the neutral mesh using the config provided for this builder class object
-
-        @rtype: om.MObject
-        @returns: the instance of the created mesh object
+        使用提供给此构建器类对象的配置创建中性网格
+        
+        @rtype：om.MObject
+        @returns：创建的网格对象的实例
         """
         self.prepare_mesh()
         self.mesh_object = self.create_mesh_object()
@@ -159,11 +109,6 @@ class MayaMesh:
 
     def create_mesh_object(self) -> MObject:
         """
-        Gets a list of points that represent the vertex positions.
-
-        @rtype: MObject
-        @returns: Maya objects representing maya mesh functions and the created maya mesh object.
-
         获取表示顶点位置的点列表。
         
         @rtype：MObject
@@ -180,11 +125,6 @@ class MayaMesh:
 
     def get_vertex_positions_from_dna_vertex_positions(self) -> List[MPoint]:
         """
-        Gets a list of points that represent the vertex positions.
-
-        @rtype: List[MPoint]
-        @returns: List of maya point objects.
-
         获取代表顶点位置的点列表。
         
         @rtype: List[MPoint]
@@ -204,11 +144,6 @@ class MayaMesh:
 
     def rename_mesh(self) -> MDagModifier:
         """
-        Renames the initial mesh object that was created to the name from the configuration.
-
-        @rtype: Tuple[MDagModifier]
-        @returns: Maya object representing the dag modifier.
-
         将创建的初始网格对象重命名为来自配置的名称。
         
         @rtype：元组[MDagModifier]
@@ -223,7 +158,6 @@ class MayaMesh:
 
     def prepare_mesh(self) -> None:
         """
-        Gets a list of points that represent the vertex positions.
         获取一个表示顶点位置的点列表。
         """
 
@@ -244,7 +178,6 @@ class MayaMesh:
 
     def add_texture_coordinates(self) -> None:
         """
-        Method for adding texture coordinates.
         添加纹理坐标的方法。
 
         """
@@ -267,11 +200,6 @@ class MayaMesh:
 
     def get_texture_data(self) -> Tuple[List[float], List[float], List[int]]:
         """
-        Gets the data needed for the creation of textures.
-
-        @rtype: Tuple[List[float], List[float], List[int]] @returns: The tuple containing the list of texture
-        coordinate Us, the list of texture coordinate Vs and the list of texture coordinate indices.
-
         获取创建纹理所需的数据。
         
         @rtype：元组[列表[float]，列表[float]，列表[int]] @returns：包含纹理坐标U列表，纹理坐标V列表和纹理坐标索引列表的元组。
@@ -316,7 +244,6 @@ class MayaMesh:
 
     def create_blend_shape_node(self) -> None:
         """
-        Creates a blend shape node.
         创建混合形状节点。
         """
         mesh_name = self.dna.get_mesh_name(self.mesh_index)
@@ -335,11 +262,6 @@ class MayaMesh:
         self, add_mesh_name_to_blend_shape_channel_name: bool
     ) -> None:
         """
-        Builds all the derived meshes using the provided mesh and the blend shapes data of the DNA.
-
-        @type add_mesh_name_to_blend_shape_channel_name: bool
-        @param add_mesh_name_to_blend_shape_channel_name: A flag representing whether mesh name of blend shape channel is added to name when creating it
-
         使用提供的网格和DNA的混合形状数据构建所有派生网格。
         
         @type add_mesh_name_to_blend_shape_channel_name: bool
@@ -373,21 +295,6 @@ class MayaMesh:
         add_mesh_name_to_blend_shape_channel_name: bool,
     ) -> None:
         """
-        Builds a single derived mesh using the provided mesh and the blend shape data of the DNA.
-
-
-        @type blend_shape_target_index: int
-        @param blend_shape_target_index: Used for getting a delta value representing the value change concerning the blend shape.
-
-        @type blend_shape_channel: int
-        @param blend_shape_channel: Used for getting the blend shape name from the DNA.
-
-        @type group: str
-        @param group: The transform the new meshes will be added to.
-
-        @type add_mesh_name_to_blend_shape_channel_name: bool
-        @param add_mesh_name_to_blend_shape_channel_name: A flag representing whether mesh name of blend shape channel is added to name when creating it
-
         使用提供的网格和DNA的混合形状数据构建一个单一的派生网格。
 
         @type blend_shape_target_index: int
@@ -436,14 +343,6 @@ class MayaMesh:
 
     def add_skin_cluster(self, joint_names: List[str], joint_ids: List[int]) -> None:
         """
-        Adds skin cluster to the mesh
-
-        @type joint_names: List[str]
-        @param joint_names: Joint names needed for adding the skin cluster
-
-        @type joint_ids: List[int]
-        @param joint_ids: Joint indices needed for setting skin weights
-
         向网格添加皮肤集
 
         @type joint_names: List[str]
@@ -460,14 +359,6 @@ class MayaMesh:
 
     def _add_skin_cluster(self, mesh_name: str, joint_names: List[str]) -> None:
         """
-        Creates a skin cluster object.
-
-        @type mesh_name: str
-        @param mesh_name: The mesh name that is used for skin cluster naming.
-
-        @type joints: List[Joint]
-        @param joints: List of joints used for adding the skin cluster.
-
         创建一个skin cluster对象。
         
         @type mesh_name: str
@@ -496,14 +387,6 @@ class MayaMesh:
 
     def set_skin_weights(self, mesh_name: str, joint_ids: List[int]) -> None:
         """
-        Sets the skin weights attributes.
-
-        @type mesh_name: str
-        @param mesh_name: The mesh name that is used for getting the skin cluster name.
-
-        @type joint_ids: List[int]
-        @param joint_ids: List of joint indices used for setting the skin weight attribute.
-
         设置皮肤权重属性。
 
         @type mesh_name: str
