@@ -12,14 +12,13 @@ from .layer import Layer
 
 class DNA(Behavior, Geometry):
     """
-    A class used for accessing data in DNA file.
-
+    一个用于访问DNA文件中数据的类。
+    
     @type dna_path: str
-    @param dna_path: The path of the DNA file
-
+    @param dna_path: DNA文件的路径
+    
     @type layers: Optional[List[Layer]]
-    @param layers: List of parts of DNA to be loaded. If noting is passed, whole DNA is going to be loaded. Same as
-        passing Layer.all.
+    @param layers: 要加载的DNA部分的列表。如果没有传递任何内容，整个DNA将被加载。与传递Layer.all相同。
     """
 
     def __init__(self, dna_path: str, layers: Optional[List[Layer]] = None) -> None:
@@ -32,13 +31,13 @@ class DNA(Behavior, Geometry):
 
     def create_reader(self, dna_path: str) -> DNAReader:
         """
-        Creates a stream reader needed for reading values from the DNA file.
-
+        创建一个用于从DNA文件中读取值的流阅读器。
+        
         @type dna_path: str
-        @param dna_path: The path of the DNA file
-
+        @param dna_path: DNA文件的路径
+        
         @rtype: DNA
-        @returns: The reader needed for reading values from the DNA file
+        @returns: 用于从DNA文件中读取值的阅读器
         """
 
         stream = FileStream(
@@ -224,13 +223,13 @@ class DNA(Behavior, Geometry):
 
     def get_all_meshes_grouped_by_lod(self) -> List[List[int]]:
         """
-        Gets the list of list of mesh indices grouped by the lod number.
-
-        @type dna: DNA
-        @param dna: Instance of DNA.
-
-        @rtype: List[List[int]]
-        @returns: The list of list of mesh indices grouped by the lod number
+        获取按LOD编号分组的网格索引列表的列表。
+        
+        @type dna：DNA
+        @param dna：DNA的实例。
+        
+        @rtype：List[List[int]]
+        @returns：按LOD编号分组的网格索引列表的列表
         """
 
         result: List[List[int]] = []
