@@ -1,30 +1,28 @@
 """
-This example demonstrates generating functional rig in maya scene and exporting fbx per lod.
-IMPORTANT: You have to setup the environment before running this example. Please refer to the 'Environment setup' section in README.md.
+这个例子演示了在Maya场景中生成功能性的rig并为每个LOD导出fbx。
+重要提示：在运行此示例之前，您必须设置环境。请参考README.md中的“环境设置”部分。
 
-- usage in command line:
+- 命令行中的用法：
     python dna_viewer_export_fbx.py
     mayapy dna_viewer_export_fbx.py
-    NOTE: Script cannot be called with Python, it must be called with mayapy.
+    注意：脚本不能使用Python调用，必须使用mayapy调用。
 
-- usage in Maya:
-    1. copy whole content of this file to Maya Script Editor
-    2. change value of ROOT_DIR to absolute path of dna_calibration, e.g. `c:/dna_calibration` in Windows or `/home/user/dna_calibration`. Important:
-    Use `/` (forward slash), because Maya uses forward slashes in path.
+- 在Maya中的用法：
+    1. 将此文件的整个内容复制到Maya Script Editor中
+    2. 将ROOT_DIR的值更改为dna_calibration的绝对路径，例如在Windows中为`c:/dna_calibration`或在`/home/user/dna_calibration`。重要提示：使用正斜杠`/`，因为Maya在路径中使用正斜杠。
 
-- customization:
-- change CHARACTER_NAME to Taro, or the name of a custom DNA file placed in /data/dna_files. If you change name to Taro,
-    or some other Masculine character, you need to change BODY_FILE with value f"{BODY_DIR}/masc_skeleton.ma"
-    - change ADD_COLOR_VERTEX to True, if you want to import fbx in Unreal Engine with painted vertices for fallowing cases:
-        - vertex normals that are going to be updated during import in Unreal Engine, its vertices must be painted with green color.
-        - for potential future GeneSplicer usage, skinwights on vertices which will need update in character mixing process, must be painted with blue color.
-    - change UP_AXIS in order change up axis, it can be 'z' or 'y', if put any value is put, ValueError will be raised
+- 自定义：
+  - 将CHARACTER_NAME更改为Taro，或放置在/data/dna_files中的自定义DNA文件的名称。如果将名称更改为Taro或其他男性角色，您需要将BODY_FILE更改为值f"{BODY_DIR}/masc_skeleton.ma"
+  - 如果要在Unreal Engine中导入带有绘制顶点的fbx，请将ADD_COLOR_VERTEX更改为True，例如：
+      - 顶点法线在导入Unreal Engine时将进行更新，必须将其顶点涂成绿色。
+      - 对于潜在的未来GeneSplicer使用，需要在角色混合过程中需要更新的顶点上涂成蓝色。
+  - 更改UP_AXIS以更改上轴，可以是'z'或'y'，如果放入任何其他值，将引发ValueError异常
 
-Expected:
-    - script will generate fbx files Ada_lodX.mb where X are values from 0 to 7, in OUTPUT_DIR
-    - script will generate workspace.mel in OUTPUT_DIR
+预期结果：
+  - 脚本将在OUTPUT_DIR中生成名为Ada_lodX.mb的fbx文件，其中X的值从0到7。
+  - 脚本将在OUTPUT_DIR中生成workspace.mel文件
 
-NOTE: If OUTPUT_DIR does not exist, it will be created.
+注意：如果OUTPUT_DIR不存在，将会创建该目录。
 """
 
 
