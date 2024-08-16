@@ -37,6 +37,7 @@ def run_after_assemble(head_group, head_rig_group, params):
 def adjust_aim_control():
     """
     This method would properly position aim controls based on the position of eye joints for specific characters.
+    这种方法会根据特定角色眼睛关节的位置，正确地定位瞄准控制。
     """
     if not (
         cmds_exists("FACIAL_C_FacialRoot")
@@ -95,6 +96,7 @@ def connect_expression(driverCtrl, driverAttr, minVal, maxVal, driverKey1, drive
                        expKey2):
     """
     Connects one GUI control with raw control.
+    将一个 GUI 控件连接到原始控件。
     """
 
     # create driver attribute if dont exists
@@ -114,6 +116,7 @@ def connect_expressions():
     """
     This method would connect GUI with raw controls. Raw controls are driven by rig logic while the user
     manipulates GUI controls.
+    这种方法会将GUI与原始控件连接起来。原始控件由机制逻辑驱动，而用户操作GUI控件。
     """
 
     # brows down
@@ -639,6 +642,7 @@ def eyes_setup():
     """
     This method would create proper eys setup meaning that it would connect GUI controls
     with raw controls for look expressions.
+    这种方法将创建正确的眼部设置，这意味着它将连接 GUI 控件和用于外观表达的原始控件。
     """
 
     jntEyeL = "FACIAL_L_Eye"
@@ -824,6 +828,7 @@ def eye_setup(jnt_eye, loc_eye, loc_ui_eye, loc_aim_eye, ctrl_eye, ctrl_ui_eye, 
 def clean_up(head_group, head_rig_group):
     """
     This method is responsible for hierarchical organization of objects in the scene.
+    这种方法负责场景中对象的分层组织。
     """
 
     # deleting layers
@@ -937,6 +942,7 @@ def connect_neck_correctives():
     This method is used for neck setup. Neck deformations are not only coming from the GUI but also
     from movement of the body. It will connect neck joint rotations with raw controls for corrective blendshapes
     for neck turn expressions.
+    这种方法用于颈部设置。颈部变形不仅仅来自GUI，还来自身体的移动。它将颈部关节旋转与原始控制连接起来，用于颈部转动表情的校正混合形状。
     """
 
     cmds_set_attr("CTRL_neckCorrectivesMultiplyerU.translateY", 0.8)
@@ -984,6 +990,7 @@ def connect_follow_head():  # 2d + aim to follow head
     """
     This method would connect switch which will enable user to enable/disable option to GUI and Aim interface to
     follow head rotations.
+    这种方法将连接开关，用户可以通过GUI启用/禁用选项，并将Aim接口设置为跟随头部旋转。
     """
 
     cmds_space_locator(name="LOC_world")
