@@ -22,7 +22,7 @@ class Geometry(Definition):
 
     def read(self) -> None:
         """
-        Starts reading in the mesh from the geometry part of the DNA
+        从DNA的几何部分开始阅读网格。
         """
         super().read()
 
@@ -195,7 +195,7 @@ class Geometry(Definition):
         return face_vertex_layouts
 
     def add_layouts(self, mesh_index: int) -> List[Layout]:
-        """Reads in the vertex layouts"""
+        """读取顶点布局"""
         layouts = []
 
         for layout_index in range(self.get_vertex_layout_count(mesh_index)):
@@ -213,7 +213,7 @@ class Geometry(Definition):
         return layouts
 
     def add_texture_coordinates(self, mesh_index: int) -> List[UV]:
-        """Reads in the texture coordinates"""
+        """读取纹理坐标"""
         texture_coordinates = []
         for texture_coordinate_index in range(
             self.get_vertex_texture_coordinate_count(mesh_index)
@@ -225,7 +225,7 @@ class Geometry(Definition):
         return texture_coordinates
 
     def add_positions(self, mesh_index: int) -> List[Point3]:
-        """Reads in the vertex positions"""
+        """"读取顶点位置"""
 
         positions = []
         for vertex_index in range(self.get_vertex_position_count(mesh_index)):
@@ -237,10 +237,10 @@ class Geometry(Definition):
         self, mesh_index: int, blend_shape_target_index: int
     ) -> Dict[int, Point3]:
         """
-        Reads in the target deltas
-
+        读取目标增量
+        
         @rtype: Dict[int, Point3]
-        @returns: Mapping of vertex indices to positions
+        @returns: 顶点索引到位置的映射
         """
 
         result: Dict[int, Point3] = {}
@@ -261,10 +261,10 @@ class Geometry(Definition):
 
     def add_mesh_blend_shapes(self, mesh_index: int) -> List[BlendShape]:
         """
-        Reads in the blend shapes
-
+        读取混合形状
+        
         @type mesh_index: int
-        @param mesh_index: The mesh index
+        @param mesh_index: 网格索引
         """
 
         blend_shape_target_count = self.get_blend_shape_target_count(mesh_index)
