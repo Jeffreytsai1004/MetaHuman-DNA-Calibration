@@ -1,36 +1,35 @@
-# Repository Organization
+# 存储库组织
 
-This repository contains two independent components:
-1. **dnacalib C++ library** - used to manipulate DNA files
-2. **dna_viewer python code** - used to visualize DNA in Autodesk Maya
+该存储库包含两个独立的组件：
+1. **dnacalib C++ 库** - 用于操作 DNA 文件
+2. **dna_viewer python 代码** - 用于在 Autodesk Maya 中可视化 DNA
 
-# Folder structure
+# 文件夹结构
 
-- [dnacalib](/dnacalib) - DNACalib source code
-- [dna_viewer](/dna_viewer) - source code of dna_viewer
-- [examples](/examples) - several Python scripts to show basic usage of dna_viewer and the Python wrapper for DNACalib
-- [lib](/lib) - pre-built binaries for DNACalib, PyDNACalib, and PyDNA
-- [data](/data) - required DNAs and Maya scenes
-- [docs](/docs) - documentation
+- [dnacalib](/dnacalib) - DNACalib 源代码
+- [dna_viewer](/dna_viewer) - dna_viewer 的源代码
+- [examples](/examples) - 几个 Python 脚本，展示 dna_viewer 的基本用法以及对 DNACalib 的 Python 封装
+- [lib](/lib) - DNACalib、PyDNACalib 和 PyDNA 的预编译二进制文件
+- [data](/data) - 必要的 DNA 和 Maya 场景
+- [docs](/docs) - 文档
 
 
 ## DNACalib
-Documentation is located [here](dnacalib.md)
+文档位于[此处](dnacalib.md)
 
 ## DNAViewer
-Documentation is located [here](dna_viewer.md)
+文档位于[此处](dna_viewer.md)
 
-## Examples
-To run [DNAViewer examples](/docs/dna_viewer.md#examples), you must have Maya 2022 installed.
-To run [DNACalib examples](/docs/dnacalib.md#python), you need Python3.
+## 示例
+要运行[DNAViewer 示例](/docs/dna_viewer.md#examples)，您必须安装 Maya 2022。
+要运行[DNACalib 示例](/docs/dnacalib.md#python)，您需要 Python3。
 
 ## Lib
 
-[Lib folder](/lib) contains pre-built binaries of the DNACalib library for Windows and Linux. Additionally, a Maya plugin for
-RL4 is also available.
+[Lib 文件夹](/lib) 包含 Windows 和 Linux 的 DNACalib 库的预编译二进制文件。此外，还提供了一个用于 RL4 的 Maya 插件。
 
-### Linux location
-You have to copy or create symbolic links for all **.so** files in [lib](lib/Maya2022/linux):
+### Linux 位置
+您需要复制或创建所有 **.so** 文件的符号链接在 [lib](lib/Maya2022/linux) 中：
 
 ```shell
 sudo ln -s ~/MetaHuman-DNA-Calibration/lib/Maya2022/linux/_py3dna.so /usr/lib/_py3dna.so
@@ -44,23 +43,21 @@ sudo ln -s ~/MetaHuman-DNA-Calibration/lib/Maya2022/linux/libembeddedRL4.so /usr
 sudo ln -s ~/MetaHuman-DNA-Calibration/lib/Maya2022/linux/MayaUERBFPlugin.mll /usr/lib/MayaUERBFPlugin.mll
 ```
 
-Note: Change the path `~/MetaHuman-DNA-Calibration` to where `MetaHuman-DNA-Calibration` is located.
+注意：将路径 `~/MetaHuman-DNA-Calibration` 更改为 `MetaHuman-DNA-Calibration` 所在的位置。
 
-## Data
+## 数据
 
-The [`data folder`](/data) contains example DNA files. We provided two MetaHuman DNA files (Ada and Taro, our first Presets).
+[`data 文件夹`](/data) 包含示例 DNA 文件。我们提供了两个 MetaHuman DNA 文件（Ada 和 Taro，我们的第一个预设）。
 
 | Ada | Taro |
 |---|---|
 |![image](img/metahuman_008.png)| ![image](img/metahuman_010.png) |
 
-Additionally, we added [`gui`](/data/gui.ma) and [`analog_gui`](/data/analog_gui.ma) Maya scenes which are used during
-Maya scene assemble.
-Furthermore, [`additional_assemble_script.py`](/data/additional_assemble_script.py) is used to organize objects in scene and
-connect controls. The ideal setup looks like this:
+此外，我们还添加了[`gui`](/data/gui.ma) 和[`analog_gui`](/data/analog_gui.ma) Maya 场景，这些场景在 Maya 场景组装过程中使用。
+此外，[`additional_assemble_script.py`](/data/additional_assemble_script.py) 用于组织场景中的对象并连接控件。理想的设置如下所示：
 
 ![image](img/aas.png)
 
-The MHC 2023 spring release introduced changes to the rig definition (number of joints increased as well as the number of expressions).
-In order to accommodate those changes, we added several files to the repository in `/data/mh4` folder: new [gui scene](/data/mh4/gui.ma), updated [assemble script](/data/mh4/additional_assemble_script.py) and example of Ada’s [DNA file](data/mh4/dna_files/Ada.dna).
-Furthermore, in lib folder we added Maya RBF plugin which is used for controlling neck expressions. Neck setup has recently been improved and adding RBF plugin as well as new gui scene to use it, we get better neck deformations.
+2023 年春季发布的 MHC 引入了刚性定义的更改（关节数量增加以及表达式数量增加）。
+为了适应这些变化，我们在存储库的 `/data/mh4` 文件夹中添加了几个文件：新的[ gui 场景](/data/mh4/gui.ma)、更新的[ 组装脚本](/data/mh4/additional_assemble_script.py) 以及 Ada 的[ DNA 文件](data/mh4/dna_files/Ada.dna) 的示例。
+此外，在 lib 文件夹中，我们添加了用于控制颈部表达式的 Maya RBF 插件。颈部设置最近已经得到改进，并且通过添加 RBF 插件以及使用它的新 gui 场景，我们获得了更好的颈部变形。
