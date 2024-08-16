@@ -84,8 +84,7 @@ class RigBuilder(Builder):
                 mel.eval(mel_command)
             except Exception as e:
                 logging.error(
-                    "The procedure needed for assembling the rig logic was not found, the plugin needed for this might not be loaded."
-                    "Rig logic 所需的程序未找到，可能未加载此插件。"
+                    "The procedure needed for assembling the rig logic was not found, the plugin needed for this might not be loaded. Rig logic 所需的程序未找到，可能未加载此插件。"
                 )
                 raise DNAViewerError(
                     f"Something went wrong, skipping adding the rig logic... Reason: {e}"
