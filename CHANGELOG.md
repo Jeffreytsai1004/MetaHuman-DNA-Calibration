@@ -1,54 +1,54 @@
-# Change Log
+# 更改日志
 
-All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
+此项目的所有重要更改将记录在此文件中。该项目遵循[语义化版本](http://semver.org/)。
 
 
 ## [1.3.0] - 2024-08-15
 
-### Added
-- support for Maya 2024
-- support for Python 3.11
-- added source code comments to python wrappers
+### 新增
+- 支持 Maya 2024
+- 支持 Python 3.11
+- 在Python包装器中添加源代码注释
 
-### Fixed
-- `CalculateMeshLowerLODsCommand` was rewritten to address edge cases discovered with eyelashes and to handle some common cases of invalid UV data. 
-- `RotateCommand` to rotate blend shape target deltas as well.
-- `SetBlendShapeTargetDeltasCommand` to allow setting vertex indices as well.
-- Swig generated classes are now wrapped instead of being monkey-patched to invoke constructors and destructors (which allows building with newer Swig versions - 4.0.x and 4.1.x).
+### 修复
+- 重写了 `CalculateMeshLowerLODsCommand` 以解决发现的睫毛边缘情况，并处理一些常见的无效UV数据情况。
+- `RotateCommand` 现在也旋转混合形状目标增量。
+- `SetBlendShapeTargetDeltasCommand` 现在允许设置顶点索引。
+- Swig 生成的类现在被包装，而不是被猴子补丁，以调用构造函数和析构函数（这允许使用更新的 Swig 版本 - 4.0.x 和 4.1.x 进行构建）。
 
-### Changed
-- CMake files to add test cases that execute the example scripts and allow generating bundled archives with CPack. 
-- Binaries for embeddedRL4 plugin to be .so files.
+### 更改
+- 修改了 CMake 文件以添加执行示例脚本的测试用例，并允许使用 CPack 生成捆绑归档。
+- 嵌入式RL4插件的二进制文件为 .so 文件。
 
 
 ## [1.2.0] - 2023-06-30
 
-### Added
-- assets (gui.ma, Ada.dna, additional_assemble_script.py) which support MHC 2.x.x releases (UE 5.2 and 5.3)
+### 新增
+- 支持 MHC 2.x.x 版本（UE 5.2 和 5.3）的资产（gui.ma、Ada.dna、additional_assemble_script.py）
 
 
 ## [1.1.0] - 2023-04-20
 
-### Added
-- support for Maya 2023
-- support for Python 3.9
-- `RenameAnimatedMapCommand` class to DNACalib API. Command to remove animated maps.
-- `RemoveBlendShapeCommand` class to DNACalib API. Command to remove blend shapes.
-- `DNA` class to DNAViewer API. This class is used for accessing data in DNA file.
-- `rig_build` method to DNAViewer API. Method used for creating maya scene with functional rig. Replacement of method `assemble_rig`.
-- `Config` class to DNAViewer API. Configuration class used for `build_meshes`.
-- `RigConfig` class to DNAViewer API. Configuration class used for `rig_build`.
-- documentation for DNA library.
+### 新增
+- 支持 Maya 2023
+- 支持 Python 3.9
+- `RenameAnimatedMapCommand` 类到 DNACalib API。用于删除动画贴图的命令。
+- `RemoveBlendShapeCommand` 类到 DNACalib API。用于删除混合形状的命令。
+- `DNA` 类到 DNAViewer API。此类用于访问 DNA 文件中的数据。
+- `rig_build` 方法到 DNAViewer API。用于使用功能性骨骼创建 Maya 场景的方法。替换方法 `assemble_rig`。
+- `Config` 类到 DNAViewer API。用于 `build_meshes` 的配置类。
+- `RigConfig` 类到 DNAViewer API。用于 `rig_build` 的配置类。
+- DNA库的文档。
 
-### Fixed
-- `ClearBlendShapesCommand` blend shape channel LODs were not correctly set.
-- `RotateCommand` to rotate blend shape target deltas as well.
-- `SetBlendShapeTargetDeltasCommand` to allow setting vertex indices as well.
+### 修复
+- `ClearBlendShapesCommand` 混合形状通道 LOD 设置不正确。
+- `RotateCommand` 现在也旋转混合形状目标增量。
+- `SetBlendShapeTargetDeltasCommand` 现在允许设置顶点索引。
 
-### Changed
-- changed signature of `build_meshes`. Method used for creating maya scene with meshes. 
-- Simplification of additional assemble script.
-- option to pass list of indices to remove in remove commands.
+### 更改
+- 更改了 `build_meshes` 的签名。用于创建带有网格的 Maya 场景的方法。
+- 简化了额外的组装脚本。
+- 传递要在删除命令中移除的索引列表的选项。
 
-### Removed
-- removed method `assemble_rig` from DNAViewer API.
+### 删除
+- 从 DNAViewer API 中删除了方法 `assemble_rig`。
