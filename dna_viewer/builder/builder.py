@@ -421,7 +421,7 @@ class Builder:
         raise DNAViewerError(f"Unknown angle unit set in DNA file! value {value}")
 
     def get_display_layers(self) -> List[int]:
-        """Gets a lod id list that need to be created for the meshes from @config"""
+        """获取需要为@config中的网格创建的LOD ID列表。"""
         meshes: List[int] = []
         for idx, meshes_per_lod in enumerate(
             self.dna.get_meshes_by_lods(self.all_loaded_meshes)
