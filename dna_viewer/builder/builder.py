@@ -18,13 +18,6 @@ from .mesh import Mesh
 @dataclass
 class BuildResult:
     """
-    A class used for returning data after finishing the build process
-
-    Attributes
-    ----------
-    @type meshes_per_lod: Dict[int, List[str]]
-    @param meshes_per_lod: The list of mesh names created group by LOD number
-
     用于在构建过程完成后返回数据的类
 
     属性
@@ -37,11 +30,6 @@ class BuildResult:
 
     def get_all_meshes(self) -> List[str]:
         """
-        Flatten meshes to single list.
-
-        @rtype: List[str]
-        @returns: The list of all mesh names.
-
         将网格展平为单个列表。
         
         @rtype: List[str]
@@ -56,19 +44,6 @@ class BuildResult:
 
 class Builder:
     """
-    A builder class used for building the character
-
-    Attributes
-    ----------
-    @type config: Config
-    @param config: The configuration options used for building the character
-
-    @type dna: DNA
-    @param dna: The DNA object read from the DNA file
-
-    @type meshes: Dict[int, List[str]]
-    @param meshes: A list of meshes created grouped by lod
-
     一个用于构建角色的生成器类
     
     属性
@@ -108,7 +83,6 @@ class Builder:
         return True
 
     def build(self) -> BuildResult:
-        """Builds the character"""
         """构建角色"""
         self.meshes = {}
         try:
@@ -137,14 +111,6 @@ class Builder:
 
     def add_mesh_to_display_layer(self, mesh_name: str, lod: int) -> None:
         """
-        Add the mesh with the given name to an already created display layer.
-
-        @type mesh_name: str
-        @param mesh_name: The name of the mesh that should be added to a display layer.
-
-        @type lod: int
-        @param lod: The lod value, this is needed for determining the name of the display layer that the mesh should be added to.
-        
         将具有给定名称的网格添加到已创建的显示层。
         
         @type mesh_name: str
@@ -160,11 +126,6 @@ class Builder:
 
     def _add_joints(self) -> List[JointModel]:
         """
-        Reads and adds the joints to the scene, also returns a list model objects of joints that were added.
-
-        @rtype: List[JointModel]
-        @returns: The list containing model objects representing the joints that were added to the scene.
-
         读取并将关节添加到场景中，还返回一个关节模型对象列表，其中包含已添加的关节。
         
         @rtype：List[JointModel]
@@ -180,9 +141,6 @@ class Builder:
 
     def add_joints(self) -> None:
         """
-        Starts adding the joints the character, if the character configuration options have add_joints set to False,
-        this step will be skipped.
-
         开始添加角色的关节，如果角色配置选项中的add_joints设置为False，则会跳过这一步。
         """
 
@@ -195,9 +153,6 @@ class Builder:
 
     def create_groups(self) -> None:
         """
-        Creates a Maya transform which will hold the character, if the character configuration options have
-        create_character_node set to False, this step will be skipped.
-
         创建一个Maya变换，用于容纳角色，如果角色配置选项中的create_character_node设置为False，则将跳过此步骤。
         """
 
@@ -232,14 +187,6 @@ class Builder:
 
     def attach_mesh_to_lod(self, mesh_name: str, lod: int) -> None:
         """
-        Attaches the mesh called mesh_name to a given lod.
-
-        @type mesh_name: str
-        @param mesh_name: The mesh that needs to be attached to a lod holder object.
-
-        @type lod: str
-        @param lod: The name of the mesh that should be added to a display layer.
-
         将名为mesh_name的网格附加到给定的lod。
         
         @type mesh_name: str
@@ -256,14 +203,6 @@ class Builder:
 
     def get_mesh_node_fullpath_on_root(self, mesh_name: str) -> str:
         """
-        Gets the full path in the scene of a mesh.
-
-        @type mesh_name: str
-        @param mesh_name: The mesh thats path is needed.
-
-        @rtype: str
-        @returns: The full path of the mesh object in the scene
-
         获取场景中网格的完整路径。
         
         @type mesh_name: str
@@ -277,7 +216,6 @@ class Builder:
 
     def add_ctrl_attributes_on_root_joint(self) -> None:
         """
-        Adds and sets the raw gui control attributes on root joint.
         在根关节上添加和设置原始GUI控件属性。
         """
 
@@ -292,7 +230,6 @@ class Builder:
 
     def add_animated_map_attributes_on_root_joint(self) -> None:
         """
-        Adds and sets the animated map attributes on root joint.
         在根关节上添加并设置动画地图属性。
         """
 
@@ -309,8 +246,6 @@ class Builder:
 
     def add_attribute(self, control_name: str, long_name: str) -> None:
         """
-        Adds attributes wrapper for internal usage.
-
         为内部使用添加属性包装器。
         """
         cmds.addAttr(
@@ -324,8 +259,6 @@ class Builder:
 
     def add_key_frames(self) -> None:
         """
-        Adds a starting key frame to the facial root joint if joints are added and the add_key_frames option is set
-        to True.
         如果添加了关节并且设置了add_key_frames选项为True，则在面部根关节上添加一个起始关键帧。
         """
 
@@ -372,8 +305,6 @@ class Builder:
 
     def build_meshes(self) -> None:
         """
-        Builds the meshes. If specified in the config they get parented to a created
-        character node transform, otherwise the meshes get put to the root level of the scene.
         构建网格。如果在配置中指定，它们将被添加到创建的角色节点变换下，否则网格将被放置在场景的根级别。
         """
 
@@ -388,18 +319,6 @@ class Builder:
 
     def build_meshes_by_lod(self, lod: int, meshes_per_lod: List[int]) -> List[str]:
         """
-        Builds the meshes from the provided mesh ids and then attaches them to a given lod if specified in the
-        character configuration.
-
-        @type lod: int
-        @param lod: The lod number representing the display layer the meshes to the display layer.
-
-        @type meshes_per_lod: List[int]
-        @param meshes_per_lod: List of mesh indices that are being built.
-
-        @rtype: List[MObject]
-        @returns: The list of maya objects that represent the meshes added to the scene.
-
         从提供的网格ID构建网格，然后将它们附加到角色配置中指定的LOD（如果有）。
         
         @type lod: int
@@ -464,16 +383,6 @@ class Builder:
 
     def get_linear_unit_from_int(self, value: int) -> LinearUnit:
         """
-        Returns an enum from an int value.
-        0 -> cm
-        1 -> m
-
-        @type value: int
-        @param value: The value that the enum is mapped to.
-
-        @rtype: LinearUnit
-        @returns: LinearUnit.cm or LinearUnit.m
-
         从提供的网格ID构建网格，然后将它们附加到角色配置中指定的LOD（如果有）。
         
         @type lod: int
@@ -494,16 +403,6 @@ class Builder:
 
     def get_angle_unit_from_int(self, value: int) -> AngleUnit:
         """
-        Returns an enum from an int value.
-        0 -> degree
-        1 -> radian
-
-        @type value: int
-        @param value: The value that the enum is mapped to.
-
-        @rtype: AngleUnit
-        @returns: AngleUnit.degree or AngleUnit.radian
-
         从整数值返回一个枚举。
         0 -> degree
         1 -> radian
