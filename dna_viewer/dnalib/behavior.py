@@ -26,6 +26,24 @@ class Behavior(Definition):
 
     @type joints: JointGroups
     @param joints: The data representing joints
+
+    @类型读者: BinaryStreamReader
+    @参数读者: 正在使用的二进制流读取器
+    
+    @类型gui_to_raw: ConditionalTable
+    @参数gui_to_raw: 映射有关 GUI 到原始值的数据
+    
+    @类型psd: PSDMatrix
+    @参数psd: 表示姿态空间变形的数据
+    
+    @类型blend_shapes: BlendShapesData
+    @参数blend_shapes: 表示混合形状的数据
+    
+    @类型animated_maps: AnimatedMapsConditionalTable
+    @参数animated_maps: 表示动画贴图的数据
+    
+    @类型joints: JointGroups
+    @参数joints: 表示关节的数据
     """
 
     def __init__(self, reader: DNAReader, layers: Optional[List[Layer]]) -> None:
@@ -239,6 +257,28 @@ class ConditionalTable:
 
     @type outputs: List[int]
     @param outputs: The indices of outputs
+
+    一个用于保存各种值的模型类
+
+    属性
+    ----------
+    @type from_values: List[float]
+    @param from_values: 值列表
+    
+    @type to_values: List[float]
+    @param to_values: 值列表
+    
+    @type slope_values: List[float]
+    @param slope_values: 斜率值列表
+    
+    @type cut_values: List[float]
+    @param cut_values: 截距值列表
+    
+    @type inputs: List[int]
+    @param inputs: 输入的索引
+    
+    @type outputs: List[int]
+    @param outputs: 输出的索引
     """
 
     from_values: List[float] = field(default_factory=list)
@@ -267,6 +307,22 @@ class PSDMatrix:
 
     @type values: List[float]
     @param values: The list of values, that can be accessed from the row and column index
+
+    一个用于保存关于姿势空间变形数据的模型类
+    
+    属性
+    ----------
+    @type count: int
+    @param count: 值列表
+    
+    @type rows: List[int]
+    @param rows: 用于存储值的行索引列表
+    
+    @type columns: List[int]
+    @param columns: 用于存储值的列索引列表
+    
+    @type values: List[float]
+    @param values: 值列表，可以从行和列索引中访问
     """
 
     count: Optional[int] = field(default=None)
@@ -296,6 +352,25 @@ class JointGroup:
 
     @type outputs: List[int]
     @param outputs: The indices of outputs
+
+    一个用于保存关于联合组数据的模型类
+    
+    属性
+    ----------
+    @type lods: List[int]
+    @param lods: 包含联合组的LOD索引列表
+    
+    @type values: List[float]
+    @param values: 值列表
+    
+    @type joints: List[int]
+    @param joints: 节点索引列表
+    
+    @type inputs: List[int]
+    @param inputs: 输入索引
+    
+    @type outputs: List[int]
+    @param outputs: 输出索引
     """
 
     lods: List[int] = field(default_factory=list)
@@ -320,6 +395,19 @@ class BlendShapesData:
 
     @type outputs: List[int]
     @param outputs: The indices of outputs
+
+    一个用于保存混合形状数据的模型类
+    
+    属性
+    ----------
+    @type lods: List[int]
+    @param lods: 包含混合形状的lod索引列表
+    
+    @type inputs: List[int]
+    @param inputs: 输入索引列表
+    
+    @type outputs: List[int]
+    @param outputs: 输出索引列表
     """
 
     lods: List[int] = field(default_factory=list)
@@ -339,6 +427,16 @@ class AnimatedMapsConditionalTable:
 
     @type conditional_table: ConditionalTable
     @param conditional_table: Data needed for animated maps
+
+    一个用于保存关于动画地图数据的模型类
+    
+    属性
+    ----------
+    @type lods: List[int]
+    @param lods: 包含混合形状的lod索引列表
+    
+    @type conditional_table: ConditionalTable
+    @param conditional_table: 动画地图所需的数据
     """
 
     lods: List[int] = field(default_factory=list)
@@ -363,6 +461,22 @@ class JointGroups:
 
     @type joint_groups: List[JointGroup]
     @param joint_groups: The list of joint groups
+
+    一个用于存储关节数据的模型类
+    
+    属性
+    ----------
+    @type joint_row_count: int
+    @param joint_row_count: 存储关节数据的矩阵的行数
+    
+    @type joint_column_count: int
+    @param joint_column_count: 存储关节数据的矩阵的列数
+    
+    @type joint_variable_attribute_indices: List[List[int]]
+    @param joint_variable_attribute_indices: 每个LOD的关节变量属性索引列表
+    
+    @type joint_groups: List[JointGroup]
+    @param joint_groups: 关节组列表
     """
 
     joint_row_count: Optional[int] = field(default=None)
