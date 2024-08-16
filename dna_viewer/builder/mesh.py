@@ -81,6 +81,7 @@ class Mesh:
 
     def build(self) -> None:
         """Starts the build process, creates the neutral mesh, then adds normals, blends shapes and skin if needed"""
+        """开始构建过程，创建中性网格，然后添加法线，混合形状并根据需要添加皮肤"""
 
         self.create_neutral_mesh()
         self.add_blend_shapes()
@@ -88,11 +89,13 @@ class Mesh:
 
     def create_neutral_mesh(self) -> None:
         """Creates the neutral mesh"""
+        """创建中性网格"""
 
         self.mesh.create_neutral_mesh()
 
     def add_blend_shapes(self) -> None:
         """Reads in the blend shapes, then adds them to the mesh if it is set in the build options"""
+        """读取混合形状，然后根据构建选项将它们添加到网格中"""
 
         if self.config.add_blend_shapes:
             logging.info("adding blend shapes...")
@@ -102,6 +105,7 @@ class Mesh:
 
     def add_skin_cluster(self) -> None:
         """Adds skin cluster to the mesh if it is set in the build options"""
+        """如果在构建选项中设置了，将皮肤集群添加到网格中"""
 
         if self.config.add_skin_cluster and self.config.add_joints:
             self.prepare_joints()
@@ -111,6 +115,7 @@ class Mesh:
     def prepare_joints(self) -> None:
         """
         Gets the joint indices and names needed for the given mesh.
+        获取给定网格所需的关节索引和名称。
         """
 
         self.prepare_joint_ids()
