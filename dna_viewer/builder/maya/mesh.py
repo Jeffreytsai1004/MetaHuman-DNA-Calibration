@@ -32,6 +32,26 @@ class Mesh:
 
     @type derived_mesh_names: List[str]
     @param derived_mesh_names: List of mesh names
+    
+    为在网格构建过程中需要的数据创建一个模型类
+    
+    属性
+    ----------
+    @type dna_vertex_positions: List[Point3]
+    @param dna_vertex_positions: 表示顶点位置的数据
+    
+    @type dna_vertex_layout_positions: List[int]
+    @param dna_vertex_layout_positions: 表示顶点布局位置索引的数据
+    
+    @type polygon_faces: List[int]
+    @param polygon_faces: 顶点布局索引长度的列表
+    
+    @type polygon_connects: List[int]
+    @param polygon_connects: 顶点布局位置索引的列表
+    
+    @type derived_mesh_names: List[str]
+    @param derived_mesh_names: 网格名称的列表
+    
     """
 
     dna_vertex_positions: List[Point3] = field(default_factory=list)
@@ -73,6 +93,37 @@ class MayaMesh:
 
     @type dag_modifier: om.MDagModifier
     @param dag_modifier: OpenMaya class used for naming the mesh
+
+    一个用于向场景添加连接件的建造者类
+    
+    属性
+    ----------
+    @type mesh_index: int
+    @param mesh_index: 网格的索引
+    
+    @type dna: DNA
+    @param dna: DNA的实例
+    
+    @type blend_shape_group_prefix: str
+    @param blend_shape_group_prefix: 用于混合形状组的前缀字符串
+    
+    @type blend_shape_name_postfix: str
+    @param blend_shape_name_postfix: 用于混合形状名称的后缀字符串
+    
+    @type skin_cluster_suffix: str
+    @param skin_cluster_suffix: 用于皮肤集群名称的后缀字符串
+    
+    @type data: Mesh
+    @param data: 在网格创建过程中使用的网格数据
+    
+    @type fn_mesh: om.MFnMesh
+    @param fn_mesh: 用于创建网格的OpenMaya类
+    
+    @type mesh_object: om.MObject
+    @param mesh_object: 代表网格的对象
+    
+    @type dag_modifier: om.MDagModifier
+    @param dag_modifier: 用于命名网格的OpenMaya类
     """
 
     def __init__(
@@ -112,6 +163,11 @@ class MayaMesh:
 
         @rtype: MObject
         @returns: Maya objects representing maya mesh functions and the created maya mesh object.
+
+        获取表示顶点位置的点列表。
+        
+        @rtype：MObject
+        @returns：表示Maya网格函数和创建的Maya网格对象的Maya对象。
         """
 
         mesh_object = self.fn_mesh.create(
@@ -128,6 +184,11 @@ class MayaMesh:
 
         @rtype: List[MPoint]
         @returns: List of maya point objects.
+
+        获取代表顶点位置的点列表。
+        
+        @rtype: List[MPoint]
+        @returns: Maya点对象的列表。
         """
 
         vertex_positions = []
@@ -147,6 +208,11 @@ class MayaMesh:
 
         @rtype: Tuple[MDagModifier]
         @returns: Maya object representing the dag modifier.
+
+        将创建的初始网格对象重命名为来自配置的名称。
+        
+        @rtype：元组[MDagModifier]
+        @returns：表示dag修改器的Maya对象。
         """
 
         mesh_name = self.dna.get_mesh_name(self.mesh_index)
@@ -158,7 +224,7 @@ class MayaMesh:
     def prepare_mesh(self) -> None:
         """
         Gets a list of points that represent the vertex positions.
-
+        获取一个表示顶点位置的点列表。
         """
 
         logging.info("==============================")
@@ -179,6 +245,7 @@ class MayaMesh:
     def add_texture_coordinates(self) -> None:
         """
         Method for adding texture coordinates.
+        添加纹理坐标的方法。
 
         """
 
@@ -204,6 +271,10 @@ class MayaMesh:
 
         @rtype: Tuple[List[float], List[float], List[int]] @returns: The tuple containing the list of texture
         coordinate Us, the list of texture coordinate Vs and the list of texture coordinate indices.
+
+        获取创建纹理所需的数据。
+        
+        @rtype：元组[列表[float]，列表[float]，列表[int]] @returns：包含纹理坐标U列表，纹理坐标V列表和纹理坐标索引列表的元组。
         """
 
         texture_coordinates = self.dna.get_vertex_texture_coordinates_for_mesh(
@@ -246,6 +317,7 @@ class MayaMesh:
     def create_blend_shape_node(self) -> None:
         """
         Creates a blend shape node.
+        创建混合形状节点。
         """
         mesh_name = self.dna.get_mesh_name(self.mesh_index)
 
@@ -267,6 +339,11 @@ class MayaMesh:
 
         @type add_mesh_name_to_blend_shape_channel_name: bool
         @param add_mesh_name_to_blend_shape_channel_name: A flag representing whether mesh name of blend shape channel is added to name when creating it
+
+        使用提供的网格和DNA的混合形状数据构建所有派生网格。
+        
+        @type add_mesh_name_to_blend_shape_channel_name: bool
+        @param add_mesh_name_to_blend_shape_channel_name: 一个表示在创建时是否将混合形状通道的网格名称添加到名称的标志
         """
 
         logging.info("adding derived meshes...")
@@ -310,6 +387,21 @@ class MayaMesh:
 
         @type add_mesh_name_to_blend_shape_channel_name: bool
         @param add_mesh_name_to_blend_shape_channel_name: A flag representing whether mesh name of blend shape channel is added to name when creating it
+
+        使用提供的网格和DNA的混合形状数据构建一个单一的派生网格。
+
+        @type blend_shape_target_index: int
+        @param blend_shape_target_index: 用于获取表示有关混合形状的值更改的增量值。
+        
+        @type blend_shape_channel: int
+        @param blend_shape_channel: 用于从DNA中获取混合形状名称。
+        
+        @type group: str
+        @param group: 新网格将添加到的变换。
+        
+        @type add_mesh_name_to_blend_shape_channel_name: bool
+        @param add_mesh_name_to_blend_shape_channel_name: 一个表示在创建时是否将混合形状通道的网格名称添加到名称的标志。
+        
         """
 
         new_vert_layout = self.get_vertex_positions_from_dna_vertex_positions()
@@ -351,6 +443,14 @@ class MayaMesh:
 
         @type joint_ids: List[int]
         @param joint_ids: Joint indices needed for setting skin weights
+
+        向网格添加皮肤集
+
+        @type joint_names: List[str]
+        @param joint_names: 添加皮肤集所需的关节名称
+        
+        @type joint_ids: List[int]
+        @param joint_ids: 设置皮肤权重所需的关节索引
         """
 
         mesh_name = self.dna.get_mesh_name(self.mesh_index)
@@ -367,6 +467,14 @@ class MayaMesh:
 
         @type joints: List[Joint]
         @param joints: List of joints used for adding the skin cluster.
+
+        创建一个skin cluster对象。
+        
+        @type mesh_name: str
+        @param mesh_name: 用于皮肤集群命名的网格名称。
+        
+        @type joints: List[Joint]
+        @param joints: 用于添加皮肤集群的关节列表。
         """
 
         logging.info("adding skin cluster...")
@@ -395,6 +503,14 @@ class MayaMesh:
 
         @type joint_ids: List[int]
         @param joint_ids: List of joint indices used for setting the skin weight attribute.
+
+        设置皮肤权重属性。
+
+        @type mesh_name: str
+        @param mesh_name: 用于获取皮肤集群名称的网格名称。
+        
+        @type joint_ids: List[int]
+        @param joint_ids: 用于设置皮肤权重属性的关节索引列表。
         """
 
         logging.info("adding skin weights...")
