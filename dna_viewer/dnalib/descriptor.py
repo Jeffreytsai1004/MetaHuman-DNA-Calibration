@@ -80,11 +80,6 @@ class Descriptor:
 
     def read(self) -> None:
         """
-        Starts reading in the descriptor part of the DNA
-
-        @rtype: DescriptorModel
-        @returns: the instance of the created descriptor model
-        
         开始阅读 DNA 描述部分
         
         @rtype: DescriptorModel
@@ -99,7 +94,6 @@ class Descriptor:
             self.add_db_data()
 
     def add_basic_data(self) -> None:
-        """Reads in the character name, archetype, gender and age"""
         """读入角色名称、原型、性别和年龄"""
 
         self.name = self.reader.getName()
@@ -108,7 +102,6 @@ class Descriptor:
         self.age = self.reader.getAge()
 
     def add_metadata(self) -> None:
-        """Reads in the metadata provided from the DNA file"""
         """读取DNA文件提供的元数据"""
 
         for i in range(self.reader.getMetaDataCount()):
@@ -116,7 +109,6 @@ class Descriptor:
             self.metadata[key] = self.reader.getMetaDataValue(key)
 
     def add_geometry_data(self) -> None:
-        """Sets the translation unit, rotation unit, and coordinate system from the DNA file"""
         """从DNA文件设置翻译单位、旋转单位和坐标系统"""
 
         self.translation_unit = self.reader.getTranslationUnit()
@@ -129,7 +121,6 @@ class Descriptor:
         )
 
     def add_db_data(self) -> None:
-        """Reads in the db data from the DNA file"""
         """从 DNA 文件中读取数据库数据"""
 
         self.lod_count = self.reader.getLODCount()
