@@ -1,21 +1,19 @@
-# Environment Setup
+# 环境设置
 
-In order be able to import from dna_viewer, the environment needs to be set up. This is done by adding this code to the
-beginning of any example mentioned below:
+为了能够从dna_viewer导入，需要设置环境。这是通过将以下代码添加到下面提到的任何示例的开头来实现的：
 
 ```
 from sys import path as syspath, platform
 from os import environ, path as ospath
 
-ROOT_DIR = fr"{ospath.dirname(ospath.abspath(__file__))}/..".replace("\\", "/") # if you use Maya, use an absolute path instead
+ROOT_DIR = fr"{ospath.dirname(ospath.abspath(__file__))}/..".replace("\\", "/") # 如果您使用Maya，请改用绝对路径
 ROOT_LIB_DIR = fr"{ROOT_DIR}/lib"
 if platform == "win32":
     LIB_DIR = f"{ROOT_LIB_DIR}/windows"
 elif platform == "linux":
     LIB_DIR = f"{ROOT_LIB_DIR}/linux"
 else:
-    raise OSError("OS not supported, please compile dependencies and add value to LIB_DIR")
-
+    raise OSError("不支持的操作系统，请编译依赖项并将值添加到LIB_DIR")
 
 if "MAYA_PLUG_IN_PATH" in environ:
     separator = ":" if platform == "linux" else ";"
@@ -27,13 +25,13 @@ syspath.append(ROOT_DIR)
 syspath.append(LIB_DIR)
 ```
 
-When running this from Maya, the `ROOT_DIR` should be set to an absolute path to the root of the repository instead.
+在从Maya运行时，`ROOT_DIR` 应设置为存储库根目录的绝对路径。
 
 # DNA
 
-## Loading the DNA
+## 加载DNA
 
-Loads the DNA and returns a [`DNA`](../dna_viewer/dnalib/dnalib.py#L13) object.
+加载DNA并返回一个[`DNA`](../dna_viewer/dnalib/dnalib.py#L13) 对象。
 
 ```
 from dna_viewer import DNA
@@ -42,14 +40,14 @@ dna_ada = DNA(DNA_PATH_ADA)
 dna_taro = DNA(DNA_PATH_TARO)
 ```
 
-This uses the following parameters:
-- `dna_path: str` - The path of the DNA file that should be used.
-- `layers: Optional[List[Layer]]` - List of parts of DNA to be loaded. If noting is passed, whole DNA is going to be loaded. Same as passing Layer.all.
+这使用以下参数：
+- `dna_path: str` - 应使用的DNA文件的路径。
+- `layers: Optional[List[Layer]]` - 要加载的DNA部分列表。如果未传递任何内容，则将加载整个DNA。与传递 Layer.all 相同。
 
-## Build Meshes
+## 构建网格
 
-Build meshes API explanation is located [here](/docs/dna_viewer_api_build_meshes.md).
+构建网格的API解释位于[这里](/docs/dna_viewer_api_build_meshes.md)。
 
-## Build Rig
+## 构建Rig
 
-Build Rig API explanation is located [here](/docs/dna_viewer_api_build_rig.md).
+构建Rig的API解释位于[这里](/docs/dna_viewer_api_build_rig.md)。
