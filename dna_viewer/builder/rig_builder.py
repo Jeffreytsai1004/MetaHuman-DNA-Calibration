@@ -17,7 +17,6 @@ from .config import RigConfig
 
 class RigBuilder(Builder):
     """
-    A builder class used for building meshes
     一个用于构建网格的构建器类
     """
 
@@ -36,7 +35,6 @@ class RigBuilder(Builder):
 
     def run_additional_assemble_script(self) -> None:
         """
-        Runs an additional assemble script if specified in the character configuration.
         如果在角色配置中指定，则运行额外的组装脚本。
         """
 
@@ -56,7 +54,6 @@ class RigBuilder(Builder):
 
     def add_rig_logic(self) -> None:
         """
-        Creates and adds a rig logic node specified in the character configuration.
         创建并添加在角色配置中指定的骨骼逻辑节点。
         """
 
@@ -88,7 +85,7 @@ class RigBuilder(Builder):
             except Exception as e:
                 logging.error(
                     "The procedure needed for assembling the rig logic was not found, the plugin needed for this might not be loaded."
-                    "组装井逻辑所需的程序未找到，可能未加载此插件。"
+                    "Rig logic 所需的程序未找到，可能未加载此插件。"
                 )
                 raise DNAViewerError(
                     f"Something went wrong, skipping adding the rig logic... Reason: {e}"
@@ -96,7 +93,6 @@ class RigBuilder(Builder):
 
     def add_gui(self) -> None:
         """
-        Adds a gui according to the specified gui options. If none is specified no gui will be added.
         根据指定的GUI选项添加GUI。如果未指定任何选项，则不会添加GUI。
         """
 
@@ -114,7 +110,6 @@ class RigBuilder(Builder):
 
     def add_ctrl_attributes(self) -> None:
         """
-        Adds and sets the raw gui control attributes.
         添加并设置原始 GUI 控件属性。
         """
 
@@ -128,8 +123,7 @@ class RigBuilder(Builder):
 
     def add_animated_map_attributes(self) -> None:
         """
-        Adds and sets the animated map attributes.
-        添加并设置动画地图属性。
+        添加并设置Anim Map属性。
         """
 
         names = self.dna.get_animated_map_names()
@@ -142,14 +136,13 @@ class RigBuilder(Builder):
                 )
 
     def position_gui(self, group_name: str) -> None:
-        """Sets the gui position to align with the character eyes"""
         """将 GUI 位置设置为与角色的眼睛对齐"""
 
         if not cmds.objExists(self.config.eye_gui_name) or not cmds.objExists(
             self.config.left_eye_joint_name
         ):
             logging.warning(
-                "could not find joints needed for positioning the gui, leaving it at its default position..."
+                "could not find joints needed for positioning the gui, leaving it at its default position... 开始将所有提供的关节添加到场景中..."
             )
             return
 
@@ -179,8 +172,6 @@ class RigBuilder(Builder):
 
     def add_analog_gui(self) -> None:
         """
-        Adds an analog gui according to the specified analog gui options. If none is specified no analog gui will be
-        added.
         根据指定的模拟 GUI 选项添加模拟 GUI。如果未指定，将不添加模拟 GUI。
         """
 
@@ -195,7 +186,6 @@ class RigBuilder(Builder):
                 self.add_eye_locators()
 
     def add_eyes(self) -> None:
-        """Add eyes to the analog gui"""
         """将眼睛添加到模拟界面。"""
 
         self.eye_l_pos = Maya.get_translation(self.config.left_eye_joint_name)
@@ -236,7 +226,6 @@ class RigBuilder(Builder):
         )
 
     def add_eye_locators(self) -> None:
-        """Add eye locators to the analog gui"""
         """将眼睛定位器添加到模拟界面。"""
 
         eye_l_locator_pos = Maya.get_translation(self.config.le_aim)
@@ -262,17 +251,6 @@ class RigBuilder(Builder):
 
     def source_py_file(self, name: str, path: str) -> Optional[ModuleType]:
         """
-        Used for loading a python file, used for additional assemble script.
-
-        @type name: str
-        @param name: The name of the module.
-
-        @type path: str
-        @param path: The path of the python file.
-
-        @rtype: Optional[ModuleType]
-        @returns: The loaded module.
-
         用于加载一个Python文件，用于额外的组装脚本。
         
         @type name: str
@@ -300,14 +278,6 @@ class RigBuilder(Builder):
 
     def import_gui(self, gui_path: str, group_name: str) -> None:
         """
-        Imports a gui using the provided parameters.
-
-        @type gui_path: str
-        @param gui_path: The path of the gui file that needs to be imported.
-
-        @type group_name: str
-        @param group_name: The name of the transform that holds the imported asset.
-
         使用提供的参数导入一个GUI。
         
         @type gui_path: str
