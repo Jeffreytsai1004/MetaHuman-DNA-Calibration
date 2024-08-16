@@ -14,7 +14,7 @@ from PySide2.QtWidgets import (
 
 
 class QLine(QFrame):
-    """A widget for creating a horizontal line"""
+    """用于创建水平线的小部件"""
 
     def __init__(self, line: QFrame.Shape) -> None:
         super().__init__()
@@ -23,7 +23,7 @@ class QLine(QFrame):
 
 
 class QHLine(QLine):
-    """A widget for creating a horizontal line"""
+    """一个用于创建水平线的小部件"""
 
     def __init__(self) -> None:
         super().__init__(QFrame.HLine)
@@ -31,7 +31,7 @@ class QHLine(QLine):
 
 class FileChooser(QWidget):
     """
-    A custom widget used for selecting a file path using a FileDialog and an input field
+    一个用于使用 FileDialog 和输入字段选择文件路径的自定义小部件
     """
 
     def __init__(
@@ -80,10 +80,10 @@ class FileChooser(QWidget):
 
     def get_file_path(self) -> str:
         """
-        Gets the file path from the text field
-
+        从文本字段获取文件路径
+        
         @rtype: str
-        @returns: The file path contained in the text field
+        @returns: 文本字段中包含的文件路径
         """
 
         path = str(self.fc_text_field.text())
@@ -92,7 +92,7 @@ class FileChooser(QWidget):
         return None
 
     def open_dialog(self) -> None:
-        """Opens a file dialog, when a path is chosen, the text field gets filled with its value"""
+        """打开一个文件对话框，当选择了一个路径后，文本字段将被填充为该路径的值。"""
 
         if self._dir_selector:
             file_name, _ = QFileDialog.getExistingDirectory(
