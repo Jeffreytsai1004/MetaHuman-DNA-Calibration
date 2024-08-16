@@ -36,7 +36,6 @@ def run_after_assemble(head_group, head_rig_group, params):
 # ****************************************************************************************************
 def adjust_aim_control():
     """
-    This method would properly position aim controls based on the position of eye joints for specific characters.
     这种方法会根据特定角色眼部关节的位置，适当地定位瞄准控制。
     """
     if not (
@@ -95,7 +94,7 @@ def adjust_aim_control():
 def connect_expression(driverCtrl, driverAttr, minVal, maxVal, driverKey1, driverKey2, expCtrl, expAttr, expKey1,
                        expKey2):
     """
-    Connects one GUI control with raw control.
+    将一个 GUI 控件与原始控件连接起来。
     """
 
     # create driver attribute if dont exists
@@ -113,8 +112,6 @@ def connect_expression(driverCtrl, driverAttr, minVal, maxVal, driverKey1, drive
 # ****************************************************************************************************
 def connect_expressions():
     """
-    This method would connect GUI with raw controls. Raw controls are driven by rig logic while the user
-    manipulates GUI controls.
     这种方法将GUI与原始控件连接起来。原始控件由骨骼逻辑驱动，而用户操作GUI控件。
     """
 
@@ -666,8 +663,6 @@ def connect_expressions():
 # ****************************************************************************************************
 def eyes_setup():
     """
-    This method would create proper eys setup meaning that it would connect GUI controls
-    with raw controls for look expressions.
     这种方法会创建正确的眼睛设置，这意味着它会连接GUI控件和原始控件以实现外观表达。
     """
 
@@ -764,7 +759,6 @@ def eyes_setup():
 def eye_setup(jnt_eye, loc_eye, loc_ui_eye, loc_aim_eye, ctrl_eye, ctrl_ui_eye, attr_aim_at, ctrl_ui_eye_c,
               loc_eye_root, loc_aim_up):
     """
-    Setup for one eye.
     设置为一个眼睛。
     """
     if cmds_exists(jnt_eye):
@@ -854,7 +848,6 @@ def eye_setup(jnt_eye, loc_eye, loc_ui_eye, loc_aim_eye, ctrl_eye, ctrl_ui_eye, 
 # ****************************************************************************************************
 def clean_up(head_group, head_rig_group):
     """
-    This method is responsible for hierarchical organization of objects in the scene.
     这种方法负责场景中对象的分层组织。
     """
 
@@ -965,9 +958,6 @@ def rename_skin_clusters():
 # ****************************************************************************************************
 def connect_neck_correctives():
     """
-    This method is used for neck setup. Neck deformations are not only coming from the GUI but also
-    from movement of the body. It will connect neck joint rotations with raw controls for corrective blendshapes
-    for neck turn expressions.
     这种方法用于颈部设置。颈部变形不仅来自GUI，还来自身体的运动。它将颈关节旋转与原始控件连接，用于颈部转向表情的校正混合形状。
     """
     # connect joint matrices with setup
@@ -1049,8 +1039,6 @@ def connect_neck_correctives():
 # ****************************************************************************************************
 def connect_follow_head():  # 2d + aim to follow head
     """
-    This method would connect switch which will enable user to enable/disable option to GUI and Aim interface to
-    follow head rotations.
     这种方法会连接开关，使用户能够通过GUI启用/禁用选项，并使Aim接口跟随头部旋转。
     """
 
