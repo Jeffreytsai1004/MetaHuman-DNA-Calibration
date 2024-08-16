@@ -126,11 +126,11 @@ class DNA(Behavior, Geometry):
 
         if len(skin_weight_values) != vertex_position_count:
             raise DNAViewerError(
-                "Number of skin weight values and vertex count don't match!"
+                "Number of skin weight values and vertex count don't match! 皮肤权重值的数量和顶点数量不匹配！"
             )
         if len(joint_indices) != len(skin_weight_values):
             raise DNAViewerError(
-                "Number of skin weight values and joint indices count don't match for vertex!"
+                "Number of skin weight values and joint indices count don't match for vertex! 皮肤权重值的数量和关节索引计数与顶点不匹配！"
             )
 
         weight_matrix = []
@@ -169,7 +169,7 @@ class DNA(Behavior, Geometry):
         if mesh_index is None:
             if None in (dna_faces, dna_vertex_layout_positions):
                 raise DNAViewerError(
-                    "get_polygon_faces_and_connects -> Must provide either mesh_index or dna_faces and dna_vertex_layout_positions"
+                    "get_polygon_faces_and_connects -> Must provide either mesh_index or dna_faces and dna_vertex_layout_positions. get_polygon_faces_and_connects -> 必须提供mesh_index或dnas_faces和dnas_vertex_layout_positions"
                 )
         if dna_faces is None:
             dna_faces = self.get_faces(mesh_index)
