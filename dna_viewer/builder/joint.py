@@ -16,6 +16,16 @@ class Joint:
 
     @type joint_flags: Dict[str, bool]
     @param joint_flags: A mapping used for setting flags that are used to avoid adding the same joint multiple times
+
+    用于向场景添加关节的构建器类
+    
+    属性
+    ----------
+    @type joints: List[JointModel]
+    @param joints: 表示关节的数据
+    
+    @type joint_flags: Dict[str, bool]
+    @param joint_flags: 用于设置标志的映射，以避免多次添加相同的关节
     """
 
     def __init__(self, joints: List[JointModel]) -> None:
@@ -31,6 +41,11 @@ class Joint:
 
         @type joint: JointModel
         @param joint: The joint to be added to the scene
+
+        将给定的关节添加到场景中
+        
+        @type joint: JointModel
+        @param joint: 要添加到场景中的关节
         """
 
         if self.joint_flags[joint.name]:
