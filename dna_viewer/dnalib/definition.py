@@ -11,46 +11,6 @@ from .layer import Layer
 
 class Definition(Descriptor):
     """
-    A class used for reading and accessing the definition part of the DNA file
-
-    Attributes
-    ----------
-    @type reader: BinaryStreamReader
-    @param reader: The binary stream reader being used
-
-    @type definition: DefinitionModel
-    @param definition: The object that holds the definition data read from the DNA file
-
-    @type joints: Joints
-    @param joints: The data about joints
-
-    @type blend_shape_channels: GeometryEntity
-    @param blend_shape_channels: The names and indices of blend shape channels
-
-    @type animated_maps: GeometryEntity
-    @param animated_maps: The names and indices of animated maps
-
-    @type meshes: GeometryEntity
-    @param meshes: The names and indices of the meshes
-
-    @type gui_control_names: List[str]
-    @param gui_control_names: The list of gui control names
-
-    @type raw_control_names: List[str]
-    @param raw_control_names: The list of raw control names
-
-    @type mesh_blend_shape_channel_mapping: List[Tuple[int, int]]
-    @param mesh_blend_shape_channel_mapping: Mapping of mesh index to the blend shape channel index
-
-    @type mesh_blend_shape_channel_mapping_indices_for_lod: List[List[int]]
-    @param mesh_blend_shape_channel_mapping_indices_for_lod: The list of blend shape channel mapping indices by lod
-
-    @type neutral_joint_translations: List[Point3]
-    @param neutral_joint_translations: The list of neutral joint translations
-
-    @type neutral_joint_rotations: List[Point3]
-    @param neutral_joint_rotations: The list of neutral joint rotations
-
     一个用于读取和访问DNA文件定义部分的类
     
     属性
@@ -119,11 +79,6 @@ class Definition(Descriptor):
 
     def read(self) -> None:
         """
-        Starts reading in the definition part of the DNA
-
-        @rtype: DefinitionModel
-        @returns: the instance of the created definition model
-
         开始阅读DNA定义部分
         
         @rtype：DefinitionModel
@@ -284,7 +239,6 @@ class Definition(Descriptor):
             )
 
     def add_mesh_blend_shape_channel_mapping(self) -> None:
-        """Reads in the mesh blend shape channel mapping"""
         """读取网格混合形状通道映射"""
 
         for index in range(self.get_mesh_blend_shape_channel_mapping_count()):
@@ -298,7 +252,6 @@ class Definition(Descriptor):
             )
 
     def add_meshes(self) -> None:
-        """Reads in the meshes of the definition"""
         """读取定义中的网格"""
 
         for index in range(self.get_mesh_count()):
@@ -309,7 +262,6 @@ class Definition(Descriptor):
             self.meshes.lod_indices.append(self.get_mesh_indices_for_lod(index))
 
     def add_animated_maps(self) -> None:
-        """Reads in the animated maps of the definition"""
         """读取定义的动画地图"""
 
         for index in range(self.get_animated_map_count()):
@@ -320,7 +272,6 @@ class Definition(Descriptor):
             )
 
     def add_blend_shape_channels(self) -> None:
-        """Reads in the neutral joints part of the definition"""
         """读取定义中的中性关节部分"""
 
         for index in range(self.get_blend_shape_channel_count()):
@@ -333,7 +284,6 @@ class Definition(Descriptor):
             )
 
     def add_joints(self) -> None:
-        """Reads in the joints of the definition"""
         """读取定义的关节"""
 
         for index in range(self.get_joint_count()):
@@ -343,7 +293,6 @@ class Definition(Descriptor):
             self.joints.lod_indices.append(self.get_joint_indices_for_lod(index))
 
     def add_controls(self) -> None:
-        """Reads in the gui and raw controls of the definition"""
         """读取定义的GUI和原始控件"""
 
         for index in range(self.get_gui_control_count()):
@@ -355,16 +304,6 @@ class Definition(Descriptor):
 @dataclass
 class GeometryEntity:
     """
-    A model class for holding names and indices
-
-    Attributes
-    ----------
-    @type names: List[str]
-    @param names: List of names
-
-    @type lod_indices: List[List[int]]
-    @param lod_indices: List of indices per lod
-
     一个用于保存姓名和索引的模型类
     
     属性
@@ -383,13 +322,6 @@ class GeometryEntity:
 @dataclass
 class Joints(GeometryEntity):
     """
-    A model class for holding data about the joints
-
-    Attributes
-    ----------
-    @type parent_index: List[int]
-    @param parent_index: List of parent indices for each joint index
-
     一个用于保存关节数据的模型类
     
     属性
