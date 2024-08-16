@@ -1,20 +1,20 @@
 """
-This example demonstrates reading a DNA file in binary format and writing it in a human readable JSON format.
-IMPORTANT: You have to setup the environment before running this example. Please refer to the 'Environment setup' section in README.md.
+这个例子演示了以二进制格式读取DNA文件并将其写入人类可读的JSON格式。
+重要提示：在运行此示例之前，您必须设置环境。请参考README.md中的“环境设置”部分。
 
-- usage in command line:
+- 在命令行中的使用方法：
     python dna_binary_to_json_demo.py
     mayapy dna_binary_to_json_demo.py
-- usage in Maya:
-    1. copy whole content of this file to Maya Script Editor
-    2. change value of ROOT_DIR to absolute path of dna_calibration, e.g. `c:/dna_calibration` in Windows or `/home/user/dna_calibration`. Important:
-    Use `/` (forward slash), because Maya uses forward slashes in path.
+- 在Maya中的使用方法：
+    1. 将此文件的整个内容复制到Maya脚本编辑器中
+    2. 将ROOT_DIR的值更改为dna_calibration的绝对路径，例如在Windows中为`c:/dna_calibration`或在`/home/user/dna_calibration`。重要提示：
+    使用`/`（正斜杠），因为Maya在路径中使用正斜杠。
 
-- customization:
-    - change CHARACTER_NAME to Taro, or the name of a custom DNA file placed in /data/dna_files
+- 自定义：
+    - 将CHARACTER_NAME更改为Taro，或将其更改为放置在/data/dna_files中的自定义DNA文件的名称
 
-Expected: Script will generate Ada_output.json in OUTPUT_DIR from original Ada.dna.
-NOTE: If OUTPUT_DIR does not exist, it will be created.
+预期结果：脚本将从原始的Ada.dna在OUTPUT_DIR中生成Ada_output.json。
+注意：如果OUTPUT_DIR不存在，它将被创建。
 """
 
 from os import makedirs
