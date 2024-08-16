@@ -1,154 +1,154 @@
-# DNA API overview
+# DNA API概览
 
-Here is an overview of main methods used to read from and write to DNA files.  
-The following documentation is for C++. Currently, there is no Python documentation.  
+这里是用于读取和写入DNA文件的主要方法概述。  
+以下文档适用于C++。目前没有Python文档。  
 
-As mentioned [here](/docs/dna.md#api-overview), there are classes that are used for reading a DNA from or writing it to a stream. Those are:  
+如[此处](/docs/dna.md#api-overview)所述，有用于从流中读取DNA或向其写入的类。它们是：  
 - [BinaryStreamReader](/dnacalib/DNACalib/include/dna/BinaryStreamReader.h)
 - [BinaryStreamWriter](/dnacalib/DNACalib/include/dna/BinaryStreamWriter.h)
 - [JSONStreamReader](/dnacalib/DNACalib/include/dna/JSONStreamReader.h)
 - [JSONStreamWriter](/dnacalib/DNACalib/include/dna/JSONStreamWriter.h)
 
-After creating a reader, it can be used to query different information contained in the DNA.  
-After creating a writer, it can be used to set new values in the DNA.  
+创建阅读器后，可以用它来查询DNA中包含的不同信息。  
+创建编写器后，可以用它来在DNA中设置新值。  
 
-This is done through methods listed on this page. They are grouped based on [layers](/docs/dna.md#layers) in the DNA file.  
+这是通过此页面上列出的方法完成的。它们根据DNA文件中的[层](/docs/dna.md#layers)进行分组。  
 
-**Note**: Not all available methods are listed on this page. For more details on methods listed here and a list of all available methods, consult appropriate reader and/or writer [here](/dnacalib/DNACalib/include/dna/layers).
+**注意**：此页面上未列出所有可用方法。有关此处列出的方法的更多详细信息以及所有可用方法的列表，请参考适当的阅读器和/或编写器[此处](/dnacalib/DNACalib/include/dna/layers)。
 
 ## BinaryStreamReader
-Contains methods for creating and destroying a [BinaryStreamReader](/dnacalib/DNACalib/include/dna/BinaryStreamReader.h).  
-When creating a BinaryStreamReader, the user can filter data in the DNA file, by specifying which LODs to load. As explained [here](/docs/dna.md#reader), filtering can also be done by specifying which data layers to load.  
+包含用于创建和销毁[BinaryStreamReader](/dnacalib/DNACalib/include/dna/BinaryStreamReader.h)的方法。  
+创建BinaryStreamReader时，用户可以通过指定要加载的LOD来过滤DNA文件中的数据。正如[此处](/docs/dna.md#reader)所解释的，还可以通过指定要加载的数据层来进行过滤。  
 
 - `create(stream, layer = DataLayer::All, maxLOD = 0u, memRes = nullptr)`  
-    Factory method for creation of BinaryStreamReader.  
-    Parameters:  
-        `stream` - Source stream from which data is going to be read.  
-        `layer` - Specify the layer up to which the data needs to be loaded.  
-        `maxLOD` - The maximum level of details to be loaded. A value of zero indicates to load all LODs.  
-        `memRes` - Memory resource to be used for allocations. If a memory resource is not given, a default allocation mechanism will be used. User is responsible for releasing the returned pointer by calling destroy.  
+    用于创建BinaryStreamReader的工厂方法。  
+    参数：  
+        `stream` - 要从中读取数据的源流。  
+        `layer` - 指定需要加载数据的层。  
+        `maxLOD` - 要加载的最大细节级别。值为零表示加载所有LOD。  
+        `memRes` - 用于分配的内存资源。如果未提供内存资源，则将使用默认分配机制。用户负责通过调用destroy释放返回的指针。
 
 - `create(stream, layer, maxLOD, minLOD, memRes = nullptr)`  
-    Factory method for creation of BinaryStreamReader.  
-    Parameters:  
-        `stream` - Source stream from which data is going to be read.  
-        `layer` - Specify the layer up to which the data needs to be loaded.  
-        `maxLOD` - The maximum level of details to be loaded.  
-        `minLOD` - The minimum level of details to be loaded. A range of [0, LOD count - 1] for maxLOD / minLOD respectively indicates to load all LODs.  
-        `memRes` - Memory resource to be used for allocations. If a memory resource is not given, a default allocation mechanism will be used. User is responsible for releasing the returned pointer by calling destroy.  
+    用于创建BinaryStreamReader的工厂方法。  
+    参数：  
+        `stream` - 要从中读取数据的源流。  
+        `layer` - 指定需要加载数据的层。  
+        `maxLOD` - 要加载的最大细节级别。  
+        `minLOD` - 要加载的最小细节级别。对于maxLOD / minLOD，范围为[0，LOD计数-1]分别表示加载所有LOD。  
+        `memRes` - 用于分配的内存资源。如果未提供内存资源，则将使用默认分配机制。用户负责通过调用destroy释放返回的指针。
 
 - `create(stream, layer, lods, lodCount, memRes = nullptr)`  
-    Factory method for creation of BinaryStreamReader.  
-    Parameters:  
-        `stream` - Source stream from which data is going to be read.  
-        `layer` - Specify the layer up to which the data needs to be loaded.  
-        `lods` - An array specifying which exact lods to load.  
-        `lodCount` - The number of elements in the lods array.  
-        `memRes` - Memory resource to be used for allocations. If a memory resource is not given, a default allocation mechanism will be used. User is responsible for releasing the returned pointer by calling destroy.  
+    用于创建BinaryStreamReader的工厂方法。  
+    参数：  
+        `stream` - 要从中读取数据的源流。  
+        `layer` - 指定需要加载数据的层。  
+        `lods` - 指定要加载的确切LOD的数组。  
+        `lodCount` - lods数组中的元素数。  
+        `memRes` - 用于分配的内存资源。如果未提供内存资源，则将使用默认分配机制。用户负责通过调用destroy释放返回的指针。
 
 - `destroy(instance)`  
-    Method for freeing a BinaryStreamReader instance.  
-    Parameters:  
-       `instance` - Instance of BinaryStreamReader to be freed.
+    释放BinaryStreamReader实例的方法。  
+    参数：  
+       `instance` - 要释放的BinaryStreamReader实例。
 
 ## BinaryStreamWriter
 - `create(stream, memRes = nullptr)`  
-    Factory method for creation of BinaryStreamWriter.  
-    Parameters:  
-        `stream` - Stream into which the data is going to be written.
-        `memRes` - Memory resource to be used for allocations. If a memory resource is not given, a default allocation mechanism will be used. User is responsible for releasing the returned pointer by calling destroy.
+    用于创建BinaryStreamWriter的工厂方法。  
+    参数：  
+        `stream` - 要写入数据的流。
+        `memRes` - 用于分配的内存资源。如果未提供内存资源，则将使用默认分配机制。用户负责通过调用destroy释放返回的指针。
 
 - `destroy(BinaryStreamWriter* instance)`  
-    Method for freeing a BinaryStreamWriter instance.  
-    Parameters:  
-        `instance` - Instance of BinaryStreamWriter to be freed.  
+    释放BinaryStreamWriter实例的方法。  
+    参数：  
+        `instance` - 要释放的BinaryStreamWriter实例。
 
 ## JSONStreamReader
 - `create(stream, memRes = nullptr)`  
-    Factory method for creation of JSONStreamReader.  
-        Parameters:  
-            `stream` - Source stream from which data is going to be read.  
-            `memRes` - Memory resource to be used for allocations. If a memory resource is not given, a default allocation mechanism will be used. User is responsible for releasing the returned pointer by calling destroy.  
+    用于创建JSONStreamReader的工厂方法。  
+        参数：  
+            `stream` - 从中读取数据的源流。  
+            `memRes` - 用于分配的内存资源。如果没有提供内存资源，则将使用默认的分配机制。用户负责通过调用 destroy 释放返回的指针。  
 
 - `destroy(instance)`  
-    Method for freeing a JSONStreamReader instance.  
-        Parameters:  
-            `instance` - Instance of JSONStreamReader to be freed.  
+    用于释放 JSONStreamReader 实例的方法。  
+        参数：  
+            `instance` - 要释放的 JSONStreamReader 实例。  
 
 ## JSONStreamWriter
 - `create(stream, indentWidth = 4u, memRes = nullptr)`  
-    Factory method for creation of JSONStreamWriter.  
-    Parameters:  
-        `stream` - Stream into which the data is going to be written.  
-        `indentWidth` - Number of spaces to use for indentation.  
-        `memRes` - Memory resource to be used for allocations. If a memory resource is not given, a default allocation mechanism will be used. User is responsible for releasing the returned pointer by calling destroy.  
+    用于创建 JSONStreamWriter 的工厂方法。  
+    参数：  
+        `stream` - 要写入数据的流。  
+        `indentWidth` - 用于缩进的空格数。  
+        `memRes` - 用于分配的内存资源。如果没有提供内存资源，则将使用默认的分配机制。用户负责通过调用 destroy 释放返回的指针。  
 
 - `destroy(instance)`  
-    Method for freeing a JSONStreamWriter instance.  
-    Parameters:  
-        `instance` - Instance of JSONStreamWriter to be freed.  
+    用于释放 JSONStreamWriter 实例的方法。  
+    参数：  
+        `instance` - 要释放的 JSONStreamWriter 实例。  
 
-## setFrom() method
-Besides methods for creating a writer, both BinaryStreamReader and JSONStreamReader have a setFrom() method, inherited from [Writer](/dnacalib/DNACalib/include/dna/Writer.h), used to initialize a writer with data from a reader.  
-Using this method, data used to initialize a writer can be filtered by data layers.  
+## setFrom() 方法
+除了用于创建 writer 的方法之外，BinaryStreamReader 和 JSONStreamReader 还具有一个 setFrom() 方法，继承自[Writer](/dnacalib/DNACalib/include/dna/Writer.h)，用于使用读取器中的数据初始化写入器。  
+使用此方法，用于初始化写入器的数据可以通过数据层进行过滤。  
 - `setFrom(source, layer = DataLayer::All, memRes = nullptr)`  
-    Initialize the Writer from the given Reader.  
-    This function copies all the data from the given Reader into the Writer instance, by calling each getter function of the Reader, and passing the return values to the matching setter functions in the Writer.  
-    Parameters:  
-        `source` - The source DNA Reader from which the data needs to be copied.  
-        `layer` - Limit which layers should be taken over from the given source reader.  
-        `memRes` - Optional memory resource to use for temporary allocations during copying.  
+    从给定的 Reader 初始化 Writer。  
+    此函数通过调用 Reader 的每个 getter 函数，并将返回值传递给 Writer 中匹配的 setter 函数，将给定 Reader 中的所有数据复制到 Writer 实例中。  
+    参数：  
+        `source` - 需要复制数据的源 DNA Reader。  
+        `layer` - 指定应从给定源读取器中接管哪些层。  
+        `memRes` - 用于在复制过程中临时分配的可选内存资源。  
 
-## Reader methods
+## Reader 方法
 ### DescriptorReader
-Contains read-only accessors for various metadata about the character and the rig.  
+包含有关角色和机构的各种元数据的只读访问器。  
 
 - `getName()`
-    Character name.
+    角色名称。
 - `getArchetype()`
-    Character archetype.
+    角色原型。
 - `getGender()`
-    Character gender.
+    角色性别。
 - `getAge()`
-    Character age.
+    角色年龄。
 - `getTranslationUnit()`
-    The translation unit that is used (cm or m).
+    使用的翻译单位（厘米或米）。
 - `getRotationUnit()`
-    The rotation unit that is used (degrees or radians).
+    使用的旋转单位（度或弧度）。
 - `getCoordinateSystem()`
-    Coordinate system that is used (directions of x, y and z axes).
+    使用的坐标系（x、y 和 z 轴的方向）。
 - `getLODCount()`
-    Available levels of detail (e.g. 6 which means the following levels are available: [0,1,2,3,4,5], where 0 is the LOD with the highest details, and 5 is the LOD with lowest details).
+    可用的细节级别（例如 6 表示可用以下级别：[0,1,2,3,4,5]，其中 0 是具有最高细节的 LOD，5 是具有最低细节的 LOD）。
 - `getDBMaxLOD()`
-    The maximum level of detail stored in the DNA data for this character. The value is relative to LOD-0 from the database.
+    存储在此角色的 DNA 数据中的最大细节级别。该值相对于数据库中的 LOD-0。
 - `getDBComplexity()`
-    Name of the input control interface used to drive this character rig. This parameter denotes the character's input control complexity.
+    用于驱动此角色机构的输入控制界面的名称。此参数表示角色的输入控制复杂性。
 - `getDBName()`
-    Name of the database from which the character originates. All characters from the same database must have the same Definition, but may have different complexity or LOD.
+    该角色所属数据库的名称。来自同一数据库的所有角色必须具有相同的 Definition，但可以具有不同的复杂性或 LOD。
 
 ### DefinitionReader
-Contains read-only accessors for DNA attributes that represent the rig's static data.  
+包含用于表示机构静态数据的 DNA 属性的只读访问器。  
 
 - `getGUIControlCount()`
-    Number of GUI controls.
+    GUI 控件数量。
 - `getGUIControlName(index)`
-    Name of the requested GUI control.
+    请求的 GUI 控件名称。
 - `getRawControlCount()`
-    Number of raw controls.
+    原始控件数量。
 - `getRawControlName(index)`
-    Name of the requested raw control.
+    请求的原始控件名称。
 - `getJointCount()`
-    Number of joints.
+    关节数量。
 - `getJointName(index)`
-    Name of the requested joint.
+    请求的关节名称。
 - `getJointIndicesForLOD(lod)`
-    List of joint indices for the specified LOD.
+    指定 LOD 的关节索引列表。
 - `getJointParentIndex(index)`
-    Index of the requested joint's parent.  
-    The joint hierarchy may be traversed and reconstructed using this function. Example:  
-    Joint names: [A, B, C, D, E, F, G, H, I]  
-    Hierarchy:   [0, 0, 0, 1, 1, 4, 2, 6, 2]  
-    Describes the following hierarchy:
+    请求的关节的父级索引。  
+    可以使用此函数遍历和重建关节层次结构。示例：  
+    关节名称：[A, B, C, D, E, F, G, H, I]  
+    层次结构：[0, 0, 0, 1, 1, 4, 2, 6, 2]  
+    描述以下层次结构：
     ```
     A
     ├── B
@@ -158,288 +158,287 @@ Contains read-only accessors for DNA attributes that represent the rig's static 
     └── C
         ├── G
         │   └── H
-        └── I
+        └  ── 我
     ```
-    Requesting the parent index of joint 5 (joint name: F) would return 4 (joint name: E).  
-    Requesting the parent index of the root joint: 0 (joint name: A) would return the same index 0.
+    请求关节5的父级索引（关节名称：F）将返回4（关节名称：E）。
+    请求根关节的父级索引：0（关节名称：A）将返回相同的索引0。
 - `getBlendShapeChannelCount()`
-    Number of blend shape channels.
+    混合形状通道数量。
 - `getBlendShapeChannelName(index)`
-    Name of the requested blend shape channel.
+    请求的混合形状通道的名称。
 - `getBlendShapeChannelIndicesForLOD(lod)`
-    List of blend shape channel indices for the specified LOD.
+    指定LOD的混合形状通道索引列表。
 - `getAnimatedMapCount()`
-    Number of animated maps.
+    动画地图数量。
 - `getAnimatedMapName(index)`
-    Name of the requested animated map.
+    请求的动画地图的名称。
 - `getAnimatedMapIndicesForLOD(lod)`
-    List of animated map indices for the specified LOD.
+    指定LOD的动画地图索引列表。
 - `getMeshCount()`
-    Number of meshes.
+    网格数量。
 - `getMeshName(index)`
-    Name of the requested mesh.
+    请求的网格的名称。
 - `getMeshIndicesForLOD(lod)`
-    List of mesh indices for the specified LOD.
+    指定LOD的网格索引列表。
 - `getMeshBlendShapeChannelMappingCount()`
-    Number of mesh-blend shape channel mapping items.
+    网格-混合形状通道映射项数量。
 - `getMeshBlendShapeChannelMapping(index)`
-    A structure holding the mesh index and the associated blend shape channel index for the specified mapping index.
+    包含指定映射索引的网格索引和关联的混合形状通道索引的结构。
 - `getMeshBlendShapeChannelMappingIndicesForLOD(lod)`
-    List of mesh-blend shape channel mapping indices for the specified LOD.
+    指定LOD的网格-混合形状通道映射索引列表。
 - `getNeutralJointTranslation(index)`
-    The joint's translation (x, y, z) in bind pose.
+    关节在绑定姿势中的平移（x，y，z）。
 - `getNeutralJointTranslationXs()`
-    List of all translation X values for joints in bind pose.
+    绑定姿势中所有关节的所有平移X值列表。
 - `getNeutralJointTranslationYs()`
-    List of all translation Y values for joints in bind pose.
+    绑定姿势中所有关节的所有平移Y值列表。
 - `getNeutralJointTranslationZs()`
-    List of all translation Z values for joints in bind pose.
+    绑定姿势中所有关节的所有平移Z值列表。
 - `getNeutralJointRotation(index)`
-    The joint's rotation (x, y, z) in bind pose.
+    关节在绑定姿势中的旋转（x，y，z）。
 - `getNeutralJointRotationXs()`
-    List of all rotation X values for joints in bind pose.
+    绑定姿势中所有关节的所有旋转X值列表。
 - `getNeutralJointRotationYs()`
-    List of all rotation Y values for joints in bind pose.
+    绑定姿势中所有关节的所有旋转Y值列表。
 - `getNeutralJointRotationZs()`
-    List of all rotation Z values for joints in bind pose.
+    绑定姿势中所有关节的所有旋转Z值列表。
 
 ### BehaviorReader
-Contains read-only accessors for DNA attributes that define the rig's evaluation.  
+包含用于定义角色评估的DNA属性的只读访问器。
 
 - `getGUIToRawInputIndices()`
-    Input indices used for mapping GUI to raw controls.
+    用于将GUI映射到原始控件的输入索引。
 - `getGUIToRawOutputIndices()`
-    Output indices used for mapping GUI to raw controls.
+    用于将GUI映射到原始控件的输出索引。
 - `getGUIToRawFromValues()`
-    Filter values(lower-bounds) used to decide whether a particular entry should be evaluated or not during GUI to raw control mapping.
+    用于在GUI到原始控件映射期间决定是否评估特定条目的过滤值（下界）。
 - `getGUIToRawToValues()`
-    Filter values(upper-bounds) used to decide whether a particular entry should be evaluated or not during GUI to raw control mapping.
+    用于在GUI到原始控件映射期间决定是否评估特定条目的过滤值（上界）。
 - `getGUIToRawSlopeValues()`
-    Computational values(slope/gradient) used for calculating the output value during GUI to raw control mapping.
+    用于在GUI到原始控件映射期间计算输出值的计算值（斜率/梯度）。
 - `getGUIToRawCutValues()`
-    Computational values(vertical intercept) used for calculating the output value during GUI to raw control mapping.
+    用于在GUI到原始控件映射期间计算输出值的计算值（垂直截距）。
 - `getPSDCount()`
-    The number of distinct PSD expressions.
+    不同PSD表达式的数量。
 - `getPSDRowIndices()`
-    PSD(input) indices.
+    PSD（输入）索引。
 - `getPSDColumnIndices()`
-    Control(input) indices.
+    控件（输入）索引。
 - `getPSDValues()`
-    Weights associated with each PSD row and column pair.
+    与每个PSD行和列对相关联的权重。
 - `getJointRowCount()`
-    Number of rows in the entire, uncompressed joint matrix.
+    整个未压缩关节矩阵中的行数。
 - `getJointColumnCount()`
-    Number of columns in the entire, uncompressed joint matrix.
+    整个未压缩关节矩阵中的列数。
 - `getJointVariableAttributeIndices(lod)`
-    Joint attribute indices (output indices) for the requested LOD.
+    请求的LOD的关节属性索引（输出索引）。
 - `getJointGroupCount()`
-    Number of joint groups present in the entire joint matrix.
+    整个关节矩阵中存在的关节组数量。
 - `getJointGroupLODs(jointGroupIndex)`
-    Number of rows per each level of detail for the requested joint group.  
-    Each element's position represents the level itself, while the value denotes the number of rows within the joint group belonging to that level. e.g.:  
+    请求的关节组每个细节级别的行数。
+    每个元素的位置代表级别本身，值表示属于该级别的关节组中的行数。例如：
     ```
     [12, 9, 3]
-     │   │  └── LOD-2 contains first 3 rows
-     │   └── LOD-1 contains first 9 rows
-     └── LOD-0 contains first 12 rows
+     │   │  └── LOD-2 包含前3行
+     │   └── LOD-1 包含前9行
+     └── LOD-0 包含前12行
     ```
 - `getJointGroupInputIndices(jointGroupIndex)`
-    Column indices that the requested joint group contains. The column indices point into the entire, uncompressed joint matrix.
+    请求的关节组包含的列索引。列索引指向整个未压缩关节矩阵。
 - `getJointGroupOutputIndices(jointGroupIndex)`
-    Row indices that the requested joint group contains. The row indices point into the entire, uncompressed joint matrix.
-- `getJointGroupValues(jointGroupIndex)`
-    Values that the requested joint group contains.
+    请求的关节组包含的行索引。行索引指向整个未压缩关节矩阵。
+- `获取`jointGroupIndex`的联合组值。
 - `getJointGroupJointIndices(jointGroupIndex)`
-    Joint indices that the requested joint group contains.
+    获取请求的联合组包含的关节索引。
 - `getBlendShapeChannelLODs()`
-    Input index count per each level of detail for blend shape channels.  
-    Each element's position represents the level itself (e.g. [0,1,2,3,4,5] Value 0 is LOD with highest of details, value 5 is LOD with lowest details), while the value denotes the number of input indices belonging to that level.
+    每个融合形状通道不同细节级别的输入索引数。 
+    每个元素的位置代表级别本身（例如[0,1,2,3,4,5] 值0是最高细节级别的LOD，值5是最低细节级别的LOD），而该值表示属于该级别的输入索引数。
 - `getBlendShapeChannelInputIndices()`
-    Input indices used to index into the input vector.
+    用于索引输入向量的输入索引。
 - `getBlendShapeChannelOutputIndices()`
-    Output indices specify the positions of blend shape channel output values.
+    输出索引指定融合形状通道输出值的位置。
 - `getAnimatedMapLODs()`
-    Row count per each level of detail for animated maps.  
-    Each element's position represents the level itself (e.g. [0,1,2,3,4,5] Value 0 is LOD with highest of details, value 5 is LOD with lowest details), while the value denotes the number of rows (within the conditional table), belonging to that level.
+    每个动画贴图不同细节级别的行数。 
+    每个元素的位置代表级别本身（例如[0,1,2,3,4,5] 值0是最高细节级别的LOD，值5是最低细节级别的LOD），而该值表示该级别所属的行数（在条件表内）。
 - `getAnimatedMapInputIndices()`
-    Input indices used to index into the array of input values.
+    用于索引输入值数组的输入索引。
 - `getAnimatedMapOutputIndices()`
-    Output indices that specify the computed output value's position.
+    指定计算输出值位置的输出索引。
 - `getAnimatedMapFromValues()`
-    Filter values(lower-bounds) used to decide whether a particular entry should be evaluated or not.
+    用于决定是否应评估特定条目的过滤值（下限）。
 - `getAnimatedMapToValues()`
-    Filter values(upper-bounds) used to decide whether a particular entry should be evaluated or not.
+    用于决定是否应评估特定条目的过滤值（上限）。
 - `getAnimatedMapSlopeValues()`
-    Computational values(slope/gradient) used for calculating the output value.
+    用于计算输出值的计算值（斜率/梯度）。
 - `getAnimatedMapCutValues()`
-    Computational values(vertical intercept) used for calculating the output value.
+    用于计算输出值的计算值（垂直截距）。
 
 ### GeometryReader
-Contains read-only accessors to the geometry data associated with a rig.  
+包含对与骨骼关联的几何数据的只读访问器。
 
 - `getVertexPositionCount(meshIndex)`
-    Number of vertex positions in the entire mesh.
+    整个网格中顶点位置的数量。
 - `getVertexPosition(meshIndex, vertexIndex)`
-    Position of the specified vertex in the specified mesh. The vertices are sorted by the vertex ID.
+    指定网格中指定顶点的位置。 顶点按顶点ID排序。
 - `getVertexPositionXs(meshIndex)`
-    List of all vertex position X values for the referenced mesh.
+    用于参考网格的所有顶点位置X值的列表。
 - `getVertexPositionYs(meshIndex)`
-    List of all vertex position Y values for the referenced mesh.
+    用于参考网格的所有顶点位置Y值的列表。
 - `getVertexPositionZs(meshIndex)`
-    List of all vertex position Z values for the referenced mesh.
+    用于参考网格的所有顶点位置Z值的列表。
 - `getVertexTextureCoordinateCount(meshIndex)`
-    Number of texture coordinates in the entire mesh.
+    整个网格中纹理坐标的数量。
 - `getVertexTextureCoordinate(meshIndex, textureCoordinateIndex)`
-    Texture coordinate for specified index in the specified mesh.
+    指定网格中指定索引的纹理坐标。
 - `getVertexTextureCoordinateUs(meshIndex)`
-    List of all texture coordinate U values for the referenced mesh.
+    用于参考网格的所有纹理坐标U值的列表。
 - `getVertexTextureCoordinateVs(meshIndex)`
-    List of all texture coordinate V values for the referenced mesh.
+    用于参考网格的所有纹理坐标V值的列表。
 - `getVertexNormalCount(meshIndex)`
-    Number of vertex normals in the entire mesh.
+    整个网格中顶点法线的数量。
 - `getVertexNormal(meshIndex, normalIndex)`
-    Vertex normal for specified index in the specified mesh.
+    指定网格中指定索引的顶点法线。
 - `getVertexNormalXs(meshIndex)`
-    List of all normal X values for the referenced mesh.
+    用于参考网格的所有法线X值的列表。
 - `getVertexNormalYs(meshIndex)`
-    List of all normal Y value for the referenced meshs.
+    用于参考网格的所有法线Y值的列表。
 - `getVertexNormalZs(meshIndex)`
-    List of all normal Z values for the referenced mesh.
+    用于参考网格的所有法线Z值的列表。
 - `getVertexLayoutCount(meshIndex)`
-    Number of vertex layouts in the entire mesh. A vertex layout is a collection of vertex attributes.
+    整个网格中顶点布局的数量。 顶点布局是顶点属性的集合。
 - `getVertexLayout(meshIndex, layoutIndex)`
-    Vertex layouts contain only attribute indices which can be used to query the actual attributes, such as positions, texture coordinates and normals, which are associated with the vertex. The indices from a layout are usable with the above defined APIs.
+    顶点布局仅包含可用于查询与顶点关联的实际属性（如位置、纹理坐标和法线）的属性索引。 布局中的索引可与上面定义的API一起使用。
 - `getVertexLayoutPositionIndices(meshIndex)`
-    Position indices for each vertex of the referenced mesh.
+    参考网格每个顶点的位置索引。
 - `getVertexLayoutTextureCoordinateIndices(meshIndex)`
-    Texture coordinate indices for each vertex of the referenced mesh.
+    参考网格每个顶点的纹理坐标索引。
 - `getVertexLayoutNormalIndices(meshIndex)`
-    Normal indices for each vertex of the referenced mesh.
+    参考网格每个顶点的法线索引。
 - `getFaceCount(meshIndex)`
-    Number of faces that belong to the specified mesh.
+    属于指定网格的面数。
 - `getFaceVertexLayoutIndices(meshIndex, faceIndex)`
-    List of vertex layout indices the belong to a face on the specified mesh.
+    属于指定网格上面的顶点布局索引列表。
 - `getMaximumInfluencePerVertex(meshIndex)`
-    The maximum number of joints that may influence any single vertex.
+    可影响任何单个顶点的最大关节数。
 - `getSkinWeightsCount(meshIndex)`
-    Number of skin weights associated with the specified mesh.
+    与指定网格关联的皮肤权重数。
 - `getSkinWeightsValues(meshIndex, vertexIndex)`
-    List of skin weights influencing the requested vertex.
+    影响请求的顶点的皮肤权重列表。
 - `getSkinWeightsJointIndices(meshIndex, vertexIndex)`
-    List of joint indices associated with each skin weight for the specified vertex. The joint indices are stored in the same order as the weights they are associated with.
+    关联的关节索引列表。为指定顶点的每个皮肤权重。关节索引按与它们关联的权重相同的顺序存储。
 - `getBlendShapeTargetCount(meshIndex)`
-    Number of blend shapes that belong to the specified mesh.
+    属于指定网格的变形目标数量。
 - `getBlendShapeChannelIndex(meshIndex, blendShapeTargetIndex)`
-    The matching blend shape channel index of the requested blend shape target.
+    请求的变形目标的匹配变形通道索引。
 - `getBlendShapeTargetDeltaCount(meshIndex, blendShapeTargetIndex)`
-    Number of deltas that belong to the specified blend shape.
+    属于指定变形的增量数量。
 - `getBlendShapeTargetDelta(meshIndex, blendShapeTargetIndex, deltaIndex)`
-    List of deltas for each affected vertex.
+    每个受影响顶点的增量列表。
 - `getBlendShapeTargetDeltaXs(meshIndex, blendShapeTargetIndex)`
-    List of all delta X values for the referenced blend shape target.
+    引用的变形目标的所有增量X值列表。
 - `getBlendShapeTargetDeltaYs(meshIndex, blendShapeTargetIndex)`
-    List of all delta Y values for the referenced blend shape target.
+    引用的变形目标的所有增量Y值列表。
 - `getBlendShapeTargetDeltaZs(meshIndex, blendShapeTargetIndex)`
-    List of all delta Z values for the referenced blend shape target.
+    引用的变形目标的所有增量Z值列表。
 - `getBlendShapeTargetVertexIndices(meshIndex, blendShapeTargetIndex)`
-    Vertex position indices affected by the referenced blend shape target. The vertex position indices are stored in the same order as the deltas they are associated with. These indices can be used to query the associated vertices themselves through getVertexPosition.
+    受引用变形目标影响的顶点位置索引。顶点位置索引按与它们关联的增量相同的顺序存储。这些索引可用于通过getVertexPosition查询关联的顶点本身。
 
-## Writer methods
+## 写入方法
 
 ### DescriptorWriter
-Contains write-only accessors to various metadata about the character and the rig.  
+包含对角色和骨骼的各种元数据的只写访问器。
 
 - `setName(name)`
-    Sets character name.
+    设置角色名称。
 - `setArchetype(archetype)`
-    Sets character archetype.
+    设置角色原型。
 - `setGender(gender)`
-    Sets character gender.
+    设置角色性别。
 - `setAge(age)`
-    Sets character age.
+    设置角色年龄。
 - `setTranslationUnit(unit)`
-    Sets translation unit (cm or m).
+    设置平移单位（厘米或米）。
 - `setRotationUnit(unit)`
-    Sets rotation unit (degrees or radians).
+    设置旋转单位（度或弧度）。
 - `setCoordinateSystem(system)`
-    Sets coordinate system (directions of the axes).
+    设置坐标系统（轴的方向）。
 - `setLODCount(lodCount)`
-    Sets available levels of detail (e.g. 6 which means the following levels are available: [0,1,2,3,4,5], where 0 is the LOD with the highest details, and 5 is the LOD with lowest details).
+    设置可用的细节级别（例如6表示以下级别可用：[0,1,2,3,4,5]，其中0是具有最高细节的LOD，5是具有最低细节的LOD）。
 - `setDBMaxLOD(lod)`
-    Sets the maximum level of detail stored in the DNA data for this character.
+    设置存储在此角色的DNA数据中的最大细节级别。
 - `setDBComplexity(name)`
-    Sets name of the input control interface used to drive this character rig.
+    设置用于驱动此角色骨骼的输入控制界面的名称。
 - `setDBName(name)`
-    Sets name of the database from which the character originates.
+    设置角色来源的数据库名称。
 
 ### DefinitionWriter
-Contains write-only accessors for DNA attributes that represent the rig's static data.  
+包含用于表示骨骼静态数据的DNA属性的只写访问器。
 - `clearGUIControlNames()`
-    Deletes all stored GUI control names.
+    删除所有存储的GUI控件名称。
 - `setGUIControlName(index, name)`
-    Sets name of the specified GUI control.
+    设置指定GUI控件的名称。
 - `clearRawControlNames()`
-    Deletes all stored raw control names.
+    删除所有存储的原始控件名称。
 - `setRawControlName(index, name)`
-    Sets name of the specified raw control.
+    设置指定原始控制的名称。
 - `clearJointNames()`
-    Deletes all stored joint names.
+    删除所有存储的关节名称。
 - `setJointName(index, name)`
-    Sets name of the specified joint.
+    设置指定关节的名称。
 - `clearJointIndices()`
-    Deletes all stored joint indices.
+    删除所有存储的关节索引。
 - `setJointIndices(index, jointIndices, count)`
-    Stores a list of joint indices onto a specified index. The index denotes the position of an entire joint index list, not the position of it's individual elements, i.e. the row index in a 2D matrix of joint indices.
+    将关节索引列表存储到指定索引上。索引表示整个关节索引列表的位置，而不是它的单个元素的位置，即关节索引的2D矩阵中的行索引。
 - `clearLODJointMappings()`
-    Deletes all stored LOD to joint list index mapping entries.
+    删除所有存储的LOD到关节列表索引映射条目。
 - `setLODJointMapping(lod, index)`
-    Sets which joints belong to which level of detail.
+    设置哪些关节属于哪个细节级别。
 - `clearBlendShapeChannelNames()`
-    Deletes all stored blend shape channel names.
+    删除所有存储的变形通道名称。
 - `setBlendShapeChannelName(index, name)`
-    Sets name of the specified blend shape channel.
+    设置指定变形通道的名称。
 - `clearBlendShapeChannelIndices()`
-    Deletes all stored blend shape channel indices.
+    删除所有存储的变形通道索引。
 - `setBlendShapeChannelIndices(index, blendShapeChannelIndices, count)`
-    Stores a list of blend shape channel name indices onto a specified index. The index denotes the position of an entire blend shape channel index list, not the position of it's individual elements, i.e. the row index in a 2D matrix of blend shape channel indices.
+    将变形通道名称索引列表存储到指定索引上。索引表示整个变形通道索引列表的位置，而不是它的单个元素的位置，即变形通道索引的2D矩阵中的行索引。
 - `clearLODBlendShapeChannelMappings()`
-    Deletes all stored LOD to blend shape channel list index mapping entries.
+    删除所有存储的LOD到变形通道列表索引映射条目。
 - `setLODBlendShapeChannelMapping(lod, index)`
-    Sets which blend shape channels belong to which level of detail.
+    设置哪些变形通道属于哪个细节级别。
 - `clearAnimatedMapNames()`
-    Deletes all stored animated map names.
+    删除所有存储的动画映射名称。
 - `setAnimatedMapName(index, name)`
-    Sets name of the specified animated map.
+    设置指定动画映射的名称。
 - `clearAnimatedMapIndices()`
-    Deletes all stored animated map indices.
-- `setAnimatedMapIndices(index, animatedMapIndices, count)`
-    Stores a list of animated map name indices onto a specified index. The index denotes the position of an entire animated map index list, not the position of it's individual elements, i.e. the row index in a 2D matrix of animated map indices.
+    删除所有存储的动画映射索引。
+- `setAnimatedMapIndices(index, animatedMap索引、计数）
+    将动画地图名称索引列表存储到指定索引上。索引表示整个动画地图索引列表的位置，而不是其各个元素的位置，即在二维动画地图索引矩阵中的行索引。
 - `clearLODAnimatedMapMappings()`
-    Deletes all stored LOD to animated map list index mapping entries.
+    删除所有存储的LOD到动画地图列表索引映射条目。
 - `setLODAnimatedMapMapping(lod, index)`
-    Sets which animated maps belong to which level of detail.
+    设置哪些动画地图属于哪个细节级别。
 - `clearMeshNames()`
-    Deletes all stored mesh names.
+    删除所有存储的网格名称。
 - `setMeshName(index, name)`
-    Sets name of the specified mesh.
+    设置指定网格的名称。
 - `clearMeshIndices()`
-    Deletes all stored mesh indices.
+    删除所有存储的网格索引。
 - `setMeshIndices(index, meshIndices, count)`
-    Stores a list of mesh name indices onto a specified index. The index denotes the position of an entire mesh index list, not the position of it's individual elements, i.e. the row index in a 2D matrix of mesh indices.
+    将网格名称索引列表存储到指定索引上。索引表示整个网格索引列表的位置，而不是其各个元素的位置，即在二维网格索引矩阵中的行索引。
 - `clearLODMeshMappings()`
-    Deletes all stored LOD to mesh list index mapping entries.
+    删除所有存储的LOD到网格列表索引映射条目。
 - `setLODMeshMapping(lod, index)`
-    Sets which meshes belong to which level of detail.
+    设置哪些网格属于哪个细节级别。
 - `clearMeshBlendShapeChannelMappings()`
-    Deletes all stored mesh to blend shape channel mapping entries.
+    删除所有存储的网格到混合形状通道映射条目。
 - `setMeshBlendShapeChannelMapping(index, meshIndex, blendShapeChannelIndex)`
-    Associates a blend shape channel with it's mesh.
+    将混合形状通道与其网格关联。
 - `setJointHierarchy(jointIndices, count)`
-    Sets a simple array describing the parent-child relationships between joints.  
-    Example:  
-    Joint names: [A, B, C, D, E, F, G, H]  
-    Hierarchy:   [0, 0, 0, 1, 1, 4, 2, 2]  
-    Describes the following hierarchy:  
+    设置描述关节之间父子关系的简单数组。  
+    例如：  
+    关节名称：[A, B, C, D, E, F, G, H]  
+    层次结构：[0, 0, 0, 1, 1, 4, 2, 2]  
+    描述了以下层次结构：  
     ```
     A
     ├── B
@@ -451,112 +450,112 @@ Contains write-only accessors for DNA attributes that represent the rig's static
         └── H
     ```
 - `setNeutralJointTranslations(translations, count)`
-    Sets translations for joints in bind pose.
+    设置绑定姿势中关节的平移。
 - `setNeutralJointRotations(rotations, count)`
-    Sets rotations for joints in bind pose.
+    设置绑定姿势中关节的旋转。
 
 ### BehaviorWriter
-Contains write-only accessors for DNA attributes that define the rig's evaluation.
+包含仅写访问器，用于定义机构评估的DNA属性。
 - `setGUIToRawInputIndices(inputIndices, count)`
-    Sets input indices used for mapping GUI to raw controls.
+    设置用于将GUI映射到原始控件的输入索引。
 - `setGUIToRawOutputIndices(outputIndices, count)`
-    Sets output indices used for mapping GUI to raw controls.
+    设置用于将GUI映射到原始控件的输出索引。
 - `setGUIToRawFromValues(fromValues, count)`
-    Sets filter values(lower-bounds) used to decide whether a particular entry should be evaluated or not during GUI to raw control mapping.
+    设置用于决定在GUI到原始控件映射期间是否应该评估特定条目的过滤值（下限）。
 - `setGUIToRawToValues(toValues, count)`
-    Sets filter values(upper-bounds) used to decide whether a particular entry should be evaluated or not during GUI to raw control mapping.
+    设置用于决定在GUI到原始控件映射期间是否应该评估特定条目的过滤值（上限）。
 - `setGUIToRawSlopeValues(slopeValues, count)`
-    Sets computational values(slope/gradient) used for calculating the output value during GUI to raw control mapping.
+    设置用于在计算GUI到原始控件映射期间计算输出值的计算值（斜率/梯度）。
 - `setGUIToRawCutValues(cutValues, count)`
-    Sets computational values(vertical intercept) used for calculating the output value during GUI to raw control mapping.
+    设置用于在计算GUI到原始控件映射期间计算输出值的计算值（垂直截距）。
 - `setPSDCount(count)`
-    Sets the number of distinct PSD expressions.
+    设置不同PSD表达式的数量。
 - `setPSDRowIndices(rowIndices, count)`
-    Sets PSD(input) indices which will become the rows of the PSD matrix.
+    设置将成为PSD矩阵行的PSD（输入）索引。
 - `setPSDColumnIndices(columnIndices, count)`
-    Sets control(input) indices which will become the columns of the PSD matrix.
+    设置将成为PSD矩阵列的控制（输入）索引。
 - `setPSDValues(weights, count)`
-    Sets weights associated with each PSD row and column pair.
+    设置与每个PSD行和列对相关联的权重。
 - `setJointRowCount(rowCount)`
-    Sets number of rows in the entire, uncompressed joint matrix.
+    设置整个未压缩关节矩阵中的行数。
 - `setJointColumnCount(columnCount)`
-    Sets number of columns in the entire, uncompressed joint matrix.
+    设置整个未压缩关节矩阵中的列数。
 - `clearJointGroups()`
-    Deletes all joint groups.
+    删除所有关节组。
 - `deleteJointGroup(jointGroupIndex)`
-    Deletes the specified joint group.
+    删除指定的关节组。
 - `setJointGroupLODs(jointGroupIndex, lods, count)`
-    Sets number of rows per each level of detail for the specified joint group.  
-    Each element's position represents the level itself, while the value denotes the number of rows within the joint group belonging to that level. e.g.:  
+    设置指定关节组每个细节级别的行数。  
+    每个元素的位置代表级别本身，而值表示属于该级别的关节组内的行数。例如：  
     ```
     [12, 9, 3]
-     │   │  └── LOD-2 contains first 3 rows
-     │   └── LOD-1 contains first 9 rows
-     └── LOD-0 contains first 12 rows
+     │   │  └── LOD-2 包含前3行
+     │   └── LOD-1 包含前9行
+     └── LOD-0 包含前12行
     ```
 - `setJointGroupInputIndices(jointGroupIndex, inputIndices, count)`
-    Sets column indices that the specified joint group contains. The column indices point into the entire, uncompressed joint matrix.
+    设置列出指定联合组包含的列索引。列索引指向整个未压缩的联合矩阵。
 - `setJointGroupOutputIndices(jointGroupIndex, outputIndices, count)`
-    Sets row indices that the specified joint group contains. The row indices point into the entire, uncompressed joint matrix.
+    设置指定联合组包含的行索引。行索引指向整个未压缩的联合矩阵。
 - `setJointGroupValues(jointGroupIndex, values, count)`
-    Sets values that the specified joint group contains.
+    设置指定联合组包含的值。
 - `setJointGroupJointIndices(jointGroupIndex, jointIndices, count)`
-    Sets joint indices that the specified joint group contains.
+    设置指定联合组包含的联合索引。
 - `setBlendShapeChannelLODs(lods, count)`
-    Sets input index count per each level of detail for blend shapes.  
-    Each element's position represents the level itself (e.g. [0,1,2,3,4,5] Value 0 is LOD with highest of details, value 5 is LOD with lowest details), while the value denotes the number of input indices belonging to that level.  
+    为混合形状设置每个细节级别的输入索引计数。  
+    每个元素的位置表示级别本身（例如[0,1,2,3,4,5]值0是具有最高细节的LOD，值5是具有最低细节的LOD），而值表示属于该级别的输入索引数。
 - `setBlendShapeChannelInputIndices(inputIndices, count)`
-    Sets input indices used to index into the input vector.
+    设置用于索引输入向量的输入索引。
 - `setBlendShapeChannelOutputIndices(outputIndices, count)`
-    Sets output indices specify the positions of blend shape output values.
+    设置输出索引，指定混合形状输出值的位置。
 - `setAnimatedMapLODs(lods, count)`
-    Sets row count per each level of detail for animated maps.  
-    Each element's position represents the level itself (e.g. [0,1,2,3,4,5] Value 0 is LOD with highest of details, value 5 is LOD with lowest details), while the value denotes the number of rows (within the conditional table), belonging to that level.  
+    为动画地图设置每个细节级别的行数。  
+    每个元素的位置表示级别本身（例如[0,1,2,3,4,5]值0是具有最高细节的LOD，值5是具有最低细节的LOD），而值表示属于该级别的行数（在条件表中）。
 - `setAnimatedMapInputIndices(inputIndices, count)`
-    Sets input indices used to index into the array of input values.
+    设置用于索引输入值数组的输入索引。
 - `setAnimatedMapOutputIndices(outputIndices, count)`
-    Sets output indices that specify the computed output value's position.
+    设置输出索引，指定计算输出值位置。
 - `setAnimatedMapFromValues(fromValues, count)`
-    Sets filter values(lower-bounds) used to decide whether a particular entry should be evaluated or not.
+    设置用于决定是否评估特定条目的过滤值（下限）。
 - `setAnimatedMapToValues(toValues, count)`
-    Sets filter values(upper-bounds) used to decide whether a particular entry should be evaluated or not.
+    设置用于决定是否评估特定条目的过滤值（上限）。
 - `setAnimatedMapSlopeValues(slopeValues, count)`
-    Sets computational values(slope/gradient) used for calculating the output value.
+    设置用于计算输出值的计算值（斜率/梯度）。
 - `setAnimatedMapCutValues(cutValues, count)`
-    Sets computational values(vertical intercept) used for calculating the output value.
+    设置用于计算输出值的计算值（垂直截距）。
 
 ### GeometryWriter
-Contains write-only accessors for the geometry data associated with a rig.
+包含与一个姿势相关的几何数据的只写访问器。
 
 - `clearMeshes()`
-    Deletes all meshes.
+    删除所有网格。
 - `deleteMesh(meshIndex)`
-    Deletes the specified mesh.
+    删除指定的网格。
 - `setVertexPositions(meshIndex, positions, count)`
-    Sets vertex positions.
+    设置顶点位置。
 - `setVertexTextureCoordinates(meshIndex, textureCoordinates, count)`
-    Sets vertex texture coordinates.
+    设置顶点纹理坐标。
 - `setVertexNormals(meshIndex, normals, count)`
-    Sets vertex normals.
+    设置顶点法线。
 - `setVertexLayouts(meshIndex, layouts, count)`
-    Sets vertex layouts the belong to the specified mesh.
+    设置属于指定网格的顶点布局。
 - `clearFaceVertexLayoutIndices(meshIndex)`
-    Deletes all lists of vertex layout indices for the specified mesh.
+    删除指定网格的所有顶点布局索引列表。
 - `setFaceVertexLayoutIndices(meshIndex, faceIndex, layoutIndices, count)`
-    Sets vertex layout indices that belong to the specified face. The layout indices point into the array that is set through setVertexLayouts().
+    设置属于指定面的顶点布局索引。布局索引指向通过setVertexLayouts()设置的数组。
 - `setMaximumInfluencePerVertex(meshIndex, maxInfluenceCount)`
-    Sets the maximum number of joints that may influence any single vertex.
+    设置可能影响任一顶点的最大关节数。
 - `clearSkinWeights(meshIndex)`
-    Deletes all skin weights for the specified mesh.
+    删除指定网格的所有皮肤权重。
 - `setSkinWeightsValues(meshIndex, vertexIndex, weights, count)`
-    Sets skin weights influencing the referenced vertex. The sum of weights must add up to 1.
+    设置影响引用顶点的皮肤权重。权重总和必须为1。
 - `setSkinWeightsJointIndices(meshIndex, vertexIndex, jointIndices, count)`
-    Sets joint indices associated with each skin weight for the specified vertex. The joint indices must be stored in the same order as the weights they are associated with.
+    设置指定顶点的每个皮肤权重关联的联合索引。联合索引必须按与其关联的权重相同的顺序存储。
 - `clearBlendShapeTargets(meshIndex)`
-    Deletes all blend shape targets for the specified mesh.
+    删除指定网格的所有混合形状目标。
 - `setBlendShapeChannelIndex(meshIndex, blendShapeTargetIndex, blendShapeChannelIndex)`
-    Sets the matching blend shape channel index of the specified blend shape target. Associate the mesh-local blend shape target index with the absolute blend shape channel index as found in the Definition layer.
+    设置指定混合形状目标的匹配混合形状通道索引。将网格本地混合形状目标索引与在Definition层中找到的绝对混合形状通道索引相关联。
 - `setBlendShapeTargetDeltas(meshIndex, blendShapeTargetIndex, deltas, count)`
-    Sets deltas for each affected vertex.
+    设置每个受影响顶点的增量。
 - `setBlendShapeTargetVertexIndices(meshIndex, blendShapeTargetIndex, vertexIndices, count)`
-    Sets vertex position indices affected by the specified blend shape target. The vertex position indices must be stored in the same order as the deltas they are associated with.
+    设置由指定混合形状目标影响的顶点位置索引。顶点位置索引必须按与其关联的增量相同的顺序存储。
