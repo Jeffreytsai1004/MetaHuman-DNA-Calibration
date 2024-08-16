@@ -1,7 +1,7 @@
 # PyDNACalib
 
-Python wrapper for the DNACalib API.
+DNACalib API的Python封装。
 
-## Usage
+## 用法
 
-For now, check out the examples under `python3/examples/`.
+目前，请查看`python3/examples/`目录下的示例。
