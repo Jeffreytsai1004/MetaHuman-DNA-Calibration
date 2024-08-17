@@ -1,4 +1,4 @@
-# 元人类DNA校准
+# Metahuman DNA Calibration
 MetaHuman DNA校准是一套用于处理MetaHuman DNA文件的工具集，打包成一个单独的软件包。
 [`DNA`](/docs/dna.md#metahuman-dna)是[MetaHuman](https://www.unrealengine.com/en-US/metahuman)身份的一个组成部分。
 DNA文件是使用[MetaHuman Creator](https://metahuman.unrealengine.com/)创建的，并通过[Quixel Bridge](https://docs.metahuman.unrealengine.com/en-US/downloading-metahumans-with-quixel-bridge/)和UE5中的Bifrost进行下载。
